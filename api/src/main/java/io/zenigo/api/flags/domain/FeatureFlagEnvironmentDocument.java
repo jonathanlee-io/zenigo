@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,5 +20,9 @@ public class FeatureFlagEnvironmentDocument {
     private String id;
 
     private String name;
+
+    private Instant createdAt;
+
+    private Instant updatedAt;
 
 }
