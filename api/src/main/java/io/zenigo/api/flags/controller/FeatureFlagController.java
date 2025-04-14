@@ -17,7 +17,7 @@ public class FeatureFlagController {
 
     private final FeatureFlagService featureFlagService;
 
-    @GetMapping(value = "/{environmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/for-environment/{environmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Flux<FeatureFlagDocument> findAllByEnvironmentId(@PathVariable String environmentId) {
         return this.featureFlagService.findAllByEnvironmentId(environmentId);
     }
