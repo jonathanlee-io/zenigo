@@ -1,0 +1,26 @@
+<div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
+  <div class="sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    <div class="mx-4">
+      <p class="text-sm text-gray-700">
+        Showing page
+        <span class="font-medium">{{ currentPage() + 1 }}</span>
+        of total
+        <span class="font-medium">{{ totalPages() }}</span>
+        pages
+      </p>
+    </div>
+    <div>
+      <div aria-label="Pagination" class="isolate inline-flex -space-x-px rounded-md shadow-sm">
+        <button (click)="onClickPrev()" [disabled]="isClickPrevDisabled()" class="relative inline-flex items-center mx-1 px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" pButton>
+          <span class="sr-only">Previous</span>
+          <ArrowLeftIcon class="h-5 w-5" />
+        </button>
+
+        <button (click)="onClickNext()" [disabled]="isClickNextDisabled()" class="relative inline-flex items-center mx-1 px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" pButton>
+          <span class="sr-only">Next</span>
+          <ArrowRightIcon class="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

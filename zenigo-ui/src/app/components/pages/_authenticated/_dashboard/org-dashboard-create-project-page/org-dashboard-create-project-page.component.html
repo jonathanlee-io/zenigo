@@ -1,0 +1,45 @@
+<div class="py-8 px-8 border-8 border-black rounded-3xl min-h-screen bg-light-primary dark:bg-dark-primary"
+     style="box-shadow: 5px 5px 0 black; outline: 3px solid black;">
+  <form>
+    <div class="space-y-12 animate-fadeinup">
+      <app-client-form
+        [clientDisplayNameFormControl]="clientDisplayNameFormControl"
+        [isReadonly]="true"
+      />
+
+      <app-create-project-display-name
+        [isReadonly]="false"
+        [projectDisplayNameFormControl]="projectDisplayNameFormControl"
+      />
+
+      <app-create-project
+        [subdomainFormControl]="subdomainFormControl"
+        [subdomainState]="subdomainState"
+      />
+
+      <div class="mt-3">
+        <app-project-features-switches
+          [bugReportsEnabledFormControl]="bugReportsEnabledFormControl"
+          [featureFeedbackEnabledFormControl]="featureFeedbackEnabledFormControl"
+          [featureRequestsEnabledFormControl]="featureRequestsEnabledFormControl"
+          [isHintEnabled]="true"
+          [ownerIssuesEnabledFormControl]="ownerIssuesEnabledFormControl"
+          [ownerUpdatesEnabledFormControl]="ownerUpdatesEnabledFormControl"
+          [userIssuesEnabledFormControl]="userIssuesEnabledFormControl"
+        />
+      </div>
+    </div>
+
+    <app-cancel-continue
+      [bugReportsEnabledFormControl]="bugReportsEnabledFormControl"
+      [cancelRoutePath]="rebaseRoutePath(RoutePath.DASHBOARD)"
+      [clientDisplayNameFormControl]="clientDisplayNameFormControl"
+      [featureFeedbackEnabledFormControl]="featureFeedbackEnabledFormControl"
+      [featureRequestsEnabledFormControl]="featureRequestsEnabledFormControl"
+      [isNewClient]="false"
+      [isReadyToContinue]="isReadyToContinue()"
+      [projectDisplayNameFormControl]="projectDisplayNameFormControl"
+      [subdomainFormControl]="subdomainFormControl"
+    />
+  </form>
+</div>

@@ -1,0 +1,28 @@
+<div class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Current Sprint</h2>
+      <p class="mt-6 text-lg/8 text-gray-600">Sprint started: {{ startDate }}</p>
+      <p class="mt-2 text-lg/8 text-gray-600">Active until: {{ startDate }}</p>
+    </div>
+    <ul role="list" class="mx-auto mt-20 grid max-w-2xl gap-x-2 gap-y-16 lg:mx-0 lg:max-w-none"
+        [ngClass]="'grid-cols-' + String(demoStore.assignees().length * 2)">
+      @for (assignee of demoStore.assignees(); track $index; ) {
+        <li>
+          <div (click)="updateActiveAssignee(assignee)" pButton [ngClass]="demoStore.currentlyFilteredAssignee() === assignee ? 'bg-blue-400' : 'bg-gray-50'" class="card rounded-2xl shadow-lg px-2 py-2 text-black">
+            {{ assignee }}
+          </div>
+        </li>
+      }
+    </ul>
+    <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-4 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none">
+      @for (section of demoStore.sortedByIdSections(); track $index; ) {
+        <app-issue-section pDroppable
+                           [title]="section.title"
+                           [issues]="section.issues"
+                           [sectionId]="section.id"
+                           (onDrop)="demoStore.handleDrop(section.id)" />
+      }
+    </ul>
+  </div>
+</div>

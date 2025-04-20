@@ -1,0 +1,10 @@
+<a [routerLink]="routerLink()"
+   [ngClass]="{ 'text-indigo-600': activeTabIndex()() === isActiveIndex() }"
+   (click)="activeTabIndex().set(0)"
+   class="group flex gap-x-3 rounded-md bg-gray-50 p-2 text-sm font-semibold leading-6">
+  <svg [ngClass]="{ 'text-indigo-600': activeTabIndex()() === isActiveIndex() }" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+       stroke="currentColor" aria-hidden="true" data-slot="icon">
+    <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="svgPathD()" />
+  </svg>
+  {{ title() }}
+</a>

@@ -1,0 +1,7 @@
+<app-toast />
+<p-confirm-dialog />
+<app-navbar />
+<main class="flex flex-col min-h-screen">
+  <router-outlet />
+</main>
+<app-footer *ngIf="!isSidebarVisible()" class="sticky bottom-0 top-[100vh]" />

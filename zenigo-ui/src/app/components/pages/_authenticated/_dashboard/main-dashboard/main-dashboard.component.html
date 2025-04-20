@@ -1,0 +1,52 @@
+<div class="card min-h-screen bg-light-primary dark:bg-dark-primary">
+  <p-table *ngIf="!projectStore.isLoading() else loadingSpinner" [tableStyle]="{ 'min-width': '60rem' }"
+           [value]="projectStore.projectsWhereInvolved()">
+    <ng-template pTemplate="caption">
+      <div class="flex items-center justify-between">
+        <span class="text-xl font-bold">Projects Where Involved</span>
+        <p-button (click)="projectStore.loadProjectsWhereInvolved()" icon="pi pi-refresh" raised rounded />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Organization</th>
+        <th>Name</th>
+        <th>Subdomain(s) (.zenigo.io)</th>
+        <th>Custom Hostname</th>
+        <th>Bug Reporting Enabled</th>
+        <th>Feature Request Enabled</th>
+        <th>Feature Feedback Enabled</th>
+      </tr>
+    </ng-template>
+    <ng-template let-project pTemplate="body">
+      <tr>
+        <td><a [routerLink]="[rebaseRoutePathAsString(RoutePath.CLIENT_DASHBOARD.replace(':clientId', project.clientId))]"
+          pButton>{{ project.client.displayName }}
+          <i class="px-2 pi pi-arrow-right"></i></a></td>
+        <td><a [routerLink]="[rebaseRoutePathAsString(RoutePath.PROJECT_DASHBOARD.replace(':projectId', project.id))]"
+          pButton>{{ project.name }}
+          <i class="px-2 pi pi-arrow-right"></i></a></td>
+        <td>{{ (project.subdomains?.length === 0) ? 'None' : commaListSubdomains(project.subdomains) }}</td>
+        <td>{{ (project.hostnames?.length === 0) ? 'None' : project.hostnames?.[0].hostname }}</td>
+        <td>
+          <p-tag [severity]="(project.isBugReportsEnabled) ? 'success': 'danger'"
+                 [value]="(project.isBugReportsEnabled) ? 'Enabled': 'Disabled'"/>
+        </td>
+        <td>
+          <p-tag [severity]="(project.isFeatureRequestsEnabled) ? 'success': 'danger'"
+                 [value]="(project.isFeatureRequestsEnabled) ? 'Enabled': 'Disabled'"/>
+        </td>
+        <td>
+          <p-tag [severity]="(project.isFeatureFeedbackEnabled) ? 'success': 'danger'"
+                 [value]="(project.isFeatureFeedbackEnabled) ? 'Enabled': 'Disabled'"/>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">Total of {{ projectStore.projectsWhereInvolved() ? projectStore.projectsWhereInvolved().length : 0 }} project(s).</ng-template>
+  </p-table>
+  <ng-template #loadingSpinner>
+    <div class="flex justify-center items-center">
+      <p-progressSpinner styleClass="mt-8" />
+    </div>
+  </ng-template>
+</div>

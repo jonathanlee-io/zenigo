@@ -1,0 +1,71 @@
+textarea::placeholder {
+  color: gray !important;
+}
+
+.js-widget-modal-menu {
+  filter: none !important;
+  pointer-events: auto;
+}
+
+.js-widget-overlay {
+    z-index: 10001;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 100%;
+    opacity: 0.8;
+    background-color: #000;
+}
+
+.js-widget-dialog {
+    position: fixed;
+    z-index: 10002;
+    background: #fff;
+    right: 0;
+    bottom: 0;
+    margin: 0 0 0 -120px;
+    width: 50px;
+    padding: 5px 5px 5px 5px;
+    border: solid 1px #333
+}
+
+.widget-modal {
+  position: fixed;
+  z-index: 10003;
+  inset: 0; /* This centers it vertically and horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+  padding: 10px 20px;
+  background-color: #e8e1e1;
+  opacity: 0.999;
+
+  width: 90%; /* Shrinks for smaller screens */
+  max-width: 50rem; /* Prevents it from growing too large on desktops */
+  height: auto; /* Allow height to adapt based on content */
+  max-height: 90%; /* Stops it from overflowing vertically */
+  margin: auto; /* Centers it in all cases */
+  overflow-y: auto; /* Adds scroll if content overflows */
+  border-radius: 0.5rem; /* Optional: make it look modern with rounded corners */
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.grow-hover:hover {
+  transform: scale(1.08);
+  transition: transform 200ms;
+}

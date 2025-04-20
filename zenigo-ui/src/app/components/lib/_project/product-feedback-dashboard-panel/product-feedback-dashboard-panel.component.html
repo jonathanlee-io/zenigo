@@ -1,0 +1,30 @@
+<div *ngIf="productFeedbackSubmissions() && productFeedbackSubmissions().length > 0; else noFeedback">
+  <div *ngFor="let feedback of productFeedbackSubmissions()" class="border p-4 mb-4 rounded shadow-md">
+    <div class="flex flex-col md:flex-row justify-between mb-2">
+      <span class="font-bold text-light-text-primary dark:text-dark-text-primary">Type: {{ feedback.widgetMetadataType }}</span>
+      <span class="md:ml-4 text-light-text-primary dark:text-dark-text-primary">Submitted: {{ formatDateString(feedback.submittedAt) }}</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-2">
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">User Feedback:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ feedback.userFeedback }}</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Product ID:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ feedback.productId }}</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Client IP:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ feedback.clientIp }}</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Client Subdomain:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ feedback.clientSubdomain }}</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Widget Metadata URL:</div> <div class="break-all text-light-text-primary dark:text-dark-text-primary">{{ feedback.widgetMetadataUrl }}</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Widget Metadata Timezone:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ feedback.widgetMetadataTimezone }}</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Server Response Time:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ feedback.serverResponseTime }} ms</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Created At:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ formatDateString(feedback.createdAt) }}</div>
+      <div class="font-bold text-light-text-primary dark:text-dark-text-primary">Updated At:</div> <div class="text-light-text-primary dark:text-dark-text-primary">{{ formatDateString(feedback.updatedAt) }}</div>
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <app-paginator
+      [(currentPage)]="currentPage"
+      [itemsPerPage]="itemsPerPage"
+      [totalItems]="projectStore.productFeedbackSubmissionsTotal()"
+    />
+  </div>
+</div>
+
+<ng-template #noFeedback>
+  <p>No feedback has been submitted yet.</p>
+</ng-template>

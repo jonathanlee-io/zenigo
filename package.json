@@ -1,0 +1,38 @@
+{
+  "name": "zenigo",
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "concurrently -c \"green.bold,blue.bold\" yarn:lint:*",
+    "lint:ui": "cd zenigo-ui && yarn run lint",
+    "lint:api": "cd zenigo-api && yarn run lint",
+    "start": "concurrently -c \"green.bold,blue.bold\" yarn:start:*",
+    "start:ui": "cd zenigo-ui && yarn run start",
+    "start:api": "cd zenigo-api && yarn run start",
+    "test": "concurrently -c \"green.bold,blue.bold\" yarn:test:*",
+    "test:ui": "cd zenigo-ui && yarn run test",
+    "test:api": "cd zenigo-api && yarn run test",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "feature flag",
+    "feature toggle",
+    "release management",
+    "continuous delivery",
+    "continuous deployment",
+    "canary release",
+    "A/B testing",
+    "experimentation",
+    "rollout",
+    "deployment",
+    "SaaS",
+    "software as a service"
+  ],
+  "license": "MIT",
+  "author": "Jonathan Lee <jonathan.lee.devel@gmail.com>",
+  "description": "Feature Flag and Release management software",
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "husky": "^9.1.7"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

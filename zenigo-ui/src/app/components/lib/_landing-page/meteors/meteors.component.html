@@ -1,0 +1,17 @@
+<div class="flex justify-center">
+  @for (meteor of meteors(); track $index; ) {
+    <span
+      class="meteor animate-meteor-effect absolute h-1 w-1 rounded-[9999px]
+             bg-blue-200/90
+             shadow-[0_0_0_2px_#ffffff30,_0_0_15px_#4f46e5,_0_0_45px_#818cf8] rotate-[215deg]
+             before:content-[''] before:absolute before:top-1/2 before:left-1/2
+             before:w-[100px] before:h-[1px] before:translate-x-0 before:-translate-y-1/2
+             before:bg-gradient-to-l
+             before:from-indigo-500 before:via-blue-400/50 before:to-transparent
+             after:content-[''] after:absolute after:top-1/2 after:left-1/2
+             after:w-[15px] after:h-[1.5px] after:translate-x-0 after:-translate-y-1/2
+             after:bg-gradient-to-l after:from-white after:to-transparent"
+      [style]="meteor"
+    ></span>
+  }
+</div>
