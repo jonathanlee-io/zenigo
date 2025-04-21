@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/zenigo-api/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "assets": [
+      "js-widget/**/*"
+    ],
+    "webpack": true,
+    "tsConfigPath": "apps/zenigo-api/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/zenigo-api",
+  "projects": {
+    "auth": {
+      "type": "library",
+      "root": "libs/auth",
+      "entryFile": "index",
+      "sourceRoot": "libs/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/auth/tsconfig.lib.json"
+      }
+    },
+    "config": {
+      "type": "library",
+      "root": "libs/config",
+      "entryFile": "index",
+      "sourceRoot": "libs/config/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/config/tsconfig.lib.json"
+      }
+    },
+    "constants": {
+      "type": "library",
+      "root": "libs/constants",
+      "entryFile": "index",
+      "sourceRoot": "libs/constants/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/constants/tsconfig.lib.json"
+      }
+    },
+    "database": {
+      "type": "library",
+      "root": "libs/database",
+      "entryFile": "index",
+      "sourceRoot": "libs/database/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/database/tsconfig.lib.json"
+      }
+    },
+    "dto": {
+      "type": "library",
+      "root": "libs/dto",
+      "entryFile": "index",
+      "sourceRoot": "libs/dto/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/dto/tsconfig.lib.json"
+      }
+    },
+    "echonexus-api": {
+      "type": "application",
+      "root": "apps/echonexus-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/echonexus-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/echonexus-api/tsconfig.app.json"
+      }
+    },
+    "init": {
+      "type": "library",
+      "root": "libs/init",
+      "entryFile": "index",
+      "sourceRoot": "libs/init/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/init/tsconfig.lib.json"
+      }
+    },
+    "payments": {
+      "type": "library",
+      "root": "libs/payments",
+      "entryFile": "index",
+      "sourceRoot": "libs/payments/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/payments/tsconfig.lib.json"
+      }
+    },
+    "projects": {
+      "type": "library",
+      "root": "libs/projects",
+      "entryFile": "index",
+      "sourceRoot": "libs/projects/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/projects/tsconfig.lib.json"
+      }
+    },
+    "storage": {
+      "type": "library",
+      "root": "libs/storage",
+      "entryFile": "index",
+      "sourceRoot": "libs/storage/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/storage/tsconfig.lib.json"
+      }
+    },
+    "users": {
+      "type": "library",
+      "root": "libs/users",
+      "entryFile": "index",
+      "sourceRoot": "libs/users/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/users/tsconfig.lib.json"
+      }
+    },
+    "util": {
+      "type": "library",
+      "root": "libs/util",
+      "entryFile": "index",
+      "sourceRoot": "libs/util/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/util/tsconfig.lib.json"
+      }
+    },
+    "validation": {
+      "type": "library",
+      "root": "libs/validation",
+      "entryFile": "index",
+      "sourceRoot": "libs/validation/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/validation/tsconfig.lib.json"
+      }
+    },
+    "zenigo-api": {
+      "type": "application",
+      "root": "apps/zenigo-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/zenigo-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/zenigo-api/tsconfig.app.json"
+      }
+    }
+  }
+}
