@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "scripts": {
     "lint": "concurrently -c \"green.bold,blue.bold\" yarn:lint:*",
-    "lint:ui": "cd zenigo-ui && yarn run lint",
+    "lint:ui": "cd ui && yarn run lint",
     "lint:api": "cd api && yarn run lint",
     "start": "concurrently -c \"green.bold,blue.bold\" yarn:start:*",
-    "start:ui": "cd zenigo-ui && yarn run start",
+    "start:ui": "cd ui && yarn run start",
     "start:api": "cd api && yarn run start",
     "test": "concurrently -c \"green.bold,blue.bold\" yarn:test:*",
-    "test:ui": "cd zenigo-ui && yarn run test",
+    "test:ui": "cd ui && yarn run test",
     "test:api": "cd api && yarn run test",
     "prepare": "husky"
   },
