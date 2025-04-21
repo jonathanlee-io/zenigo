@@ -26,7 +26,7 @@ async function bootstrap() {
   );
   await app.listen(port, '0.0.0.0', () => {
     Logger.log(
-      `Listening on port ${port} in NODE_ENV: ${appConfig.nodeEnv}...`,
+      `Listening on 0.0.0.0 port ${port} in NODE_ENV: ${appConfig.nodeEnv}...`,
     );
   });
 }
