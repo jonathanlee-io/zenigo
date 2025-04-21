@@ -5,6 +5,11 @@ import {IsDefined, IsString} from 'class-validator';
 export class DatabaseConfig {
   @IsDefined()
   @IsString()
-  @Value('ZENIGO_API_DATABASE_URL')
-  url: string;
+  @Value('FEATURE_FLAG_DATABASE_URL')
+  featureFlagUrl: string;
+
+  @IsDefined()
+  @IsString()
+  @Value('FEEDBACK_DATABASE_URL')
+  feedbackUrl: string;
 }

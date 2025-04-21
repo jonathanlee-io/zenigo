@@ -9,6 +9,7 @@ import {FastifyAdapter, NestFastifyApplication} from '@nestjs/platform-fastify';
 export async function bootstrap(
   appModule: unknown,
   port: number,
+  migrationUrlPropertyKey: string,
   schemaOverride?: string,
 ) {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -19,7 +20,10 @@ export async function bootstrap(
   const databaseConfig = app.get<DatabaseConfig>(DatabaseConfig);
   const appConfig = app.get<ApplicationConfig>(ApplicationConfig);
 
-  await HelpersUtil.runPrismaMigrations(databaseConfig.url, schemaOverride);
+  await HelpersUtil.runPrismaMigrations(
+    databaseConfig[migrationUrlPropertyKey],
+    schemaOverride,
+  );
 
   initApp(app);
 

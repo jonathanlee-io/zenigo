@@ -1,17 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/zenigo-api/src",
+  "sourceRoot": "apps/feature-flag-service/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "assets": [
       "js-widget/**/*"
     ],
     "webpack": true,
-    "tsConfigPath": "apps/zenigo-api/tsconfig.app.json"
+    "tsConfigPath": "apps/feature-flag-service/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/zenigo-api",
+  "root": "apps/feature-flag-service",
   "projects": {
     "auth": {
       "type": "library",
@@ -67,13 +67,13 @@
         "tsConfigPath": "libs/dto/tsconfig.lib.json"
       }
     },
-    "echonexus-api": {
+    "feedback-service": {
       "type": "application",
-      "root": "apps/echonexus-api",
+      "root": "apps/feedback-service",
       "entryFile": "main",
-      "sourceRoot": "apps/echonexus-api/src",
+      "sourceRoot": "apps/feedback-service/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/echonexus-api/tsconfig.app.json"
+        "tsConfigPath": "apps/feedback-service/tsconfig.app.json"
       }
     },
     "init": {
@@ -139,13 +139,13 @@
         "tsConfigPath": "libs/validation/tsconfig.lib.json"
       }
     },
-    "zenigo-api": {
+    "feature-flag-service": {
       "type": "application",
-      "root": "apps/zenigo-api",
+      "root": "apps/feature-flag-service",
       "entryFile": "main",
-      "sourceRoot": "apps/zenigo-api/src",
+      "sourceRoot": "apps/feature-flag-service/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/zenigo-api/tsconfig.app.json"
+        "tsConfigPath": "apps/feature-flag-service/tsconfig.app.json"
       }
     }
   }
