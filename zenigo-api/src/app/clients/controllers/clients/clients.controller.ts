@@ -24,8 +24,7 @@ export class ClientsController {
 
   @Post('create')
   async registerNewClient(
-    @CurrentUser()
-    {requestingUserEmail}: CurrentUserDto,
+    @CurrentUser() {requestingUserEmail}: CurrentUserDto,
     @Body() createClientDto: CreateClientDto,
   ) {
     return this.clientsService.createClient(
@@ -46,16 +45,14 @@ export class ClientsController {
 
   @Get('where-involved')
   async getClientsWhereInvolved(
-    @CurrentUser()
-    {requestingUserEmail}: CurrentUserDto,
+    @CurrentUser() {requestingUserEmail}: CurrentUserDto,
   ) {
     return this.clientsService.getClientsWhereInvolved(requestingUserEmail);
   }
 
   @Get(':id')
   async getClientById(
-    @CurrentUser()
-    {requestingUserId}: CurrentUserDto,
+    @CurrentUser() {requestingUserId}: CurrentUserDto,
     @Param() {id: clientId}: IdParamDto,
   ) {
     return this.clientsService.getClientById(requestingUserId, clientId);
@@ -63,8 +60,7 @@ export class ClientsController {
 
   @Patch(':id/remove-member')
   async removeMemberFromClientById(
-    @CurrentUser()
-    {requestingUserEmail}: CurrentUserDto,
+    @CurrentUser() {requestingUserEmail}: CurrentUserDto,
     @Param() {id: clientId}: IdParamDto,
     @Body() {emailToRemove}: {emailToRemove: string},
   ) {
@@ -77,8 +73,7 @@ export class ClientsController {
 
   @Patch(':id/add-member')
   async addMemberToClientById(
-    @CurrentUser()
-    {requestingUserEmail}: CurrentUserDto,
+    @CurrentUser() {requestingUserEmail}: CurrentUserDto,
     @Param() {id: clientId}: IdParamDto,
     @Body() {emailToAdd}: {emailToAdd: string},
   ) {

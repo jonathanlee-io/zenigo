@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import {faker} from '@faker-js/faker/locale/en';
 import {HttpStatus, INestApplication} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';

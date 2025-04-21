@@ -1,7 +1,7 @@
-import {show} from './views/message';
-import Alpine from 'alpinejs';
+import { show } from "./views/message";
+import Alpine from "alpinejs";
 
-const supportedAPI = ['init', 'message']; // enlist all methods supported by API (e.g. `mw('event', 'user-login');`)
+const supportedAPI = ["init", "message"]; // enlist all methods supported by API (e.g. `mw('event', 'user-login');`)
 
 /**
  The main entry of the application
@@ -10,8 +10,12 @@ function app(window) {
   window.alpine = Alpine;
   Alpine.start();
 
-  Alpine.store('api', {
-    baseUrl: `http://${window.location.hostname.split('.')[window.location.hostname.split('.').length - 2]}.api.zenigo-local.io:8000/v1`,
+  Alpine.store("api", {
+    baseUrl: `http://${
+      window.location.hostname.split(
+        ".",
+      )[window.location.hostname.split(".").length - 2]
+    }.api.zenigo-local.io:8000/v1`,
 
     isLoading: false,
     isMainMenuOpen: false,
@@ -28,9 +32,9 @@ function app(window) {
 
     fetchConfig() {
       fetch(`${this.baseUrl}/products/config`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
+          Accept: "application/json",
         },
       })
         .then(async (response) => {
@@ -50,7 +54,7 @@ function app(window) {
       this.isFeatureRequestOpen = false;
       this.isFeatureFeedbackOpen = false;
       this.isSubmissionSuccessfulOpen = false;
-      this.userFeedback = '';
+      this.userFeedback = "";
     },
 
     closeMainMenu() {
@@ -93,11 +97,11 @@ function app(window) {
     submitFeedback(url, body) {
       this.openLoadingModal();
       return fetch(url, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(body),
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
       })
         .then(() => {
@@ -137,7 +141,7 @@ function app(window) {
     },
   });
 
-  console.log('zenigo Widget Starting...');
+  console.log("zenigo Widget Starting...");
 
   // set default configurations
   let configurations = {
@@ -146,13 +150,13 @@ function app(window) {
 
   // all methods that were called till now and stored in queue
   // needs to be called now
-  let globalObject = window[window['JS-Widget']];
+  let globalObject = window[window["JS-Widget"]];
   const queue = globalObject.q;
   if (queue) {
     for (let i = 0; i < queue.length; i++) {
-      if (queue[i][0].toLowerCase() === 'init') {
+      if (queue[i][0].toLowerCase() === "init") {
         configurations = extendObject(configurations, queue[i][1]);
-        console.log('zenigo Widget successfully started', configurations);
+        console.log("zenigo Widget successfully started", configurations);
       } else apiHandler(queue[i][0], queue[i][1]);
     }
   }
@@ -167,19 +171,20 @@ function app(window) {
  Method that handles all API calls
  */
 function apiHandler(api, params) {
-  if (!api) throw Error('API method required');
+  if (!api) throw Error("API method required");
   api = api.toLowerCase();
 
-  if (supportedAPI.indexOf(api) === -1)
+  if (supportedAPI.indexOf(api) === -1) {
     throw Error(`Method ${api} is not supported`);
+  }
 
   console.log(`Handling API call ${api}`, params);
 
   switch (api) {
-    case 'message':
-      Alpine.store('api').baseUrl =
+    case "message":
+      Alpine.store("api").baseUrl =
         `http://${params.project.subdomain}.api.zenigo-local.io:8000/v1`;
-      Alpine.store('api').fetchConfig();
+      Alpine.store("api").fetchConfig();
       show(params);
       break;
     default:

@@ -15,8 +15,7 @@ export class AuthenticatedUsersController {
   @Post('check-in')
   @HttpCode(HttpStatus.OK)
   checkIn(
-    @CurrentUser()
-    {requestingUserId, requestingUserEmail}: CurrentUserDto,
+    @CurrentUser() {requestingUserId, requestingUserEmail}: CurrentUserDto,
   ) {
     return this.authenticatedUsersService.checkIn(
       requestingUserId,

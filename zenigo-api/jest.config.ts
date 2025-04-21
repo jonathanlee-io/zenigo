@@ -1,39 +1,39 @@
-import {Config} from 'jest';
+import { Config } from "jest";
 
 const config: Config = {
   projects: [
     {
-      displayName: 'unit',
+      displayName: "unit",
       transform: {
-        '^.+\\.(t|j)s$': 'ts-jest',
+        "^.+\\.(t|j)s$": "ts-jest",
       },
-      rootDir: 'src',
-      collectCoverageFrom: ['**/*.ts'],
-      testMatch: ['<rootDir>/**/*.spec.ts'],
+      rootDir: "src",
+      collectCoverageFrom: ["**/*.ts"],
+      testMatch: ["<rootDir>/**/*.spec.ts"],
     },
     {
-      displayName: 'integration',
+      displayName: "integration",
       transform: {
-        '^.+\\.(t|j)s$': 'ts-jest',
+        "^.+\\.(t|j)s$": "ts-jest",
       },
-      runner: 'jest-serial-runner',
-      rootDir: 'src',
-      collectCoverageFrom: ['**/*.ts'],
-      testMatch: ['<rootDir>/**/*.it-spec.ts'],
+      runner: "jest-serial-runner",
+      rootDir: "src",
+      collectCoverageFrom: ["**/*.ts"],
+      testMatch: ["<rootDir>/**/*.it-spec.ts"],
     },
     {
-      displayName: 'e2e',
+      displayName: "e2e",
       transform: {
-        '^.+\\.(t|j)s$': 'ts-jest',
+        "^.+\\.(t|j)s$": "ts-jest",
       },
-      runner: 'jest-serial-runner',
-      rootDir: 'test',
-      testMatch: ['<rootDir>/**/*.e2e-spec.ts'],
+      runner: "jest-serial-runner",
+      rootDir: "test",
+      testMatch: ["<rootDir>/**/*.e2e-spec.ts"],
     },
   ],
-  moduleFileExtensions: ['js', 'json', 'ts'],
-  coverageDirectory: '../coverage',
-  testEnvironment: 'node',
+  moduleFileExtensions: ["js", "json", "ts"],
+  coverageDirectory: "../coverage",
+  testEnvironment: "node",
 };
 
 export default config;

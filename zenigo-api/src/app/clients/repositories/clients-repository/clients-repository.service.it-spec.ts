@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import {faker} from '@faker-js/faker/locale/en';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Logger} from '@nestjs/common';

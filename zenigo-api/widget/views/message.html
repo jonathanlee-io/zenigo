@@ -1,448 +1,460 @@
 <div x-data="{ userFeedback: '' }">
-    <div class="js-widget-overlay"
-         style="color: black;">
-    </div>
-    <div @click="$store.api.openMainMenu()"
-         class="js-widget-dialog center"
-         style="
-        color: white;
-        background: linear-gradient(to right, #6366f1, #22d3ee);
-        border-radius: 0.5rem;
-        font-size: 0.85rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        margin: 0.75rem 0.75rem 0.75rem auto;
-        transition: transform 150ms, box-shadow 150ms;
-        cursor: pointer;
-        display: flex; /* Added for alignment */
-        align-items: center; /* Added for alignment */
-     "
-         x-show="!$store.api.isMainMenuOpen">
-        <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-            <path d="M32.769 33.359c-2.739-3.286-3.903-6.569-4.397-8.746-.064-.283-.249-.524-.506-.661s-.56-.154-.83-.05l-7.112 2.749c-.303.117-.53.374-.609.688-.079.315-.019.665.211.896C25.492 34.216 31.945 35 32 35c.354 0 .688-.188.867-.503.208-.362.169-.816-.098-1.138z"
-                  fill="#31373D"/>
-            <ellipse cx="18" cy="16" fill="#31373D" rx="18" ry="14"/>
-            <circle cx="18" cy="16" fill="#31373D" r="5"/>
-            <path d="M18 7c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9zm0 14c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5z"
-                  fill="#FFF"/>
-        </svg>
-    </div>
-    <div>
-        <div class="js-widget-modal-menu widget-modal items-center justify-center" x-show="$store.api.isMainMenuOpen">
-            <div aria-labelledby="modal-title" aria-modal="true" class="js-widget-modal-content z-10" role="dialog">
-                <div aria-hidden="false"
-                     style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto;">
-                    <div
-                            style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 1); display: flex; align-items: center; justify-content: center; z-index: 50;">
-                        <div
-                                style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto;">
+  <div class="js-widget-overlay" style="color: black"></div>
+  <div
+    @click="$store.api.openMainMenu()"
+    class="js-widget-dialog center"
+    style="color: white; background: linear-gradient(to right, #6366f1, #22d3ee); border-radius: 0.5rem; font-size: 0.85rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; margin: 0.75rem 0.75rem 0.75rem auto; transition: transform 150ms, box-shadow 150ms; cursor: pointer; display: flex; align-items: center"
+    x-show="!$store.api.isMainMenuOpen"
+  >
+    <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M32.769 33.359c-2.739-3.286-3.903-6.569-4.397-8.746-.064-.283-.249-.524-.506-.661s-.56-.154-.83-.05l-7.112 2.749c-.303.117-.53.374-.609.688-.079.315-.019.665.211.896C25.492 34.216 31.945 35 32 35c.354 0 .688-.188.867-.503.208-.362.169-.816-.098-1.138z"
+        fill="#31373D"
+      />
+      <ellipse cx="18" cy="16" fill="#31373D" rx="18" ry="14" />
+      <circle cx="18" cy="16" fill="#31373D" r="5" />
+      <path
+        d="M18 7c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9zm0 14c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5z"
+        fill="#FFF"
+      />
+    </svg>
+  </div>
+  <div>
+    <div
+      class="js-widget-modal-menu widget-modal items-center justify-center"
+      x-show="$store.api.isMainMenuOpen"
+    >
+      <div
+        aria-labelledby="modal-title"
+        aria-modal="true"
+        class="js-widget-modal-content z-10"
+        role="dialog"
+      >
+        <div
+          aria-hidden="false"
+          style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto"
+        >
+          <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 1); display: flex; align-items: center; justify-content: center; z-index: 50">
+            <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto">
+              <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black">
+                Provide Feedback
+              </h3>
+              <p style="margin-top: 0.5rem; font-size: 0.875rem; text-align: center; color: black">
+                We sincerely appreciate your valuable input to the product.
+              </p>
+              <div style="margin-top: 1.25rem; display: grid; gap: 1.5rem; place-items: center">
+                <!-- Bug Button -->
+                <button
+                  @click="$store.api.openBugReportMenu()"
+                  id="js-widget-modal-menu-bug-button"
+                  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.12)';"
+                  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.15)';"
+                  style="width: 100%; border-radius: 9999px; background: linear-gradient(to right, #10b981, #3b82f6); padding: 0.85rem 1.5rem; font-size: 1rem; font-weight: 600; color: white; text-align: center; cursor: pointer; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12)"
+                  x-show="$store.api.isBugReportEnabled"
+                >
+                  Report a Bug
+                </button>
 
-                            <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black;">
-                                Provide Feedback
-                            </h3>
-                            <p style="margin-top: 0.5rem; font-size: 0.875rem; text-align: center; color: black;">
-                                We sincerely appreciate your valuable input to the product.
-                            </p>
-                            <div style="margin-top: 1.25rem; display: grid; gap: 1.5rem; place-items: center;">
+                <!-- Feature Request Button -->
+                <button
+                  @click="$store.api.openFeatureRequestMenu()"
+                  id="js-widget-modal-menu-feature-request-button"
+                  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.12)';"
+                  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.15)';"
+                  style="width: 100%; border-radius: 9999px; background: linear-gradient(to right, #6366f1, #a78bfa); padding: 0.85rem 1.5rem; font-size: 1rem; font-weight: 600; color: white; text-align: center; cursor: pointer; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12)"
+                  x-show="$store.api.isFeatureRequestEnabled"
+                >
+                  Request a Feature
+                </button>
 
-                                <!-- Bug Button -->
-                                <button
-                                        @click="$store.api.openBugReportMenu()"
-                                        id="js-widget-modal-menu-bug-button"
-                                        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.12)';"
-                                        onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.15)';"
-                                        style="
-      width: 100%;
-      border-radius: 9999px;
-      background: linear-gradient(to right, #10b981, #3b82f6);
-      padding: 0.85rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: white;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 200ms, box-shadow 200ms;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);"
-                                        x-show="$store.api.isBugReportEnabled">
-                                    Report a Bug
-                                </button>
+                <!-- Feature Feedback Button -->
+                <button
+                  @click="$store.api.openFeatureFeedbackMenu()"
+                  id="js-widget-modal-menu-feature-feedback-button"
+                  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.12)';"
+                  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.15)';"
+                  style="width: 100%; border-radius: 9999px; background: linear-gradient(to right, #ec4899, #f43f5e, #f59e0b); padding: 0.85rem 1.5rem; font-size: 1rem; font-weight: 600; color: white; text-align: center; cursor: pointer; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12)"
+                  x-show="$store.api.isFeatureFeedbackEnabled"
+                >
+                  Specific Feature Feedback
+                </button>
 
-                                <!-- Feature Request Button -->
-                                <button
-                                        @click="$store.api.openFeatureRequestMenu()"
-                                        id="js-widget-modal-menu-feature-request-button"
-                                        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.12)';"
-                                        onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.15)';"
-                                        style="
-      width: 100%;
-      border-radius: 9999px;
-      background: linear-gradient(to right, #6366f1, #a78bfa);
-      padding: 0.85rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: white;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 200ms, box-shadow 200ms;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);"
-                                        x-show="$store.api.isFeatureRequestEnabled">
-                                    Request a Feature
-                                </button>
-
-                                <!-- Feature Feedback Button -->
-                                <button
-                                        @click="$store.api.openFeatureFeedbackMenu()"
-                                        id="js-widget-modal-menu-feature-feedback-button"
-                                        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.12)';"
-                                        onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.15)';"
-                                        style="
-      width: 100%;
-      border-radius: 9999px;
-      background: linear-gradient(to right, #ec4899, #f43f5e, #f59e0b);
-      padding: 0.85rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: white;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 200ms, box-shadow 200ms;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);"
-                                        x-show="$store.api.isFeatureFeedbackEnabled">
-                                    Specific Feature Feedback
-                                </button>
-
-                                <p style="margin-top: 0.5rem; font-size: 0.875rem; text-align: center; color: black;" x-show="!$store.api.isBugReportEnabled && !$store.api.isFeatureRequestEnabled && !$store.api.isFeatureFeedbackEnabled">
-                                    No feedback options available.
-                                </p>
-
-                                <!-- Close Button -->
-                                <button
-                                        @click="$store.api.closeMainMenu()"
-                                        id="js-widget-modal-menu-close-button"
-                                        onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';"
-                                        onmouseover="this.style.backgroundColor='rgba(0,0,0,0.8)'; this.style.transform='scale(1.05)';"
-                                        style="
-      width: 100%;
-      border-radius: 0.5rem;
-      padding: 0.65rem 1.25rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      background: black;
-      color: white;
-      cursor: pointer;
-      margin-top: 1rem;
-      text-align: center;
-      transition: transform 200ms, background-color 200ms;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);">
-                                    Close
-                                </button>
-
-                                <!-- Attribution -->
-                                <p style="margin-top: 0.75rem; font-size: 0.875rem; text-align: center; color: #555; font-style: italic;">
-                                    Powered by
-                                    <a href="https://www.zenigo.io" onmouseout="this.style.color='#3b82f6';"
-                                       onmouseover="this.style.color='#2563eb';" rel="noopener noreferrer"
-                                       style="
-      color: #3b82f6;
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 200ms;"
-                                       target="_blank">
-                                        EchoNexus.io
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div aria-labelledby="modal-title" aria-modal="true" class="js-widget-modal-bug-report z-10" role="dialog"
-                 x-show="$store.api.isBugReportOpen">
-                <div aria-hidden="false"
-                     style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity;"></div>
-                <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto;">
-                    <div
-                            style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50;">
-                        <div
-                                style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto;">
-
-                            <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black;">
-                                Report a Bug
-                            </h3>
-                            <div style="width: 100%; max-width: 600px; margin: 2rem auto; padding: 1rem; border-radius: 8px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 1rem;"
-                            >
-                                <!-- Form Header -->
-                                <h2 style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #333;">
-                                    Describe
-                                    the Bug</h2>
-
-                                <!-- Input for Bug Description -->
-                                <textarea
-                                        onblur="this.style.borderColor='#eeeeee';"
-                                        onfocus="this.style.borderColor='#007BFF';"
-                                        placeholder="Please describe the bug you encountered"
-                                        style="width: 100%; background-color: white; padding: 0.75rem 1rem; border: 2px solid #eeeeee; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; color: black; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); resize: none; min-height: 150px; outline: none; transition: border-color 200ms; overflow-y: auto;"
-                                        x-model="userFeedback"
-                                ></textarea>
-
-                                <!-- Buttons Section -->
-                                <div style="display: flex; justify-content: space-between; gap: 1rem;">
-                                    <!-- Report Button -->
-                                    <button
-                                            @click="$store.api.submitFeedback(`${$store.api.baseUrl}/products/feedback`, {userFeedback: userFeedback, widgetMetadataType: 'bug_report', widgetMetadataTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, widgetMetadataUrl: window.location.href}).then(() => userFeedback = '');"
-                                            onmouseout="this.style.transform='scale(1)';"
-                                            onmouseover="this.style.transform='scale(1.05)';"
-                                            style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: white; border: none; border-radius: 9999px; background: linear-gradient(to right, #f59e0b, #ef4444); cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 200ms;"
-                                            type="button"
-                                    >
-                                        Report
-                                    </button>
-
-                                    <!-- Cancel Button -->
-                                    <button
-                                            @click="$store.api.closeNonMainMenu()"
-                                            onmouseout="this.style.backgroundColor='#f7f7f7';"
-                                            onmouseover="this.style.backgroundColor='#e2e2e2';"
-                                            style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: #333; border: 2px solid #eeeeee; border-radius: 6px; background-color: #f7f7f7; cursor: pointer; transition: background-color 200ms;"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div aria-labelledby="modal-title" aria-modal="true" class="z-10" role="dialog"
-                 x-show="$store.api.isFeatureRequestOpen">
-                <div aria-hidden="false"
-                     style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity;"></div>
-                <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto;">
-                    <div
-                            style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50;">
-                        <div
-                                style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto;">
-
-                            <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black;">
-                                Request a Feature
-                            </h3>
-                            <div
-                                    style="width: 100%; max-width: 600px; margin: 2rem auto; padding: 1rem; border-radius: 8px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 1rem;"
-                            >
-                                <!-- Form Header -->
-                                <h2 style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #333;">
-                                    Describe
-                                    the Feature
-                                    Request</h2>
-
-                                <!-- Input for Bug Description -->
-                                <textarea
-                                        onblur="this.style.borderColor='#eeeeee';"
-                                        onfocus="this.style.borderColor='#007BFF';"
-                                        placeholder="Please describe the feature or functionality you would like to see"
-                                        style="width: 100%; background-color: white; padding: 0.75rem 1rem; border: 2px solid #eeeeee; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; color: black; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); resize: none; min-height: 150px; outline: none; transition: border-color 200ms; overflow-y: auto;"
-                                        x-model="userFeedback"
-                                ></textarea>
-
-                                <!-- Buttons Section -->
-                                <div style="display: flex; justify-content: space-between; gap: 1rem;">
-                                    <!-- Report Button -->
-                                    <button
-                                            @click="$store.api.submitFeedback(`${$store.api.baseUrl}/products/feedback`, {userFeedback: userFeedback, widgetMetadataType: 'feature_request', widgetMetadataTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, widgetMetadataUrl: window.location.href}).then(() => userFeedback = '');"
-                                            onmouseout="this.style.transform='scale(1)';"
-                                            onmouseover="this.style.transform='scale(1.05)';"
-                                            style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: white; border: none; border-radius: 9999px; background: linear-gradient(to right, #f59e0b, #ef4444); cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 200ms;"
-                                            type="button"
-                                    >
-                                        Submit
-                                    </button>
-
-                                    <!-- Cancel Button -->
-                                    <button
-                                            @click="$store.api.closeNonMainMenu()"
-                                            onmouseout="this.style.backgroundColor='#f7f7f7';"
-                                            onmouseover="this.style.backgroundColor='#e2e2e2';"
-                                            style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: #333; border: 2px solid #eeeeee; border-radius: 6px; background-color: #f7f7f7; cursor: pointer; transition: background-color 200ms;"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div aria-labelledby="modal-title" aria-modal="true" class="js-widget-modal-feature-feedback z-10"
-                 role="dialog"
-                 x-show="$store.api.isFeatureFeedbackOpen">
-                <div aria-hidden="false"
-                     style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity;"></div>
-                <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto;">
-                    <div
-                            style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50;">
-                        <div
-                                style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto;">
-
-                            <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black;">
-                                Feature Feedback
-                            </h3>
-                            <div
-                                    style="width: 100%; max-width: 600px; margin: 2rem auto; padding: 1rem; border-radius: 8px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 1rem;"
-                            >
-                                <!-- Form Header -->
-                                <h2 style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #333;">
-                                    Describe
-                                    your
-                                    Experience</h2>
-
-                                <!-- Input for Bug Description -->
-                                <textarea
-                                        onblur="this.style.borderColor='#eeeeee';"
-                                        onfocus="this.style.borderColor='#007BFF';"
-                                        placeholder="Please describe your experience with this feature"
-                                        style="width: 100%; background-color: white; padding: 0.75rem 1rem; border: 2px solid #eeeeee; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; color: black; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); resize: none; min-height: 150px; outline: none; transition: border-color 200ms; overflow-y: auto;"
-                                        x-model="userFeedback"
-                                ></textarea>
-
-                                <!-- Buttons Section -->
-                                <div style="display: flex; justify-content: space-between; gap: 1rem;">
-                                    <!-- Report Button -->
-                                    <button
-                                            @click="$store.api.submitFeedback(`${$store.api.baseUrl}/products/feedback`, {userFeedback: userFeedback, widgetMetadataType: 'feature_feedback', widgetMetadataTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, widgetMetadataUrl: window.location.href}).then(() => userFeedback = '');"
-                                            onmouseout="this.style.transform='scale(1)';"
-                                            onmouseover="this.style.transform='scale(1.05)';"
-                                            style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: white; border: none; border-radius: 9999px; background: linear-gradient(to right, #f59e0b, #ef4444); cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 200ms;"
-                                    >
-                                        Submit
-                                    </button>
-
-                                    <!-- Cancel Button -->
-                                    <button
-                                            @click="$store.api.closeNonMainMenu()"
-                                            onmouseout="this.style.backgroundColor='#f7f7f7';"
-                                            onmouseover="this.style.backgroundColor='#e2e2e2';"
-                                            style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: #333; border: 2px solid #eeeeee; border-radius: 6px; background-color: #f7f7f7; cursor: pointer; transition: background-color 200ms;"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div aria-labelledby="modal-title" aria-modal="true" class="z-10" role="dialog"
-     x-show="$store.api.isSubmissionSuccessfulOpen">
-    <div aria-hidden="false"
-         style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity;"></div>
-    <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto;">
-        <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50;">
-            <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 2rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);">
-
-                <!-- Success Icon -->
-                <div style="width: 4rem; height: 4rem; margin: 0 auto; background-color: #34D399; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <svg fill="none" stroke="currentColor" style="width: 2rem; height: 2rem; color: white;"
-                         viewBox="0 0 24 24">
-                        <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                </div>
-
-                <!-- Success Message -->
-                <div style="margin-top: 1.5rem; text-align: center;">
-                    <h3 style="font-size: 1.5rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">
-                        Thank You for Your Feedback!
-                    </h3>
-                    <p style="color: #6B7280; font-size: 1rem; margin-bottom: 1.5rem;">
-                        Your feedback has been successfully submitted and will help us improve our service.
-                    </p>
-                </div>
+                <p
+                  style="margin-top: 0.5rem; font-size: 0.875rem; text-align: center; color: black"
+                  x-show="!$store.api.isBugReportEnabled && !$store.api.isFeatureRequestEnabled && !$store.api.isFeatureFeedbackEnabled"
+                >
+                  No feedback options available.
+                </p>
 
                 <!-- Close Button -->
-                <div style="text-align: center;">
-                    <button
-                            @click="$store.api.closeSuccessModal()"
-                            onmouseout="this.style.backgroundColor='#34D399'"
-                            onmouseover="this.style.backgroundColor='#10B981'"
-                            style="padding: 0.75rem 2rem; background-color: #34D399; color: white; font-weight: 600; border-radius: 0.5rem; border: none; cursor: pointer; transition: background-color 150ms;">
-                        Close
-                    </button>
-                </div>
+                <button
+                  @click="$store.api.closeMainMenu()"
+                  id="js-widget-modal-menu-close-button"
+                  onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';"
+                  onmouseover="this.style.backgroundColor='rgba(0,0,0,0.8)'; this.style.transform='scale(1.05)';"
+                  style="width: 100%; border-radius: 0.5rem; padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: black; color: white; cursor: pointer; margin-top: 1rem; text-align: center; transition: transform 200ms, background-color 200ms; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1)"
+                >
+                  Close
+                </button>
+
+                <!-- Attribution -->
+                <p style="margin-top: 0.75rem; font-size: 0.875rem; text-align: center; color: #555; font-style: italic">
+                  Powered by
+                  <a
+                    href="https://www.zenigo.io"
+                    onmouseout="this.style.color='#3b82f6';"
+                    onmouseover="this.style.color='#2563eb';"
+                    rel="noopener noreferrer"
+                    style="color: #3b82f6; font-weight: 500; text-decoration: none; transition: color 200ms"
+                    target="_blank"
+                  >
+                    EchoNexus.io
+                  </a>
+                </p>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div
+        aria-labelledby="modal-title"
+        aria-modal="true"
+        class="js-widget-modal-bug-report z-10"
+        role="dialog"
+        x-show="$store.api.isBugReportOpen"
+      >
+        <div
+          aria-hidden="false"
+          style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity"
+        >
+        </div>
+        <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto">
+          <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50">
+            <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto">
+              <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black">
+                Report a Bug
+              </h3>
+              <div style="width: 100%; max-width: 600px; margin: 2rem auto; padding: 1rem; border-radius: 8px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 1rem">
+                <!-- Form Header -->
+                <h2 style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #333">
+                  Describe the Bug
+                </h2>
+
+                <!-- Input for Bug Description -->
+                <textarea
+                  onblur="this.style.borderColor='#eeeeee';"
+                  onfocus="this.style.borderColor='#007BFF';"
+                  placeholder="Please describe the bug you encountered"
+                  style="width: 100%; background-color: white; padding: 0.75rem 1rem; border: 2px solid #eeeeee; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; color: black; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); resize: none; min-height: 150px; outline: none; transition: border-color 200ms; overflow-y: auto"
+                  x-model="userFeedback"
+                ></textarea>
+
+                <!-- Buttons Section -->
+                <div style="display: flex; justify-content: space-between; gap: 1rem">
+                  <!-- Report Button -->
+                  <button
+                    @click="$store.api.submitFeedback(`${$store.api.baseUrl}/products/feedback`, {userFeedback: userFeedback, widgetMetadataType: 'bug_report', widgetMetadataTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, widgetMetadataUrl: window.location.href}).then(() => userFeedback = '');"
+                    onmouseout="this.style.transform='scale(1)';"
+                    onmouseover="this.style.transform='scale(1.05)';"
+                    style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: white; border: none; border-radius: 9999px; background: linear-gradient(to right, #f59e0b, #ef4444); cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 200ms"
+                    type="button"
+                  >
+                    Report
+                  </button>
+
+                  <!-- Cancel Button -->
+                  <button
+                    @click="$store.api.closeNonMainMenu()"
+                    onmouseout="this.style.backgroundColor='#f7f7f7';"
+                    onmouseover="this.style.backgroundColor='#e2e2e2';"
+                    style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: #333; border: 2px solid #eeeeee; border-radius: 6px; background-color: #f7f7f7; cursor: pointer; transition: background-color 200ms"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="modal-title"
+        aria-modal="true"
+        class="z-10"
+        role="dialog"
+        x-show="$store.api.isFeatureRequestOpen"
+      >
+        <div
+          aria-hidden="false"
+          style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity"
+        >
+        </div>
+        <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto">
+          <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50">
+            <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto">
+              <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black">
+                Request a Feature
+              </h3>
+              <div style="width: 100%; max-width: 600px; margin: 2rem auto; padding: 1rem; border-radius: 8px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 1rem">
+                <!-- Form Header -->
+                <h2 style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #333">
+                  Describe the Feature Request
+                </h2>
+
+                <!-- Input for Bug Description -->
+                <textarea
+                  onblur="this.style.borderColor='#eeeeee';"
+                  onfocus="this.style.borderColor='#007BFF';"
+                  placeholder="Please describe the feature or functionality you would like to see"
+                  style="width: 100%; background-color: white; padding: 0.75rem 1rem; border: 2px solid #eeeeee; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; color: black; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); resize: none; min-height: 150px; outline: none; transition: border-color 200ms; overflow-y: auto"
+                  x-model="userFeedback"
+                ></textarea>
+
+                <!-- Buttons Section -->
+                <div style="display: flex; justify-content: space-between; gap: 1rem">
+                  <!-- Report Button -->
+                  <button
+                    @click="$store.api.submitFeedback(`${$store.api.baseUrl}/products/feedback`, {userFeedback: userFeedback, widgetMetadataType: 'feature_request', widgetMetadataTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, widgetMetadataUrl: window.location.href}).then(() => userFeedback = '');"
+                    onmouseout="this.style.transform='scale(1)';"
+                    onmouseover="this.style.transform='scale(1.05)';"
+                    style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: white; border: none; border-radius: 9999px; background: linear-gradient(to right, #f59e0b, #ef4444); cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 200ms"
+                    type="button"
+                  >
+                    Submit
+                  </button>
+
+                  <!-- Cancel Button -->
+                  <button
+                    @click="$store.api.closeNonMainMenu()"
+                    onmouseout="this.style.backgroundColor='#f7f7f7';"
+                    onmouseover="this.style.backgroundColor='#e2e2e2';"
+                    style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: #333; border: 2px solid #eeeeee; border-radius: 6px; background-color: #f7f7f7; cursor: pointer; transition: background-color 200ms"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="modal-title"
+        aria-modal="true"
+        class="js-widget-modal-feature-feedback z-10"
+        role="dialog"
+        x-show="$store.api.isFeatureFeedbackOpen"
+      >
+        <div
+          aria-hidden="false"
+          style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity"
+        >
+        </div>
+        <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto">
+          <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50">
+            <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 1.5rem; background-color: white; border-radius: 0.375rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); max-height: 90vh; overflow-y: auto">
+              <h3 style="font-size: 1.125rem; font-weight: 600; text-align: center; color: black">
+                Feature Feedback
+              </h3>
+              <div style="width: 100%; max-width: 600px; margin: 2rem auto; padding: 1rem; border-radius: 8px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 1rem">
+                <!-- Form Header -->
+                <h2 style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #333">
+                  Describe your Experience
+                </h2>
+
+                <!-- Input for Bug Description -->
+                <textarea
+                  onblur="this.style.borderColor='#eeeeee';"
+                  onfocus="this.style.borderColor='#007BFF';"
+                  placeholder="Please describe your experience with this feature"
+                  style="width: 100%; background-color: white; padding: 0.75rem 1rem; border: 2px solid #eeeeee; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; color: black; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); resize: none; min-height: 150px; outline: none; transition: border-color 200ms; overflow-y: auto"
+                  x-model="userFeedback"
+                ></textarea>
+
+                <!-- Buttons Section -->
+                <div style="display: flex; justify-content: space-between; gap: 1rem">
+                  <!-- Report Button -->
+                  <button
+                    @click="$store.api.submitFeedback(`${$store.api.baseUrl}/products/feedback`, {userFeedback: userFeedback, widgetMetadataType: 'feature_feedback', widgetMetadataTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, widgetMetadataUrl: window.location.href}).then(() => userFeedback = '');"
+                    onmouseout="this.style.transform='scale(1)';"
+                    onmouseover="this.style.transform='scale(1.05)';"
+                    style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: white; border: none; border-radius: 9999px; background: linear-gradient(to right, #f59e0b, #ef4444); cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 200ms"
+                  >
+                    Submit
+                  </button>
+
+                  <!-- Cancel Button -->
+                  <button
+                    @click="$store.api.closeNonMainMenu()"
+                    onmouseout="this.style.backgroundColor='#f7f7f7';"
+                    onmouseover="this.style.backgroundColor='#e2e2e2';"
+                    style="flex: 1; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; color: #333; border: 2px solid #eeeeee; border-radius: 6px; background-color: #f7f7f7; cursor: pointer; transition: background-color 200ms"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-<div aria-labelledby="modal-title" aria-modal="true" class="z-10" role="dialog"
-     x-show="$store.api.isSubmissionErrorOpen">
-    <div aria-hidden="false"
-         style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity;"></div>
-    <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto;">
-        <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50;">
-            <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 2rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);">
-
-                <!-- Error Icon -->
-                <div style="width: 4rem; height: 4rem; margin: 0 auto; background-color: #F87171; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <svg fill="none" stroke="currentColor" style="width: 2rem; height: 2rem; color: white;"
-                         viewBox="0 0 24 24">
-                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="2"></path>
-                    </svg>
-                </div>
-
-                <!-- Error Message -->
-                <div style="margin-top: 1.5rem; text-align: center;">
-                    <h3 style="font-size: 1.5rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">
-                        Error Submitting Feedback
-                    </h3>
-                    <p style="color: #6B7280; font-size: 1rem; margin-bottom: 1.5rem;">
-                        Please try again.
-                    </p>
-                </div>
-
-                <!-- Close Button -->
-                <div style="text-align: center;">
-                    <button
-                            @click="$store.api.closeErrorModal()"
-                            onmouseout="this.style.backgroundColor='#F87171'"
-                            onmouseover="this.style.backgroundColor='#EF4444'"
-                            style="padding: 0.75rem 2rem; background-color: #F87171; color: white; font-weight: 600; border-radius: 0.5rem; border: none; cursor: pointer; transition: background-color 150ms;">
-                        Close
-                    </button>
-                </div>
-            </div>
+<div
+  aria-labelledby="modal-title"
+  aria-modal="true"
+  class="z-10"
+  role="dialog"
+  x-show="$store.api.isSubmissionSuccessfulOpen"
+>
+  <div
+    aria-hidden="false"
+    style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity"
+  >
+  </div>
+  <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto">
+    <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50">
+      <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 2rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)">
+        <!-- Success Icon -->
+        <div style="width: 4rem; height: 4rem; margin: 0 auto; background-color: #34d399; border-radius: 50%; display: flex; align-items: center; justify-content: center">
+          <svg
+            fill="none"
+            stroke="currentColor"
+            style="width: 2rem; height: 2rem; color: white"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M5 13l4 4L19 7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            >
+            </path>
+          </svg>
         </div>
+
+        <!-- Success Message -->
+        <div style="margin-top: 1.5rem; text-align: center">
+          <h3 style="font-size: 1.5rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem">
+            Thank You for Your Feedback!
+          </h3>
+          <p style="color: #6b7280; font-size: 1rem; margin-bottom: 1.5rem">
+            Your feedback has been successfully submitted and will help us
+            improve our service.
+          </p>
+        </div>
+
+        <!-- Close Button -->
+        <div style="text-align: center">
+          <button
+            @click="$store.api.closeSuccessModal()"
+            onmouseout="this.style.backgroundColor='#34D399'"
+            onmouseover="this.style.backgroundColor='#10B981'"
+            style="padding: 0.75rem 2rem; background-color: #34d399; color: white; font-weight: 600; border-radius: 0.5rem; border: none; cursor: pointer; transition: background-color 150ms"
+          >
+            Close
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-<div aria-labelledby="modal-title" aria-modal="true" class="z-10" role="dialog" x-show="$store.api.isLoading">
-    <div aria-hidden="false"
-         style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity;"></div>
-    <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto;">
-        <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50;">
-            <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 2rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);">
-
-                <!-- Loading Spinner -->
-                <div style="width: 4rem; height: 4rem; margin: 0 auto; border: 0.25rem solid #4B5563; border-top-color: #34D399; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-
-                <!-- Loading Message -->
-                <div style="margin-top: 1.5rem; text-align: center;">
-                    <p style="color: #6B7280; font-size: 1rem;">
-                        Loading...
-                    </p>
-                </div>
-            </div>
+<div
+  aria-labelledby="modal-title"
+  aria-modal="true"
+  class="z-10"
+  role="dialog"
+  x-show="$store.api.isSubmissionErrorOpen"
+>
+  <div
+    aria-hidden="false"
+    style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity"
+  >
+  </div>
+  <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto">
+    <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50">
+      <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 2rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)">
+        <!-- Error Icon -->
+        <div style="width: 4rem; height: 4rem; margin: 0 auto; background-color: #f87171; border-radius: 50%; display: flex; align-items: center; justify-content: center">
+          <svg
+            fill="none"
+            stroke="currentColor"
+            style="width: 2rem; height: 2rem; color: white"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M6 18L18 6M6 6l12 12"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            >
+            </path>
+          </svg>
         </div>
+
+        <!-- Error Message -->
+        <div style="margin-top: 1.5rem; text-align: center">
+          <h3 style="font-size: 1.5rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem">
+            Error Submitting Feedback
+          </h3>
+          <p style="color: #6b7280; font-size: 1rem; margin-bottom: 1.5rem">
+            Please try again.
+          </p>
+        </div>
+
+        <!-- Close Button -->
+        <div style="text-align: center">
+          <button
+            @click="$store.api.closeErrorModal()"
+            onmouseout="this.style.backgroundColor='#F87171'"
+            onmouseover="this.style.backgroundColor='#EF4444'"
+            style="padding: 0.75rem 2rem; background-color: #f87171; color: white; font-weight: 600; border-radius: 0.5rem; border: none; cursor: pointer; transition: background-color 150ms"
+          >
+            Close
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+<div
+  aria-labelledby="modal-title"
+  aria-modal="true"
+  class="z-10"
+  role="dialog"
+  x-show="$store.api.isLoading"
+>
+  <div
+    aria-hidden="false"
+    style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); transition: opacity"
+  >
+  </div>
+  <div style="position: fixed; inset: 0; z-index: 10; width: 100vw; overflow-y: auto">
+    <div style="position: fixed; inset: 0; background-color: rgba(75, 85, 99, 0.75); display: flex; align-items: center; justify-content: center; z-index: 50">
+      <div style="position: relative; width: 91.666667%; max-width: 28rem; padding: 2rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)">
+        <!-- Loading Spinner -->
+        <div style="width: 4rem; height: 4rem; margin: 0 auto; border: 0.25rem solid #4b5563; border-top-color: #34d399; border-radius: 50%; animation: spin 1s linear infinite">
+        </div>
+
+        <!-- Loading Message -->
+        <div style="margin-top: 1.5rem; text-align: center">
+          <p style="color: #6b7280; font-size: 1rem">
+            Loading...
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
     }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 </style>

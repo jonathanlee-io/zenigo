@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import {CacheModule} from '@nestjs/cache-manager';
 import {Logger} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';

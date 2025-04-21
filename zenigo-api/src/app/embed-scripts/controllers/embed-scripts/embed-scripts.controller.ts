@@ -16,8 +16,7 @@ export class EmbedScriptsController {
   @Header('Content-Type', 'text/javascript')
   @Header('Cache-Control', 'no-cache, no-store, must-revalidate')
   async getFeedbackWidgetScript(
-    @CurrentUser()
-    {clientSubdomain}: CurrentUserDto,
+    @CurrentUser() {clientSubdomain}: CurrentUserDto,
   ) {
     return this.projectsService.getFeedbackWidgetScript(clientSubdomain);
   }

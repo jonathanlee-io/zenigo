@@ -8,26 +8,26 @@ textarea::placeholder {
 }
 
 .js-widget-overlay {
-    z-index: 10001;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 100%;
-    opacity: 0.8;
-    background-color: #000;
+  z-index: 10001;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 100%;
+  opacity: 0.8;
+  background-color: #000;
 }
 
 .js-widget-dialog {
-    position: fixed;
-    z-index: 10002;
-    background: #fff;
-    right: 0;
-    bottom: 0;
-    margin: 0 0 0 -120px;
-    width: 50px;
-    padding: 5px 5px 5px 5px;
-    border: solid 1px #333
+  position: fixed;
+  z-index: 10002;
+  background: #fff;
+  right: 0;
+  bottom: 0;
+  margin: 0 0 0 -120px;
+  width: 50px;
+  padding: 5px 5px 5px 5px;
+  border: solid 1px #333;
 }
 
 .widget-modal {

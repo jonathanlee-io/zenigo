@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
