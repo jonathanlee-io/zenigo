@@ -1,4 +1,5 @@
 import {AuthModule, JwtAuthGuard} from '@app/auth';
+import {ClientsModule} from '@app/clients/clients.module';
 import {PaymentsModule} from '@app/payments';
 import {ProjectsModule} from '@app/projects';
 import {UsersModule} from '@app/users';
@@ -11,7 +12,6 @@ import {EventEmitterModule} from '@nestjs/event-emitter';
 import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
 
 import {routes} from './app.routes';
-import {ClientsModule} from './clients/clients.module';
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
 import {IssuesModule} from './issues/issues.module';
 import {ProductsModule} from './products/products.module';

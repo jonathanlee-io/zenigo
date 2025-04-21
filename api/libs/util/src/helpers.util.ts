@@ -12,9 +12,12 @@ export class HelpersUtil {
     );
   }
 
-  static async runPrismaMigrations(connectionUri: string) {
+  static async runPrismaMigrations(
+    connectionUri: string,
+    schemaOverride: string = './schema.prisma',
+  ) {
     execSync(
-      `export DATABASE_URL=${connectionUri} && npx prisma migrate deploy`,
+      `export DATABASE_URL=${connectionUri} && npx prisma migrate deploy --schema=${schemaOverride}`,
       {
         stdio: 'inherit',
       },

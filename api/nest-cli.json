@@ -22,6 +22,15 @@
         "tsConfigPath": "libs/auth/tsconfig.lib.json"
       }
     },
+    "clients": {
+      "type": "library",
+      "root": "libs/clients",
+      "entryFile": "index",
+      "sourceRoot": "libs/clients/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/clients/tsconfig.lib.json"
+      }
+    },
     "config": {
       "type": "library",
       "root": "libs/config",

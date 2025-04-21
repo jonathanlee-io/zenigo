@@ -6,7 +6,11 @@ import {Logger} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
 import {FastifyAdapter, NestFastifyApplication} from '@nestjs/platform-fastify';
 
-export async function bootstrap(appModule: unknown, port: number) {
+export async function bootstrap(
+  appModule: unknown,
+  port: number,
+  schemaOverride?: string,
+) {
   const app = await NestFactory.create<NestFastifyApplication>(
     // @ts-expect-error within this monorepo is valid as IEntryNestModule, IEntryNestModule type is not exported from @nestjs/common
     appModule,
@@ -15,7 +19,7 @@ export async function bootstrap(appModule: unknown, port: number) {
   const databaseConfig = app.get<DatabaseConfig>(DatabaseConfig);
   const appConfig = app.get<ApplicationConfig>(ApplicationConfig);
 
-  await HelpersUtil.runPrismaMigrations(databaseConfig.url);
+  await HelpersUtil.runPrismaMigrations(databaseConfig.url, schemaOverride);
 
   initApp(app);
 

@@ -1,5 +1,4 @@
 import {AuthModule, JwtAuthGuard} from '@app/auth';
-import {ProjectsModule} from '@app/projects';
 import {ConfigifyModule} from '@jdevel/configify';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
@@ -30,7 +29,6 @@ import {routes} from './app.routes';
       isGlobal: true,
     }),
     AuthModule,
-    ProjectsModule,
   ],
   providers: [
     {

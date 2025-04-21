@@ -1,6 +1,6 @@
+import {POSTSuccessDto} from '@app/dto';
 import {Injectable, Logger} from '@nestjs/common';
 
-import {POSTSuccessDto} from '../../../../src/lib/dto/POSTSuccess.dto';
 import {UsersRepositoryService} from '../../repositories/users-repository/users-repository.service';
 
 @Injectable()

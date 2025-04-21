@@ -1,9 +1,9 @@
-import {PaymentsModule} from '@app/payments/payments.module';
-import {ProjectsModule} from '@app/projects/projects.module';
-import {UsersModule} from '@app/users/users.module';
+import {ClientsModule} from '@app/clients';
+import {PaymentsModule} from '@app/payments';
+import {ProjectsModule} from '@app/projects';
+import {UsersModule} from '@app/users';
 import {Routes} from '@nestjs/core';
 
-import {ClientsModule} from './clients/clients.module';
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
 import {IssuesModule} from './issues/issues.module';
 import {ProductsModule} from './products/products.module';

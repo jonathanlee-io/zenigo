@@ -1,7 +1,7 @@
+import {PrismaService} from '@app/database';
 import {UsersRepositoryService} from '@app/users/repositories/users-repository/users-repository.service';
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 
-import {PrismaService} from '../../../../src/lib/prisma/services/prisma.service';
 import {CreateProjectDto} from '../../dto/CreateProject.dto';
 import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
 

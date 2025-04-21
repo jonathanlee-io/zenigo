@@ -1,15 +1,14 @@
 import {PrismaModule} from '@app/database';
-import {PaymentsModule} from '@app/payments/payments.module';
-import {UsersModule} from '@app/users/users.module';
+import {PaymentsModule} from '@app/payments';
+import {UsersModule} from '@app/users';
 import {Logger, Module} from '@nestjs/common';
 
-import {EventsModule} from '../events/events.module';
 import {ClientsController} from './controllers/clients/clients.controller';
 import {ClientsRepositoryService} from './repositories/clients-repository/clients-repository.service';
 import {ClientsService} from './services/clients/clients.service';
 
 @Module({
-  imports: [PrismaModule, UsersModule, PaymentsModule, EventsModule],
+  imports: [PrismaModule, UsersModule, PaymentsModule],
   controllers: [ClientsController],
   providers: [
     {

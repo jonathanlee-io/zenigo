@@ -5,6 +5,6 @@ import {IsDefined, IsString} from 'class-validator';
 export class DatabaseConfig {
   @IsDefined()
   @IsString()
-  @Value('DATABASE_URL')
+  @Value('ZENIGO_API_DATABASE_URL')
   url: string;
 }

@@ -25,6 +25,12 @@
       "@app/auth/*": [
         "libs/auth/src/*"
       ],
+      "@app/clients": [
+        "libs/clients/src"
+      ],
+      "@app/clients/*": [
+        "libs/clients/src/*"
+      ],
       "@app/config": [
         "libs/config/src"
       ],

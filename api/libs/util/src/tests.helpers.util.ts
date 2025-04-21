@@ -6,7 +6,6 @@ import {
 import {Client} from 'pg';
 
 import {HelpersUtil} from './helpers.util';
-import {CreateClientDto} from '../../../apps/zenigo-api/src/app/clients/dto/CreateClient.dto';
 
 export class TestHelpersUtil {
   static async initializePostgresTestContainer() {
@@ -49,7 +48,7 @@ export class TestHelpersUtil {
     isBugReportsEnabled?: boolean;
     isFeatureRequestsEnabled?: boolean;
     isFeatureFeedbackEnabled?: boolean;
-  }): CreateClientDto {
+  }) {
     return {
       clientDisplayName:
         overrides?.clientDisplayName ?? faker.internet.displayName(),
