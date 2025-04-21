@@ -1,5 +1,5 @@
 import {ApplicationConfig} from '@app/config/Application.config';
-import {DatabaseConfig} from '@app/config/Database.config';
+import {DatabaseConfig, DatabaseUrlKeys} from '@app/config/Database.config';
 import {initApp} from '@app/init/init-app';
 import {HelpersUtil} from '@app/util';
 import {Logger} from '@nestjs/common';
@@ -9,8 +9,8 @@ import {FastifyAdapter, NestFastifyApplication} from '@nestjs/platform-fastify';
 export async function bootstrap(
   appModule: unknown,
   port: number,
-  migrationUrlPropertyKey: string,
-  schemaOverride?: string,
+  migrationUrlPropertyKey: DatabaseUrlKeys,
+  schemaOverride: string,
 ) {
   const app = await NestFactory.create<NestFastifyApplication>(
     // @ts-expect-error within this monorepo is valid as IEntryNestModule, IEntryNestModule type is not exported from @nestjs/common

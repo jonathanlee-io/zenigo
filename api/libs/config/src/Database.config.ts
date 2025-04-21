@@ -1,6 +1,8 @@
 import {Configuration, Value} from '@jdevel/configify';
 import {IsDefined, IsString} from 'class-validator';
 
+export type DatabaseUrlKeys = 'featureFlagUrl' | 'feedbackUrl';
+
 @Configuration()
 export class DatabaseConfig {
   @IsDefined()
