@@ -25,7 +25,10 @@
     "rollout",
     "deployment",
     "SaaS",
-    "software as a service"
+    "software as a service",
+    "feedback",
+    "user feedback",
+    "customer feedback"
   ],
   "license": "MIT",
   "author": "Jonathan Lee <jonathan.lee.devel@gmail.com>",
