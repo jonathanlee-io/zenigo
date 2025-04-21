@@ -1,7 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import {INestApplication} from '@nestjs/common';
+import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
-import { EchonexusApiModule } from './../src/echonexus-api.module';
+
+import {EchonexusApiModule} from './../src/echonexus-api.module';
 
 describe('EchonexusApiController (e2e)', () => {
   let app: INestApplication;
