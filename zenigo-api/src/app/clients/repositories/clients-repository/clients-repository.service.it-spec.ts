@@ -10,10 +10,7 @@ import {Client} from 'pg';
 import {ClientsRepositoryService} from './clients-repository.service';
 import {jestIntegrationTestTimeout} from '../../../../lib/constants/testing/integration-testing.constants';
 import {PrismaModule} from '../../../../lib/prisma/prisma.module';
-import {
-  initializePostgresTestContainer,
-  tearDownPostgresTestContainer,
-} from '../../../../lib/util/tests.helpers.util';
+import {TestHelpersUtil} from '../../../../lib/util/tests.helpers.util';
 import {PaymentsModule} from '../../../payments/payments.module';
 import {PaymentsService} from '../../../payments/services/payments/payments.service';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
@@ -30,13 +27,16 @@ describe('ClientsRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await initializePostgresTestContainer();
+      await TestHelpersUtil.initializePostgresTestContainer();
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
 
   afterAll(async () => {
-    await tearDownPostgresTestContainer(postgresContainer, postgresClient);
+    await TestHelpersUtil.tearDownPostgresTestContainer(
+      postgresContainer,
+      postgresClient,
+    );
   });
 
   beforeEach(async () => {

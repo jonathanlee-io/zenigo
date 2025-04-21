@@ -7,10 +7,7 @@ import {Client} from 'pg';
 import {IssuesRepositoryService} from './issues-repository.service';
 import {jestIntegrationTestTimeout} from '../../../../lib/constants/testing/integration-testing.constants';
 import {PrismaModule} from '../../../../lib/prisma/prisma.module';
-import {
-  initializePostgresTestContainer,
-  tearDownPostgresTestContainer,
-} from '../../../../lib/util/tests.helpers.util';
+import {TestHelpersUtil} from '../../../../lib/util/tests.helpers.util';
 
 describe('IssuesRepositoryService', () => {
   jest.setTimeout(jestIntegrationTestTimeout);
@@ -21,13 +18,16 @@ describe('IssuesRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await initializePostgresTestContainer();
+      await TestHelpersUtil.initializePostgresTestContainer();
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
 
   afterAll(async () => {
-    await tearDownPostgresTestContainer(postgresContainer, postgresClient);
+    await TestHelpersUtil.tearDownPostgresTestContainer(
+      postgresContainer,
+      postgresClient,
+    );
   });
 
   beforeEach(async () => {

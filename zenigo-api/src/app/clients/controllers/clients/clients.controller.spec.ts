@@ -3,10 +3,7 @@ import {Mocked, TestBed} from '@suites/unit';
 
 import {ClientsController} from './clients.controller';
 import {CurrentUserDto} from '../../../../lib/auth/dto/CurrentUserDto';
-import {
-  createMockCreateClientDto,
-  createMockRequestingUser,
-} from '../../../../lib/util/tests.helpers.util';
+import {TestHelpersUtil} from '../../../../lib/util/tests.helpers.util';
 import {ClientsService} from '../../services/clients/clients.service';
 
 describe('ClientsController', () => {
@@ -26,9 +23,9 @@ describe('ClientsController', () => {
   });
 
   it('should register new client', async () => {
-    const mockUser = createMockRequestingUser();
+    const mockUser = TestHelpersUtil.createMockRequestingUser();
 
-    const mockCreateClientDto = createMockCreateClientDto();
+    const mockCreateClientDto = TestHelpersUtil.createMockCreateClientDto();
 
     mockClientsService.createClient.mockResolvedValue({
       isSuccessful: true,

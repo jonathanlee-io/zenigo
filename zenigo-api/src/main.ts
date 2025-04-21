@@ -6,7 +6,7 @@ import {AppModule} from './app/app.module';
 import {ApplicationConfig} from './lib/config/Application.config';
 import {DatabaseConfig} from './lib/config/Database.config';
 import {initApp} from './lib/init/init-app';
-import {runPrismaMigrations} from './lib/util/helpers.util';
+import {HelpersUtil} from './lib/util/helpers.util';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -16,7 +16,7 @@ async function bootstrap() {
   const databaseConfig = app.get<DatabaseConfig>(DatabaseConfig);
   const appConfig = app.get<ApplicationConfig>(ApplicationConfig);
 
-  await runPrismaMigrations(databaseConfig.url);
+  await HelpersUtil.runPrismaMigrations(databaseConfig.url);
 
   initApp(app);
 

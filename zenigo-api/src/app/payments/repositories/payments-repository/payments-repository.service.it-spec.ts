@@ -5,14 +5,11 @@ import {Logger} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
+import {TestHelpersUtil} from 'src/lib/util/tests.helpers.util';
 
 import {PaymentsRepositoryService} from './payments-repository.service';
 import {jestIntegrationTestTimeout} from '../../../../lib/constants/testing/integration-testing.constants';
 import {PrismaModule} from '../../../../lib/prisma/prisma.module';
-import {
-  initializePostgresTestContainer,
-  tearDownPostgresTestContainer,
-} from '../../../../lib/util/tests.helpers.util';
 import {PaymentsModule} from '../../payments.module';
 
 describe('PaymentsRepositoryService', () => {
@@ -24,13 +21,16 @@ describe('PaymentsRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await initializePostgresTestContainer();
+      await TestHelpersUtil.initializePostgresTestContainer();
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
 
   afterAll(async () => {
-    await tearDownPostgresTestContainer(postgresContainer, postgresClient);
+    await TestHelpersUtil.tearDownPostgresTestContainer(
+      postgresContainer,
+      postgresClient,
+    );
   });
 
   beforeEach(async () => {

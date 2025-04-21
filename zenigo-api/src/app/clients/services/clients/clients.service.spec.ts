@@ -7,10 +7,7 @@ import {
 import {Mocked, TestBed} from '@suites/unit';
 
 import {ClientsService} from './clients.service';
-import {
-  createMockCreateClientDto,
-  createMockRequestingUser,
-} from '../../../../lib/util/tests.helpers.util';
+import {TestHelpersUtil} from '../../../../lib/util/tests.helpers.util';
 import {CreateClientDto} from '../../dto/CreateClient.dto';
 import {ClientsRepositoryService} from '../../repositories/clients-repository/clients-repository.service';
 
@@ -35,8 +32,9 @@ describe('ClientsService', () => {
   });
 
   it('should throw bad request exception if client subdomain is not available', async () => {
-    const mockUser = createMockRequestingUser();
-    const mockCreateClientDto: CreateClientDto = createMockCreateClientDto();
+    const mockUser = TestHelpersUtil.createMockRequestingUser();
+    const mockCreateClientDto: CreateClientDto =
+      TestHelpersUtil.createMockCreateClientDto();
 
     mockClientsRepository.isExistsSubdomain.mockResolvedValue(true);
     mockClientsRepository.getClientsWhereUserInvolved.mockResolvedValue([]);
@@ -47,8 +45,8 @@ describe('ClientsService', () => {
   });
 
   it('should throw internal server error if any element fails to create', async () => {
-    const mockUser = createMockRequestingUser();
-    const mockCreateClientDto = createMockCreateClientDto();
+    const mockUser = TestHelpersUtil.createMockRequestingUser();
+    const mockCreateClientDto = TestHelpersUtil.createMockCreateClientDto();
 
     mockClientsRepository.isExistsSubdomain.mockResolvedValue(false);
     mockClientsRepository.getClientsWhereUserInvolved.mockResolvedValue([]);
@@ -65,8 +63,8 @@ describe('ClientsService', () => {
   });
 
   it('should create new client', async () => {
-    const mockUser = createMockRequestingUser();
-    const mockCreateClientDto = createMockCreateClientDto();
+    const mockUser = TestHelpersUtil.createMockRequestingUser();
+    const mockCreateClientDto = TestHelpersUtil.createMockCreateClientDto();
     const clientId = faker.string.uuid();
 
     mockClientsRepository.getClientsWhereUserInvolved.mockResolvedValue([]);

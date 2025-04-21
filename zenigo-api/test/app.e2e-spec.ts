@@ -11,12 +11,7 @@ import * as request from 'supertest';
 import {AppModule} from '../src/app/app.module';
 import {e2eTestTimeout} from '../src/lib/constants/testing/integration-testing.constants';
 import {initApp} from '../src/lib/init/init-app';
-import {
-  createMockCreateClientDto,
-  createMockRequestingUser,
-  initializePostgresTestContainer,
-  tearDownPostgresTestContainer,
-} from '../src/lib/util/tests.helpers.util';
+import {TestHelpersUtil} from '../src/lib/util/tests.helpers.util';
 
 describe('AppController (e2e)', () => {
   jest.setTimeout(e2eTestTimeout);
@@ -27,17 +22,20 @@ describe('AppController (e2e)', () => {
   let accessToken: string;
 
   const testJwtSecret = faker.string.uuid();
-  const mockUser = createMockRequestingUser();
+  const mockUser = TestHelpersUtil.createMockRequestingUser();
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await initializePostgresTestContainer();
+      await TestHelpersUtil.initializePostgresTestContainer();
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
 
   afterAll(async () => {
-    await tearDownPostgresTestContainer(postgresContainer, postgresClient);
+    await TestHelpersUtil.tearDownPostgresTestContainer(
+      postgresContainer,
+      postgresClient,
+    );
   });
 
   beforeEach(async () => {
@@ -67,7 +65,7 @@ describe('AppController (e2e)', () => {
   });
 
   it('/v1/clients/create [POST]', async () => {
-    const payload = createMockCreateClientDto();
+    const payload = TestHelpersUtil.createMockCreateClientDto();
 
     await request(app.getHttpServer())
       .post('/v1/users/authenticated/check-in')
