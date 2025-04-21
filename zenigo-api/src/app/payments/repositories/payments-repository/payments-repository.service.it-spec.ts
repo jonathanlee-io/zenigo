@@ -1,15 +1,13 @@
-import process from 'node:process';
-
 import {CacheModule} from '@nestjs/cache-manager';
 import {Logger} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
-import {TestHelpersUtil} from 'src/lib/util/tests.helpers.util';
 
 import {PaymentsRepositoryService} from './payments-repository.service';
 import {jestIntegrationTestTimeout} from '../../../../lib/constants/testing/integration-testing.constants';
 import {PrismaModule} from '../../../../lib/prisma/prisma.module';
+import {TestHelpersUtil} from '../../../../lib/util/tests.helpers.util';
 import {PaymentsModule} from '../../payments.module';
 
 describe('PaymentsRepositoryService', () => {
