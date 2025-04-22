@@ -26,15 +26,9 @@
 *   Audit Logs
 *   Role-Based Access Control (RBAC)
 
-## Getting Started
+## Tech Stack
+This project is a NestJS / Angular project.
 
-*(Adjust based on your setup - Self-hosting vs. Cloud)*
-
-**Self-Hosting:**
-*(Add instructions for cloning, building, and running the project, e.g., using Docker)*
-
-```bash
-git clone https://github.com/jonathanlee-io/zenigo.git
-cd zenigo
-docker-compose up -d
-```
+A monorepo of monorepos.
+API is NestJS microservices with an API Gateway, all sharing code using NestJS monorepo functionality.
+UI is Angular Nx Monorepo, all UI applications share code using Nx monorepo functionality.
