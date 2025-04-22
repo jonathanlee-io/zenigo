@@ -1,4 +1,3 @@
-import {ProjectsService} from '@app/projects/services/projects/projects.service';
 import {
   BadRequestException,
   Injectable,
@@ -12,7 +11,7 @@ import {ProductsRepositoryService} from '../../repositories/products-repository/
 export class ProductsService {
   constructor(
     private readonly productsRepository: ProductsRepositoryService,
-    private readonly projectsService: ProjectsService,
+    // private readonly projectsService: ProjectsService,
   ) {}
 
   async submitProductFeedback(productFeedback: {
@@ -24,9 +23,10 @@ export class ProductsService {
     ip: string;
     submittedAt: string;
   }) {
-    const [project] = await this.projectsService.getProjectFromSubdomain(
-      productFeedback.clientSubdomain,
-    );
+    // const [project] = await this.projectsService.getProjectFromSubdomain(
+    //   productFeedback.clientSubdomain,
+    // );
+    const [project] = [undefined];
     if (!project) {
       throw new NotFoundException(
         `Project with subdomain ${productFeedback.clientSubdomain} not found`,
@@ -58,10 +58,11 @@ export class ProductsService {
     limit: number,
     offset: number,
   ) {
-    const project = await this.projectsService.getProjectById(
-      requestingUserId,
-      projectId,
-    ); // Will throw a forbidden exception
+    // const project = await this.projectsService.getProjectById(
+    // requestingUserId,
+    // projectId,
+    // ); // Will throw a forbidden exception
+    const project = undefined;
     if (!project) {
       throw new NotFoundException(`Project with id ${projectId} not found`);
     }
@@ -80,7 +81,8 @@ export class ProductsService {
 
   async getProductConfig(clientSubdomain: string) {
     const [project] =
-      await this.projectsService.getProjectFromSubdomain(clientSubdomain);
+      // await this.projectsService.getProjectFromSubdomain(clientSubdomain);
+      [undefined];
     if (!project) {
       throw new NotFoundException(
         `Product with subdomain ${clientSubdomain} not found`,

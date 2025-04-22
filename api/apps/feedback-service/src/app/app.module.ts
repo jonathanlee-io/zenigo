@@ -2,7 +2,6 @@ import {AuthModule} from '@app/auth';
 import {ClientsModule} from '@app/clients/clients.module';
 import {PaymentsModule} from '@app/payments';
 import {ProjectsModule} from '@app/projects';
-import {UsersModule} from '@app/users';
 import {ConfigifyModule} from '@jdevel/configify';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
@@ -38,7 +37,7 @@ import {ProductsModule} from './products/products.module';
     AuthModule,
     IssuesModule,
     ClientsModule,
-    UsersModule,
+    // UsersModule,
     ProjectsModule,
     ProductsModule,
     PaymentsModule,

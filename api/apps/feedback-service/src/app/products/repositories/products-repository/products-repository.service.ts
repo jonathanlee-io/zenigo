@@ -1,9 +1,9 @@
-import {PrismaService} from '@app/database';
-import {Injectable} from '@nestjs/common';
+import {PRISMA_SERVICE, PrismaService} from '@app/database';
+import {Inject, Injectable} from '@nestjs/common';
 
 @Injectable()
 export class ProductsRepositoryService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async createProductFeedback(
     productId: string,

@@ -5,9 +5,14 @@ import {Logger, Module} from '@nestjs/common';
 import {ProductsController} from './controllers/products/products.controller';
 import {ProductsRepositoryService} from './repositories/products-repository/products-repository.service';
 import {ProductsService} from './services/products/products.service';
+import {PrismaClient as FeedbackPrismaClient} from '../../../generated/client';
 
 @Module({
-  imports: [PrismaModule, ProjectsModule],
+  imports: [
+    // @ts-expect-error this appears to work
+    PrismaModule.register({client: FeedbackPrismaClient}),
+    ProjectsModule,
+  ],
   controllers: [ProductsController],
   providers: [
     {

@@ -1,18 +1,18 @@
-import {PrismaService} from '@app/database';
-import {Injectable} from '@nestjs/common';
+import {PRISMA_SERVICE, PrismaService} from '@app/database';
+import {Inject, Injectable} from '@nestjs/common';
 
 @Injectable()
 export class UsersRepositoryService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async findBySupabaseId(supabaseId: string) {
-    return this.prismaService.user.findUnique({
+    return this.prisma.user.findUnique({
       where: {supabaseUserId: supabaseId},
     });
   }
 
   async findBySupabaseIdOrEmail(supabaseId: string, email: string) {
-    return this.prismaService.user.findFirst({
+    return this.prisma.user.findFirst({
       where: {
         OR: [{supabaseUserId: supabaseId}, {email: email}],
       },
@@ -23,7 +23,7 @@ export class UsersRepositoryService {
     requestingUserId: string,
     requestingUserEmail: string,
   ) {
-    return this.prismaService.user.create({
+    return this.prisma.user.create({
       data: {
         email: requestingUserEmail,
         displayName: requestingUserEmail,
@@ -33,7 +33,7 @@ export class UsersRepositoryService {
   }
 
   async findByEmail(email: string) {
-    return this.prismaService.user.findUnique({
+    return this.prisma.user.findUnique({
       where: {email},
     });
   }
@@ -42,7 +42,7 @@ export class UsersRepositoryService {
     requestingUserId: string,
     requestingUserEmail: string,
   ) {
-    return this.prismaService.user.updateMany({
+    return this.prisma.user.updateMany({
       where: {email: requestingUserEmail},
       data: {supabaseUserId: requestingUserId},
     });

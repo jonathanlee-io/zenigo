@@ -1,7 +1,6 @@
 import {ClientsModule} from '@app/clients';
 import {PaymentsModule} from '@app/payments';
 import {ProjectsModule} from '@app/projects';
-import {UsersModule} from '@app/users';
 import {Routes} from '@nestjs/core';
 
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
@@ -13,10 +12,10 @@ export const routes: Routes = [
     path: 'scripts',
     module: EmbedScriptsModule,
   },
-  {
-    path: 'users',
-    module: UsersModule,
-  },
+  // {
+  //   path: 'users',
+  //   module: UsersModule,
+  // },
   {
     path: 'clients',
     module: ClientsModule,
