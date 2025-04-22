@@ -94,6 +94,15 @@
         "tsConfigPath": "apps/feedback-service/tsconfig.app.json"
       }
     },
+    "identity-service": {
+      "type": "application",
+      "root": "apps/identity-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/identity-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/identity-service/tsconfig.app.json"
+      }
+    },
     "init": {
       "type": "library",
       "root": "libs/init",
@@ -110,6 +119,15 @@
       "sourceRoot": "libs/payments/src",
       "compilerOptions": {
         "tsConfigPath": "libs/payments/tsconfig.lib.json"
+      }
+    },
+    "payments-service": {
+      "type": "application",
+      "root": "apps/payments-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/payments-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/payments-service/tsconfig.app.json"
       }
     },
     "projects": {
