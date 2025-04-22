@@ -1,9 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { PaymentsServiceService } from './payments-service.service';
+import {Controller, Get} from '@nestjs/common';
+
+import {PaymentsServiceService} from './payments-service.service';
 
 @Controller()
 export class PaymentsServiceController {
-  constructor(private readonly paymentsServiceService: PaymentsServiceService) {}
+  constructor(
+    private readonly paymentsServiceService: PaymentsServiceService,
+  ) {}
 
   @Get()
   getHello(): string {

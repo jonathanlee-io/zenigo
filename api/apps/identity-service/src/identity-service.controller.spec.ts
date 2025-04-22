@@ -1,6 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { IdentityServiceController } from './identity-service.controller';
-import { IdentityServiceService } from './identity-service.service';
+import {Test, TestingModule} from '@nestjs/testing';
+
+import {IdentityServiceController} from './identity-service.controller';
+import {IdentityServiceService} from './identity-service.service';
 
 describe('IdentityServiceController', () => {
   let identityServiceController: IdentityServiceController;
@@ -11,7 +12,9 @@ describe('IdentityServiceController', () => {
       providers: [IdentityServiceService],
     }).compile();
 
-    identityServiceController = app.get<IdentityServiceController>(IdentityServiceController);
+    identityServiceController = app.get<IdentityServiceController>(
+      IdentityServiceController,
+    );
   });
 
   describe('root', () => {
