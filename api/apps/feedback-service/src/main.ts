@@ -3,7 +3,7 @@ import {configDotenv} from 'dotenv';
 
 import {AppModule} from './app/app.module';
 
-configDotenv({path: '../.env'});
+configDotenv();
 
 bootstrapMicroservice(
   AppModule,
