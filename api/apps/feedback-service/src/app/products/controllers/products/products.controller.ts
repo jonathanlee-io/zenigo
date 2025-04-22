@@ -1,7 +1,16 @@
 import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
 import {IdParamDto} from '@app/validation';
-import {Body, Controller, Get, Ip, Param, Post, Query} from '@nestjs/common';
-import {MessagePattern} from '@nestjs/microservices';
+import {
+  Body,
+  Controller,
+  Get,
+  Ip,
+  Logger,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
+import {MessagePattern, Payload} from '@nestjs/microservices';
 import {ApiTags} from '@nestjs/swagger';
 import {DateTime} from 'luxon';
 
@@ -14,12 +23,14 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @MessagePattern('GET_FEATURE_FLAGS')
-  async getFeatureFlags() {
-    return {
-      isBugReportsEnabled: true,
-      isFeatureRequestsEnabled: true,
-      isFeatureFeedbackEnabled: true,
-    };
+  async getFeatureFlags(@Payload() payload: any) {
+    Logger.log(payload);
+    return this.productsService.getProductFeedbackForProjectId(
+      '12345',
+      '12345',
+      10,
+      0,
+    );
   }
 
   @IsPublic()
