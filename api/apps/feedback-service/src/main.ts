@@ -1,10 +1,14 @@
-import {bootstrap} from '@app/init';
+import {bootstrapMicroservice} from '@app/init';
+import {configDotenv} from 'dotenv';
 
 import {AppModule} from './app/app.module';
 
-bootstrap(
+configDotenv({path: '../.env'});
+
+bootstrapMicroservice(
   AppModule,
-  8001,
+  [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
+  'FEEDBACK',
   'feedbackUrl',
   './apps/feedback-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));

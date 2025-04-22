@@ -13,6 +13,15 @@
   "monorepo": true,
   "root": "apps/feature-flag-service",
   "projects": {
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
     "auth": {
       "type": "library",
       "root": "libs/auth",
@@ -65,6 +74,15 @@
       "sourceRoot": "libs/dto/src",
       "compilerOptions": {
         "tsConfigPath": "libs/dto/tsconfig.lib.json"
+      }
+    },
+    "feature-flag-service": {
+      "type": "application",
+      "root": "apps/feature-flag-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/feature-flag-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/feature-flag-service/tsconfig.app.json"
       }
     },
     "feedback-service": {
@@ -137,15 +155,6 @@
       "sourceRoot": "libs/validation/src",
       "compilerOptions": {
         "tsConfigPath": "libs/validation/tsconfig.lib.json"
-      }
-    },
-    "feature-flag-service": {
-      "type": "application",
-      "root": "apps/feature-flag-service",
-      "entryFile": "main",
-      "sourceRoot": "apps/feature-flag-service/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/feature-flag-service/tsconfig.app.json"
       }
     }
   }

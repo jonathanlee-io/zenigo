@@ -1,4 +1,4 @@
-import {AuthModule, JwtAuthGuard} from '@app/auth';
+import {AuthModule} from '@app/auth';
 import {ClientsModule} from '@app/clients/clients.module';
 import {PaymentsModule} from '@app/payments';
 import {ProjectsModule} from '@app/projects';
@@ -7,9 +7,9 @@ import {ConfigifyModule} from '@jdevel/configify';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
-import {APP_GUARD, RouterModule} from '@nestjs/core';
+import {RouterModule} from '@nestjs/core';
 import {EventEmitterModule} from '@nestjs/event-emitter';
-import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
+import {ThrottlerModule} from '@nestjs/throttler';
 
 import {routes} from './app.routes';
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
@@ -45,14 +45,14 @@ import {ProductsModule} from './products/products.module';
     EmbedScriptsModule,
   ],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard,
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: ThrottlerGuard,
+    // },
   ],
 })
 export class AppModule {}

@@ -1,3 +1,3 @@
 export * from './init.module';
-export * from './boostrap';
+export * from './micro';
 export * from './init-app';

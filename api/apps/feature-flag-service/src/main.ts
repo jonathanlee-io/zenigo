@@ -1,10 +1,14 @@
-import {bootstrap} from '@app/init';
+import {bootstrapMicroservice} from '@app/init';
+import {configDotenv} from 'dotenv';
 
 import {AppModule} from './app/app.module';
 
-bootstrap(
+configDotenv();
+
+bootstrapMicroservice(
   AppModule,
-  8000,
+  [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
+  process.env.RABBIT_MQ_QUEUE_NAME,
   'featureFlagUrl',
   './apps/feature-flag-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));
