@@ -1,16 +1,18 @@
-// prisma.module.ts - In your shared database library
+import {
+  DynamicModule,
+  Logger,
+  Module,
+  OnModuleInit,
+  Provider,
+} from '@nestjs/common';
 
-import {DynamicModule, Logger, OnModuleInit, Provider} from '@nestjs/common';
-import {PrismaClient} from '@prisma/client'; // Import a base type if needed, or use 'any'/'unknown' carefully
-
-// Define an interface for the options
 export interface PrismaModuleOptions {
-  client: new (...args: any[]) => PrismaClient & OnModuleInit; // Type for a PrismaClient constructor
+  client: new (...args: any[]) => any;
 }
 
-// Define an injection token for the service itself
 export const PRISMA_SERVICE = 'PRISMA_SERVICE';
 
+@Module({})
 export class PrismaModule {
   static register(options: PrismaModuleOptions): DynamicModule {
     const prismaServiceProvider: Provider = {
@@ -25,14 +27,9 @@ export class PrismaModule {
               await super.onModuleInit();
             }
             await this.$connect();
-            Logger.log(`Prisma connected for client: ${options.client.name}`);
+            Logger.log('Prisma connected for client');
           }
         }
-
-        // Manually trigger onModuleInit if not handled by Nest lifecycle for dynamically created classes
-        // However, NestJS dependency injection usually handles this when the factory resolves.
-        // If you face issues with $connect not being called, uncomment the next line:
-        // await instance.onModuleInit();
         return new DynamicPrismaService();
       },
     };

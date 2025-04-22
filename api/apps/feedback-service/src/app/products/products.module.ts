@@ -9,7 +9,6 @@ import {PrismaClient as FeedbackPrismaClient} from '../../../generated/client';
 
 @Module({
   imports: [
-    // @ts-expect-error this appears to work
     PrismaModule.register({client: FeedbackPrismaClient}),
     ProjectsModule,
   ],
