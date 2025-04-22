@@ -1,4 +1,5 @@
 import {AuthModule, JwtAuthGuard} from '@app/auth';
+import {PrismaModule} from '@app/database';
 import {ConfigifyModule} from '@jdevel/configify';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
@@ -8,9 +9,12 @@ import {EventEmitterModule} from '@nestjs/event-emitter';
 import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
 
 import {routes} from './app.routes';
+import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
 
 @Module({
   imports: [
+    // TODO: Move to individual modules
+    PrismaModule.register({client: FeatureFlagPrismaClient}),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
