@@ -1,6 +1,5 @@
-import {ApplicationConfig} from '@app/config/Application.config';
-import {DatabaseConfig, DatabaseUrlKeys} from '@app/config/Database.config';
-import {initApp} from '@app/init/init-app';
+import {ApplicationConfig, DatabaseConfig, DatabaseUrlKeys} from '@app/config';
+import {initApp} from '@app/init';
 import {HelpersUtil} from '@app/util';
 import {Logger} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
