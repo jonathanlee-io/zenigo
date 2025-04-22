@@ -8,7 +8,7 @@ configDotenv();
 bootstrapMicroservice(
   AppModule,
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  process.env.RABBIT_MQ_QUEUE_NAME,
+  'FEATURE_FLAGS',
   'featureFlagUrl',
   './apps/feature-flag-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));
