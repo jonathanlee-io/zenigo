@@ -1,5 +1,6 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { EmbedScriptsController } from './embed-scripts.controller';
+import {Test, TestingModule} from '@nestjs/testing';
+
+import {EmbedScriptsController} from './embed-scripts.controller';
 
 describe('EmbedScriptsController', () => {
   let controller: EmbedScriptsController;
