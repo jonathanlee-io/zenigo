@@ -1,8 +1,6 @@
 import {AdminConfig} from '@app/config/AdminConfig';
 import {reservedSubdomains} from '@app/constants';
 import {POSTSuccessDto} from '@app/dto';
-import {PaymentsService} from '@app/payments/services/payments/payments.service';
-import {UsersRepositoryService} from '@app/users/repositories/users-repository/users-repository.service';
 import {
   BadRequestException,
   ForbiddenException,
@@ -13,6 +11,8 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 
+import {PaymentsService} from '../../../../../payments-service/src/services/payments/payments.service';
+import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 import {CreateClientDto} from '../../dto/CreateClient.dto';
 import {IsSubdomainAvailableDto} from '../../dto/IsSubdomainAvailable.dto';
 import {ClientsRepositoryService} from '../../repositories/clients-repository/clients-repository.service';

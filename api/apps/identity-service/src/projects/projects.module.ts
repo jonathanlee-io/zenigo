@@ -1,7 +1,8 @@
-import {ClientsModule} from '@app/clients';
 import {PrismaModule} from '@app/database';
-import {UsersModule} from '@app/users';
 import {Logger, Module} from '@nestjs/common';
+
+import {ClientsModule} from '../clients/clients.module';
+import {UsersModule} from '../users/users.module';
 
 @Module({
   imports: [PrismaModule, ClientsModule, UsersModule],

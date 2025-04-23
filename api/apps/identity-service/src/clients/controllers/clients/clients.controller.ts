@@ -1,5 +1,4 @@
-import {CurrentUser} from '@app/auth/decorators';
-import {CurrentUserDto} from '@app/auth/dto';
+import {CurrentUser, CurrentUserDto} from '@app/auth';
 import {IdParamDto} from '@app/validation';
 import {
   Body,

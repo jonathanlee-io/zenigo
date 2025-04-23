@@ -1,6 +1,7 @@
 import {PrismaService} from '@app/database';
-import {UsersRepositoryService} from '@app/users/repositories/users-repository/users-repository.service';
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
+
+import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 
 @Injectable()
 export class ClientsRepositoryService {

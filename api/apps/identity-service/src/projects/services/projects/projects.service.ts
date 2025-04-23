@@ -1,7 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-import {ClientsService} from '@app/clients/services/clients/clients.service';
 import {ApplicationConfig} from '@app/config/Application.config';
 import {
   BadRequestException,
@@ -10,6 +9,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import {ClientsService} from '../../../clients/services/clients/clients.service';
 import {CreateProjectDto} from '../../dto/CreateProject.dto';
 import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
 import {ProjectsRepositoryService} from '../../repositories/projects-repository/projects-repository.service';

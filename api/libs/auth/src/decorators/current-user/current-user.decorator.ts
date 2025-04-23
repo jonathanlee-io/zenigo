@@ -1,6 +1,5 @@
+import {CurrentUserDto} from '@app/auth';
 import {createParamDecorator, ExecutionContext} from '@nestjs/common';
-
-import {CurrentUserDto} from '../../dto/CurrentUserDto';
 
 export const CurrentUser = createParamDecorator(
   (_data: unknown, context: ExecutionContext) => {

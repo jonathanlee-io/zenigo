@@ -1,9 +1,5 @@
 import {jestIntegrationTestTimeout} from '@app/constants';
 import {PrismaModule} from '@app/database';
-import {PaymentsModule} from '@app/payments/payments.module';
-import {PaymentsService} from '@app/payments/services/payments/payments.service';
-import {UsersRepositoryService} from '@app/users/repositories/users-repository/users-repository.service';
-import {UsersModule} from '@app/users/users.module';
 import {TestHelpersUtil} from '@app/util';
 import {faker} from '@faker-js/faker/locale/en';
 import {CacheModule} from '@nestjs/cache-manager';
@@ -13,6 +9,10 @@ import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
 import {ClientsRepositoryService} from './clients-repository.service';
+import {PaymentsModule} from '../../../../../payments-service/src/payments.module';
+import {PaymentsService} from '../../../../../payments-service/src/services/payments/payments.service';
+import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
+import {UsersModule} from '../../../users/users.module';
 
 describe('ClientsRepositoryService', () => {
   jest.setTimeout(jestIntegrationTestTimeout);

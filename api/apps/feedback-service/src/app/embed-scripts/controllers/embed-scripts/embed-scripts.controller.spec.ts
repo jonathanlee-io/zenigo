@@ -1,7 +1,7 @@
-import {ProjectsService} from '@app/projects/services/projects/projects.service';
 import {Mocked, TestBed} from '@suites/unit';
 
 import {EmbedScriptsController} from './embed-scripts.controller';
+import {ProjectsService} from '../../../../../../identity-service/src/projects/services/projects/projects.service';
 
 describe('EmbedScriptsController', () => {
   let controller: EmbedScriptsController;

@@ -31,15 +31,6 @@
         "tsConfigPath": "libs/auth/tsconfig.lib.json"
       }
     },
-    "clients": {
-      "type": "library",
-      "root": "libs/clients",
-      "entryFile": "index",
-      "sourceRoot": "libs/clients/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/clients/tsconfig.lib.json"
-      }
-    },
     "config": {
       "type": "library",
       "root": "libs/config",
@@ -112,15 +103,6 @@
         "tsConfigPath": "libs/init/tsconfig.lib.json"
       }
     },
-    "payments": {
-      "type": "library",
-      "root": "libs/payments",
-      "entryFile": "index",
-      "sourceRoot": "libs/payments/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/payments/tsconfig.lib.json"
-      }
-    },
     "payments-service": {
       "type": "application",
       "root": "apps/payments-service",
@@ -130,15 +112,6 @@
         "tsConfigPath": "apps/payments-service/tsconfig.app.json"
       }
     },
-    "projects": {
-      "type": "library",
-      "root": "libs/projects",
-      "entryFile": "index",
-      "sourceRoot": "libs/projects/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/projects/tsconfig.lib.json"
-      }
-    },
     "storage": {
       "type": "library",
       "root": "libs/storage",
@@ -146,15 +119,6 @@
       "sourceRoot": "libs/storage/src",
       "compilerOptions": {
         "tsConfigPath": "libs/storage/tsconfig.lib.json"
-      }
-    },
-    "users": {
-      "type": "library",
-      "root": "libs/users",
-      "entryFile": "index",
-      "sourceRoot": "libs/users/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/users/tsconfig.lib.json"
       }
     },
     "util": {
