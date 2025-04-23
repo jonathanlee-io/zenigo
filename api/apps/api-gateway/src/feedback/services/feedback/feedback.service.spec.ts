@@ -1,5 +1,6 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { FeedbackService } from './feedback.service';
+import {Test, TestingModule} from '@nestjs/testing';
+
+import {FeedbackService} from './feedback.service';
 
 describe('FeedbackService', () => {
   let service: FeedbackService;
