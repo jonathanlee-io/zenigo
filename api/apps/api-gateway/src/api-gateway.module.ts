@@ -1,10 +1,8 @@
-import {RabbitmqModule} from '@app/init';
 import {ConfigifyModule} from '@jdevel/configify';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 
-import {ApiGatewayController} from './api-gateway.controller';
-import {ApiGatewayService} from './api-gateway.service';
+import {FeedbackModule} from './feedback/feedback.module';
 
 @Module({
   imports: [
@@ -12,9 +10,9 @@ import {ApiGatewayService} from './api-gateway.service';
       isGlobal: true,
     }),
     ConfigifyModule.forRootAsync(),
-    RabbitmqModule.register({serviceName: 'FEEDBACK'}),
+    FeedbackModule,
   ],
-  controllers: [ApiGatewayController],
-  providers: [ApiGatewayService],
+  controllers: [],
+  providers: [],
 })
 export class ApiGatewayModule {}

@@ -1,29 +1,25 @@
-import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
-import {Controller, Get, Header} from '@nestjs/common';
+import {feedbackServiceConstants} from '@app/constants';
+import {Controller} from '@nestjs/common';
+import {MessagePattern, Payload} from '@nestjs/microservices';
 import {ApiTags} from '@nestjs/swagger';
 
 @ApiTags('Embed Scripts')
 @Controller()
 export class EmbedScriptsController {
-  // constructor(private readonly projectsService: ProjectsService) {}
-
-  @IsPublic()
-  @Get('feedback-widget.js')
-  @Header('Content-Type', 'text/javascript')
-  @Header('Cache-Control', 'no-cache, no-store, must-revalidate')
-  async getFeedbackWidgetScript(
-    @CurrentUser()
-    {clientSubdomain}: CurrentUserDto,
+  @MessagePattern(
+    feedbackServiceConstants.messagePatterns.embedScripts.getBootstrapScript,
+  )
+  async getBootstrapWidgetScript(
+    @Payload()
+    {clientSubdomain}: {clientSubdomain: string},
   ) {
-    return {clientSubdomain};
-    // return this.projectsService.getFeedbackWidgetScript(clientSubdomain);
+    return `console.log(${clientSubdomain})`;
   }
 
-  @IsPublic()
-  @Get('echonexus-widget.js')
-  @Header('Content-Type', 'text/javascript')
+  @MessagePattern(
+    feedbackServiceConstants.messagePatterns.embedScripts.getWidgetScript,
+  )
   async getWidgetScript() {
-    return null;
-    // return this.projectsService.getWidgetScript();
+    return `console.log('hello world')`;
   }
 }

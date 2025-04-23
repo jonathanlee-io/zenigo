@@ -1,3 +1,4 @@
+import {feedbackServiceConstants} from '@app/constants';
 import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
@@ -8,7 +9,7 @@ configDotenv();
 bootstrapMicroservice(
   AppModule,
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  'FEEDBACK',
+  feedbackServiceConstants.queueName,
   'feedbackUrl',
   './apps/feedback-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));

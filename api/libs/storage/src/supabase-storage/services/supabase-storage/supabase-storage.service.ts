@@ -1,5 +1,5 @@
 import {SupabaseConfig} from '@app/config/Supabase.config';
-import {StorageService} from '@app/storage/storage-service';
+import {StorageService} from '@app/storage/storage-service.interface';
 import {Injectable, OnModuleInit} from '@nestjs/common';
 import {createClient, SupabaseClient} from '@supabase/supabase-js';
 import {decode} from 'base64-arraybuffer';

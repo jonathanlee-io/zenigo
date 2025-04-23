@@ -1,15 +1,11 @@
 import {AuthModule} from '@app/auth';
-import {PaymentsModule} from '@app/payments';
-import {ProjectsModule} from '@app/projects';
 import {ConfigifyModule} from '@jdevel/configify';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
-import {RouterModule} from '@nestjs/core';
 import {EventEmitterModule} from '@nestjs/event-emitter';
 import {ThrottlerModule} from '@nestjs/throttler';
 
-import {routes} from './app.routes';
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
 import {IssuesModule} from './issues/issues.module';
 import {ProductsModule} from './products/products.module';
@@ -21,7 +17,6 @@ import {ClientsModule} from '../../../identity-service/src/clients/clients.modul
       isGlobal: true,
     }),
     ConfigifyModule.forRootAsync(),
-    RouterModule.register(routes),
     EventEmitterModule.forRoot({
       global: true,
     }),
@@ -38,9 +33,9 @@ import {ClientsModule} from '../../../identity-service/src/clients/clients.modul
     IssuesModule,
     ClientsModule,
     // UsersModule,
-    ProjectsModule,
+    // ProjectsModule,
     ProductsModule,
-    PaymentsModule,
+    // PaymentsModule,
     EmbedScriptsModule,
   ],
   providers: [
