@@ -38,15 +38,6 @@ import {ClientsModule} from '../../../identity-service/src/clients/clients.modul
     // PaymentsModule,
     EmbedScriptsModule,
   ],
-  providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: JwtAuthGuard,
-    // },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: ThrottlerGuard,
-    // },
-  ],
+  providers: [],
 })
 export class AppModule {}
