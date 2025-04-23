@@ -21,6 +21,6 @@ import {PrismaClient as FeedbackPrismaClient} from '../../../generated/client';
     ProductsService,
     ProductsRepositoryService,
   ],
-  exports: [ProductsService],
+  exports: [],
 })
 export class ProductsModule {}
