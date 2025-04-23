@@ -1,10 +1,10 @@
 import {Module} from '@nestjs/common';
 
+import {ClientsModule} from './clients/clients.module';
 import {IdentityServiceController} from './identity-service.controller';
 import {IdentityServiceService} from './identity-service.service';
-import { ClientsModule } from './clients/clients.module';
-import { UsersModule } from './users/users.module';
-import { ProjectsModule } from './projects/projects.module';
+import {ProjectsModule} from './projects/projects.module';
+import {UsersModule} from './users/users.module';
 
 @Module({
   imports: [ClientsModule, UsersModule, ProjectsModule],
