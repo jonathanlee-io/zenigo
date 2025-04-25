@@ -10,6 +10,6 @@ bootstrapMicroservice(
   PaymentsServiceModule,
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   feedbackServiceConstants.queueName,
-  'feedbackUrl',
+  'paymentUrl',
   './apps/payments-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));

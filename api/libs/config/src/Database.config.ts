@@ -14,4 +14,14 @@ export class DatabaseConfig {
   @IsString()
   @Value('FEEDBACK_DATABASE_URL')
   feedbackUrl: string;
+
+  @IsDefined()
+  @IsString()
+  @Value('IDENTITY_DATABASE_URL')
+  identityUrl: string;
+
+  @IsDefined()
+  @IsString()
+  @Value('PAYMENT_DATABASE_URL')
+  paymentUrl: string;
 }

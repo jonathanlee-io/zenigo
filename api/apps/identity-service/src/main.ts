@@ -1,4 +1,4 @@
-import {feedbackServiceConstants} from '@app/constants';
+import {identityServiceConstants} from '@app/constants';
 import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
@@ -9,7 +9,7 @@ configDotenv();
 bootstrapMicroservice(
   IdentityServiceModule,
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  feedbackServiceConstants.queueName,
-  'feedbackUrl',
+  identityServiceConstants.queueName,
+  'identityUrl',
   './apps/identity-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));
