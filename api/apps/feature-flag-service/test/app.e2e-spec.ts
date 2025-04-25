@@ -9,7 +9,7 @@ import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 import * as request from 'supertest';
 
-import {AppModule} from '../src/app/app.module';
+import {FeatureFlagServiceModule} from '../src/app/feature-flag-service.module';
 
 describe('AppController (e2e)', () => {
   jest.setTimeout(e2eTestTimeout);
@@ -40,7 +40,7 @@ describe('AppController (e2e)', () => {
     process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
     process.env['JWT_SECRET'] = testJwtSecret;
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [FeatureFlagServiceModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

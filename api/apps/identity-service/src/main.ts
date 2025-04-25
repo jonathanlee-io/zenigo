@@ -1,9 +1,15 @@
-import {NestFactory} from '@nestjs/core';
+import {feedbackServiceConstants} from '@app/constants';
+import {bootstrapMicroservice} from '@app/init';
+import {configDotenv} from 'dotenv';
 
-import {IdentityServiceModule} from './identity-service.module';
+import {IdentityServiceModule} from './app/identity-service.module';
 
-async function bootstrap() {
-  const app = await NestFactory.create(IdentityServiceModule);
-  await app.listen(process.env.port ?? 3000);
-}
-bootstrap();
+configDotenv();
+
+bootstrapMicroservice(
+  IdentityServiceModule,
+  [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
+  feedbackServiceConstants.queueName,
+  'feedbackUrl',
+  './apps/identity-service/prisma/schema.prisma',
+).catch((error) => console.error(error));

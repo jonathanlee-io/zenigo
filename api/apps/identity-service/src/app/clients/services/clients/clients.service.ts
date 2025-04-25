@@ -11,7 +11,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 
-import {PaymentsService} from '../../../../../payments-service/src/services/payments/payments.service';
+import {PaymentsService} from '../../../../../../payments-service/src/app/services/payments/payments.service';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 import {CreateClientDto} from '../../dto/CreateClient.dto';
 import {IsSubdomainAvailableDto} from '../../dto/IsSubdomainAvailable.dto';

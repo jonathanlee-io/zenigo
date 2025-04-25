@@ -1,15 +1,14 @@
-import {PrismaModule} from '@app/database';
 import {ConfigifyModule} from '@jdevel/configify';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 import {EventEmitterModule} from '@nestjs/event-emitter';
 
-import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
+import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
+import {IssuesModule} from './issues/issues.module';
+import {ProductsModule} from './products/products.module';
 
 @Module({
   imports: [
-    // TODO: Move to individual modules
-    PrismaModule.register({client: FeatureFlagPrismaClient}),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -17,6 +16,9 @@ import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
     EventEmitterModule.forRoot({
       global: true,
     }),
+    EmbedScriptsModule,
+    IssuesModule,
+    ProductsModule,
   ],
 })
-export class AppModule {}
+export class FeedbackServiceModule {}

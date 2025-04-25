@@ -2,12 +2,12 @@ import {feedbackServiceConstants} from '@app/constants';
 import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
-import {AppModule} from './app/app.module';
+import {FeedbackServiceModule} from './app/feedback-service.module';
 
 configDotenv();
 
 bootstrapMicroservice(
-  AppModule,
+  FeedbackServiceModule,
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   feedbackServiceConstants.queueName,
   'feedbackUrl',
