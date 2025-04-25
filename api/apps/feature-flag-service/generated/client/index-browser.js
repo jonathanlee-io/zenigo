@@ -117,121 +117,16 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.FeatureFlagScalarFieldEnum = {
   id: 'id',
-  email: 'email',
-  supabaseUserId: 'supabaseUserId',
-  displayName: 'displayName',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  clientId: 'clientId'
-};
-
-exports.Prisma.ClientScalarFieldEnum = {
-  id: 'id',
-  displayName: 'displayName',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId',
-  paymentPlanId: 'paymentPlanId'
-};
-
-exports.Prisma.PaymentPlanScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  monthlyPrice: 'monthlyPrice',
-  maxProjectCount: 'maxProjectCount',
-  maxTeamMemberCount: 'maxTeamMemberCount',
-  isCustomSubdomainIncluded: 'isCustomSubdomainIncluded',
-  isEmbeddableFeedbackWidgetIncluded: 'isEmbeddableFeedbackWidgetIncluded',
-  isCustomHostnameIncluded: 'isCustomHostnameIncluded',
-  tag: 'tag',
-  sortIndex: 'sortIndex',
-  stripePricingTableId: 'stripePricingTableId',
-  stripePublishableKey: 'stripePublishableKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ProjectScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  isBugReportsEnabled: 'isBugReportsEnabled',
-  isFeatureRequestsEnabled: 'isFeatureRequestsEnabled',
-  isFeatureFeedbackEnabled: 'isFeatureFeedbackEnabled',
-  isOwnerUpdatesEnabled: 'isOwnerUpdatesEnabled',
-  isOwnerIssuesEnabled: 'isOwnerIssuesEnabled',
-  isUserIssuesEnabled: 'isUserIssuesEnabled',
-  clientId: 'clientId',
-  userId: 'userId',
-  productId: 'productId'
-};
-
-exports.Prisma.SubdomainScalarFieldEnum = {
+exports.Prisma.FeatureFlagAccessGroupScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  subdomain: 'subdomain',
-  projectId: 'projectId'
-};
-
-exports.Prisma.HostnameScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  hostname: 'hostname',
-  projectId: 'projectId'
-};
-
-exports.Prisma.ProductScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  projectId: 'projectId'
-};
-
-exports.Prisma.ProductPostScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  type: 'type',
-  title: 'title',
-  description: 'description',
-  productId: 'productId'
-};
-
-exports.Prisma.ProductPostUpvoteScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  productPostId: 'productPostId',
-  userId: 'userId'
-};
-
-exports.Prisma.ProductPostCommentScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  text: 'text',
-  productPostId: 'productPostId',
-  userId: 'userId'
-};
-
-exports.Prisma.ProductFeedbackSubmissionScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  productId: 'productId',
-  clientIp: 'clientIp',
-  clientSubdomain: 'clientSubdomain',
-  widgetMetadataType: 'widgetMetadataType',
-  widgetMetadataUrl: 'widgetMetadataUrl',
-  widgetMetadataTimezone: 'widgetMetadataTimezone',
-  submittedAt: 'submittedAt',
-  userFeedback: 'userFeedback'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -244,34 +139,10 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-exports.ProductPostType = exports.$Enums.ProductPostType = {
-  OWNER_UPDATE: 'OWNER_UPDATE',
-  OWNER_ISSUE: 'OWNER_ISSUE',
-  USER_ISSUE: 'USER_ISSUE'
-};
-
-exports.ProductFeedbackSubmissionType = exports.$Enums.ProductFeedbackSubmissionType = {
-  BUG_REPORT: 'BUG_REPORT',
-  FEATURE_REQUEST: 'FEATURE_REQUEST',
-  FEATURE_FEEDBACK: 'FEATURE_FEEDBACK'
-};
 
 exports.Prisma.ModelName = {
-  User: 'User',
-  Client: 'Client',
-  PaymentPlan: 'PaymentPlan',
-  Project: 'Project',
-  Subdomain: 'Subdomain',
-  Hostname: 'Hostname',
-  Product: 'Product',
-  ProductPost: 'ProductPost',
-  ProductPostUpvote: 'ProductPostUpvote',
-  ProductPostComment: 'ProductPostComment',
-  ProductFeedbackSubmission: 'ProductFeedbackSubmission'
+  FeatureFlag: 'FeatureFlag',
+  FeatureFlagAccessGroup: 'FeatureFlagAccessGroup'
 };
 
 /**
