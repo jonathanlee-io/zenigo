@@ -6,11 +6,11 @@ import {FeatureFlagServiceModule} from './app/feature-flag-service.module';
 
 configDotenv();
 
-bootstrapMicroservice(
-  FeatureFlagServiceModule,
-  [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  featureFlagServiceConstants.queueName,
-  'featureFlagUrl',
-  'FEATURE_FLAGS_DATABASE_URL',
-  './apps/feature-flag-service/prisma/schema.prisma',
-).catch((error) => console.error(error));
+bootstrapMicroservice({
+  appModule: FeatureFlagServiceModule,
+  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
+  rabbitMqQueueName: featureFlagServiceConstants.queueName,
+  migrationUrlPropertyKey: 'featureFlagUrl',
+  databaseUrlKey: 'FEATURE_FLAGS_DATABASE_URL',
+  schemaOverride: './apps/feature-flag-service/prisma/schema.prisma',
+}).catch((error) => console.error(error));

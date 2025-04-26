@@ -6,11 +6,11 @@ import {PaymentsServiceModule} from './app/payments-service.module';
 
 configDotenv();
 
-bootstrapMicroservice(
-  PaymentsServiceModule,
-  [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  feedbackServiceConstants.queueName,
-  'paymentUrl',
-  'PAYMENTS_DATABASE_URL',
-  './apps/payments-service/prisma/schema.prisma',
-).catch((error) => console.error(error));
+bootstrapMicroservice({
+  appModule: PaymentsServiceModule,
+  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
+  rabbitMqQueueName: feedbackServiceConstants.queueName,
+  migrationUrlPropertyKey: 'paymentUrl',
+  databaseUrlKey: 'PAYMENTS_DATABASE_URL',
+  schemaOverride: './apps/payments-service/prisma/schema.prisma',
+}).catch((error) => console.error(error));

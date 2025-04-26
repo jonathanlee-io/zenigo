@@ -6,11 +6,11 @@ import {IdentityServiceModule} from './app/identity-service.module';
 
 configDotenv();
 
-bootstrapMicroservice(
-  IdentityServiceModule,
-  [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  identityServiceConstants.queueName,
-  'identityUrl',
-  'IDENTITY_DATABASE_URL',
-  './apps/identity-service/prisma/schema.prisma',
-).catch((error) => console.error(error));
+bootstrapMicroservice({
+  appModule: IdentityServiceModule,
+  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
+  rabbitMqQueueName: identityServiceConstants.queueName,
+  migrationUrlPropertyKey: 'identityUrl',
+  databaseUrlKey: 'IDENTITY_DATABASE_URL',
+  schemaOverride: './apps/identity-service/prisma/schema.prisma',
+}).catch((error) => console.error(error));
