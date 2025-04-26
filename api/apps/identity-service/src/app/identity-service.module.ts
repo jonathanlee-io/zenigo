@@ -16,7 +16,5 @@ import {UsersModule} from './users/users.module';
     UsersModule,
     ProjectsModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class IdentityServiceModule {}

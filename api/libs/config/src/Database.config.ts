@@ -22,6 +22,6 @@ export class DatabaseConfig {
 
   @IsDefined()
   @IsString()
-  @Value('PAYMENT_DATABASE_URL')
+  @Value('PAYMENTS_DATABASE_URL')
   paymentUrl: string;
 }

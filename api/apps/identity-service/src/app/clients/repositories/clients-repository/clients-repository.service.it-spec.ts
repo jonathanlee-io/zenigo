@@ -3,13 +3,13 @@ import {PrismaModule} from '@app/database';
 import {TestHelpersUtil} from '@app/util';
 import {faker} from '@faker-js/faker/locale/en';
 import {CacheModule} from '@nestjs/cache-manager';
-import {Logger} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
 import {ClientsRepositoryService} from './clients-repository.service';
-import {PaymentsService} from '../../../../../../payments-service/src/app/services/payments/payments.service';
+import {PaymentsService} from '../../../../../../payments-service/src/app/payments/services/payments/payments.service';
+import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 import {UsersModule} from '../../../users/users.module';
 
@@ -18,13 +18,14 @@ describe('ClientsRepositoryService', () => {
 
   let repository: ClientsRepositoryService;
   let usersRepository: UsersRepositoryService;
-  let paymentsService: PaymentsService;
   let postgresContainer: StartedPostgreSqlContainer;
   let postgresClient: Client;
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await TestHelpersUtil.initializePostgresTestContainer();
+      await TestHelpersUtil.initializePostgresTestContainer(
+        './apps/identity-service/prisma/schema.prisma',
+      );
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
@@ -39,15 +40,10 @@ describe('ClientsRepositoryService', () => {
   beforeEach(async () => {
     process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule, CacheModule.register(), UsersModule],
-      providers: [
-        {
-          provide: Logger,
-          useFactory: () => new Logger('test'),
-        },
-        ClientsRepositoryService,
-        UsersRepositoryService,
-        PaymentsService,
+      imports: [
+        PrismaModule.register({client: IdentityPrismaClient}),
+        CacheModule.register(),
+        UsersModule,
       ],
     }).compile();
 
@@ -55,8 +51,6 @@ describe('ClientsRepositoryService', () => {
     usersRepository = module.get<UsersRepositoryService>(
       UsersRepositoryService,
     );
-    paymentsService = module.get<PaymentsService>(PaymentsService);
-    await paymentsService.onModuleInit();
   });
 
   it('should be defined', () => {

@@ -875,44 +875,142 @@ export namespace Prisma {
 
   export type AggregatePaymentPlan = {
     _count: PaymentPlanCountAggregateOutputType | null
+    _avg: PaymentPlanAvgAggregateOutputType | null
+    _sum: PaymentPlanSumAggregateOutputType | null
     _min: PaymentPlanMinAggregateOutputType | null
     _max: PaymentPlanMaxAggregateOutputType | null
   }
 
+  export type PaymentPlanAvgAggregateOutputType = {
+    maxProjectCount: number | null
+    maxTeamMemberCount: number | null
+    sortIndex: number | null
+  }
+
+  export type PaymentPlanSumAggregateOutputType = {
+    maxProjectCount: number | null
+    maxTeamMemberCount: number | null
+    sortIndex: number | null
+  }
+
   export type PaymentPlanMinAggregateOutputType = {
     id: string | null
+    name: string | null
+    description: string | null
+    monthlyPrice: string | null
+    maxProjectCount: number | null
+    maxTeamMemberCount: number | null
+    isCustomSubdomainIncluded: boolean | null
+    isEmbeddableFeedbackWidgetIncluded: boolean | null
+    isCustomHostnameIncluded: boolean | null
+    tag: string | null
+    sortIndex: number | null
+    stripePricingTableId: string | null
+    stripePublishableKey: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type PaymentPlanMaxAggregateOutputType = {
     id: string | null
+    name: string | null
+    description: string | null
+    monthlyPrice: string | null
+    maxProjectCount: number | null
+    maxTeamMemberCount: number | null
+    isCustomSubdomainIncluded: boolean | null
+    isEmbeddableFeedbackWidgetIncluded: boolean | null
+    isCustomHostnameIncluded: boolean | null
+    tag: string | null
+    sortIndex: number | null
+    stripePricingTableId: string | null
+    stripePublishableKey: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type PaymentPlanCountAggregateOutputType = {
     id: number
+    name: number
+    description: number
+    monthlyPrice: number
+    maxProjectCount: number
+    maxTeamMemberCount: number
+    isCustomSubdomainIncluded: number
+    isEmbeddableFeedbackWidgetIncluded: number
+    isCustomHostnameIncluded: number
+    tag: number
+    sortIndex: number
+    stripePricingTableId: number
+    stripePublishableKey: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
+  export type PaymentPlanAvgAggregateInputType = {
+    maxProjectCount?: true
+    maxTeamMemberCount?: true
+    sortIndex?: true
+  }
+
+  export type PaymentPlanSumAggregateInputType = {
+    maxProjectCount?: true
+    maxTeamMemberCount?: true
+    sortIndex?: true
+  }
+
   export type PaymentPlanMinAggregateInputType = {
     id?: true
+    name?: true
+    description?: true
+    monthlyPrice?: true
+    maxProjectCount?: true
+    maxTeamMemberCount?: true
+    isCustomSubdomainIncluded?: true
+    isEmbeddableFeedbackWidgetIncluded?: true
+    isCustomHostnameIncluded?: true
+    tag?: true
+    sortIndex?: true
+    stripePricingTableId?: true
+    stripePublishableKey?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type PaymentPlanMaxAggregateInputType = {
     id?: true
+    name?: true
+    description?: true
+    monthlyPrice?: true
+    maxProjectCount?: true
+    maxTeamMemberCount?: true
+    isCustomSubdomainIncluded?: true
+    isEmbeddableFeedbackWidgetIncluded?: true
+    isCustomHostnameIncluded?: true
+    tag?: true
+    sortIndex?: true
+    stripePricingTableId?: true
+    stripePublishableKey?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type PaymentPlanCountAggregateInputType = {
     id?: true
+    name?: true
+    description?: true
+    monthlyPrice?: true
+    maxProjectCount?: true
+    maxTeamMemberCount?: true
+    isCustomSubdomainIncluded?: true
+    isEmbeddableFeedbackWidgetIncluded?: true
+    isCustomHostnameIncluded?: true
+    tag?: true
+    sortIndex?: true
+    stripePricingTableId?: true
+    stripePublishableKey?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -956,6 +1054,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: PaymentPlanAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PaymentPlanSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: PaymentPlanMinAggregateInputType
@@ -986,15 +1096,31 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: PaymentPlanCountAggregateInputType | true
+    _avg?: PaymentPlanAvgAggregateInputType
+    _sum?: PaymentPlanSumAggregateInputType
     _min?: PaymentPlanMinAggregateInputType
     _max?: PaymentPlanMaxAggregateInputType
   }
 
   export type PaymentPlanGroupByOutputType = {
     id: string
+    name: string
+    description: string
+    monthlyPrice: string
+    maxProjectCount: number
+    maxTeamMemberCount: number
+    isCustomSubdomainIncluded: boolean
+    isEmbeddableFeedbackWidgetIncluded: boolean
+    isCustomHostnameIncluded: boolean
+    tag: string | null
+    sortIndex: number
+    stripePricingTableId: string
+    stripePublishableKey: string
     createdAt: Date
     updatedAt: Date
     _count: PaymentPlanCountAggregateOutputType | null
+    _avg: PaymentPlanAvgAggregateOutputType | null
+    _sum: PaymentPlanSumAggregateOutputType | null
     _min: PaymentPlanMinAggregateOutputType | null
     _max: PaymentPlanMaxAggregateOutputType | null
   }
@@ -1015,35 +1141,95 @@ export namespace Prisma {
 
   export type PaymentPlanSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
+    description?: boolean
+    monthlyPrice?: boolean
+    maxProjectCount?: boolean
+    maxTeamMemberCount?: boolean
+    isCustomSubdomainIncluded?: boolean
+    isEmbeddableFeedbackWidgetIncluded?: boolean
+    isCustomHostnameIncluded?: boolean
+    tag?: boolean
+    sortIndex?: boolean
+    stripePricingTableId?: boolean
+    stripePublishableKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["paymentPlan"]>
 
   export type PaymentPlanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
+    description?: boolean
+    monthlyPrice?: boolean
+    maxProjectCount?: boolean
+    maxTeamMemberCount?: boolean
+    isCustomSubdomainIncluded?: boolean
+    isEmbeddableFeedbackWidgetIncluded?: boolean
+    isCustomHostnameIncluded?: boolean
+    tag?: boolean
+    sortIndex?: boolean
+    stripePricingTableId?: boolean
+    stripePublishableKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["paymentPlan"]>
 
   export type PaymentPlanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
+    description?: boolean
+    monthlyPrice?: boolean
+    maxProjectCount?: boolean
+    maxTeamMemberCount?: boolean
+    isCustomSubdomainIncluded?: boolean
+    isEmbeddableFeedbackWidgetIncluded?: boolean
+    isCustomHostnameIncluded?: boolean
+    tag?: boolean
+    sortIndex?: boolean
+    stripePricingTableId?: boolean
+    stripePublishableKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["paymentPlan"]>
 
   export type PaymentPlanSelectScalar = {
     id?: boolean
+    name?: boolean
+    description?: boolean
+    monthlyPrice?: boolean
+    maxProjectCount?: boolean
+    maxTeamMemberCount?: boolean
+    isCustomSubdomainIncluded?: boolean
+    isEmbeddableFeedbackWidgetIncluded?: boolean
+    isCustomHostnameIncluded?: boolean
+    tag?: boolean
+    sortIndex?: boolean
+    stripePricingTableId?: boolean
+    stripePublishableKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PaymentPlanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPlan"]>
+  export type PaymentPlanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "monthlyPrice" | "maxProjectCount" | "maxTeamMemberCount" | "isCustomSubdomainIncluded" | "isEmbeddableFeedbackWidgetIncluded" | "isCustomHostnameIncluded" | "tag" | "sortIndex" | "stripePricingTableId" | "stripePublishableKey" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPlan"]>
 
   export type $PaymentPlanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PaymentPlan"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      name: string
+      description: string
+      monthlyPrice: string
+      maxProjectCount: number
+      maxTeamMemberCount: number
+      isCustomSubdomainIncluded: boolean
+      isEmbeddableFeedbackWidgetIncluded: boolean
+      isCustomHostnameIncluded: boolean
+      tag: string | null
+      sortIndex: number
+      stripePricingTableId: string
+      stripePublishableKey: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["paymentPlan"]>
@@ -1470,6 +1656,18 @@ export namespace Prisma {
    */
   interface PaymentPlanFieldRefs {
     readonly id: FieldRef<"PaymentPlan", 'String'>
+    readonly name: FieldRef<"PaymentPlan", 'String'>
+    readonly description: FieldRef<"PaymentPlan", 'String'>
+    readonly monthlyPrice: FieldRef<"PaymentPlan", 'String'>
+    readonly maxProjectCount: FieldRef<"PaymentPlan", 'Int'>
+    readonly maxTeamMemberCount: FieldRef<"PaymentPlan", 'Int'>
+    readonly isCustomSubdomainIncluded: FieldRef<"PaymentPlan", 'Boolean'>
+    readonly isEmbeddableFeedbackWidgetIncluded: FieldRef<"PaymentPlan", 'Boolean'>
+    readonly isCustomHostnameIncluded: FieldRef<"PaymentPlan", 'Boolean'>
+    readonly tag: FieldRef<"PaymentPlan", 'String'>
+    readonly sortIndex: FieldRef<"PaymentPlan", 'Int'>
+    readonly stripePricingTableId: FieldRef<"PaymentPlan", 'String'>
+    readonly stripePublishableKey: FieldRef<"PaymentPlan", 'String'>
     readonly createdAt: FieldRef<"PaymentPlan", 'DateTime'>
     readonly updatedAt: FieldRef<"PaymentPlan", 'DateTime'>
   }
@@ -1666,7 +1864,7 @@ export namespace Prisma {
     /**
      * The data needed to create a PaymentPlan.
      */
-    data?: XOR<PaymentPlanCreateInput, PaymentPlanUncheckedCreateInput>
+    data: XOR<PaymentPlanCreateInput, PaymentPlanUncheckedCreateInput>
   }
 
   /**
@@ -1854,6 +2052,18 @@ export namespace Prisma {
 
   export const PaymentPlanScalarFieldEnum: {
     id: 'id',
+    name: 'name',
+    description: 'description',
+    monthlyPrice: 'monthlyPrice',
+    maxProjectCount: 'maxProjectCount',
+    maxTeamMemberCount: 'maxTeamMemberCount',
+    isCustomSubdomainIncluded: 'isCustomSubdomainIncluded',
+    isEmbeddableFeedbackWidgetIncluded: 'isEmbeddableFeedbackWidgetIncluded',
+    isCustomHostnameIncluded: 'isCustomHostnameIncluded',
+    tag: 'tag',
+    sortIndex: 'sortIndex',
+    stripePricingTableId: 'stripePricingTableId',
+    stripePublishableKey: 'stripePublishableKey',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -1877,6 +2087,14 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   /**
    * Field references
    */
@@ -1897,6 +2115,27 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1911,16 +2150,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Float'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'Float[]'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -1932,12 +2171,36 @@ export namespace Prisma {
     OR?: PaymentPlanWhereInput[]
     NOT?: PaymentPlanWhereInput | PaymentPlanWhereInput[]
     id?: StringFilter<"PaymentPlan"> | string
+    name?: StringFilter<"PaymentPlan"> | string
+    description?: StringFilter<"PaymentPlan"> | string
+    monthlyPrice?: StringFilter<"PaymentPlan"> | string
+    maxProjectCount?: IntFilter<"PaymentPlan"> | number
+    maxTeamMemberCount?: IntFilter<"PaymentPlan"> | number
+    isCustomSubdomainIncluded?: BoolFilter<"PaymentPlan"> | boolean
+    isEmbeddableFeedbackWidgetIncluded?: BoolFilter<"PaymentPlan"> | boolean
+    isCustomHostnameIncluded?: BoolFilter<"PaymentPlan"> | boolean
+    tag?: StringNullableFilter<"PaymentPlan"> | string | null
+    sortIndex?: IntFilter<"PaymentPlan"> | number
+    stripePricingTableId?: StringFilter<"PaymentPlan"> | string
+    stripePublishableKey?: StringFilter<"PaymentPlan"> | string
     createdAt?: DateTimeFilter<"PaymentPlan"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentPlan"> | Date | string
   }
 
   export type PaymentPlanOrderByWithRelationInput = {
     id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    monthlyPrice?: SortOrder
+    maxProjectCount?: SortOrder
+    maxTeamMemberCount?: SortOrder
+    isCustomSubdomainIncluded?: SortOrder
+    isEmbeddableFeedbackWidgetIncluded?: SortOrder
+    isCustomHostnameIncluded?: SortOrder
+    tag?: SortOrderInput | SortOrder
+    sortIndex?: SortOrder
+    stripePricingTableId?: SortOrder
+    stripePublishableKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -1947,17 +2210,43 @@ export namespace Prisma {
     AND?: PaymentPlanWhereInput | PaymentPlanWhereInput[]
     OR?: PaymentPlanWhereInput[]
     NOT?: PaymentPlanWhereInput | PaymentPlanWhereInput[]
+    name?: StringFilter<"PaymentPlan"> | string
+    description?: StringFilter<"PaymentPlan"> | string
+    monthlyPrice?: StringFilter<"PaymentPlan"> | string
+    maxProjectCount?: IntFilter<"PaymentPlan"> | number
+    maxTeamMemberCount?: IntFilter<"PaymentPlan"> | number
+    isCustomSubdomainIncluded?: BoolFilter<"PaymentPlan"> | boolean
+    isEmbeddableFeedbackWidgetIncluded?: BoolFilter<"PaymentPlan"> | boolean
+    isCustomHostnameIncluded?: BoolFilter<"PaymentPlan"> | boolean
+    tag?: StringNullableFilter<"PaymentPlan"> | string | null
+    sortIndex?: IntFilter<"PaymentPlan"> | number
+    stripePricingTableId?: StringFilter<"PaymentPlan"> | string
+    stripePublishableKey?: StringFilter<"PaymentPlan"> | string
     createdAt?: DateTimeFilter<"PaymentPlan"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentPlan"> | Date | string
   }, "id">
 
   export type PaymentPlanOrderByWithAggregationInput = {
     id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    monthlyPrice?: SortOrder
+    maxProjectCount?: SortOrder
+    maxTeamMemberCount?: SortOrder
+    isCustomSubdomainIncluded?: SortOrder
+    isEmbeddableFeedbackWidgetIncluded?: SortOrder
+    isCustomHostnameIncluded?: SortOrder
+    tag?: SortOrderInput | SortOrder
+    sortIndex?: SortOrder
+    stripePricingTableId?: SortOrder
+    stripePublishableKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PaymentPlanCountOrderByAggregateInput
+    _avg?: PaymentPlanAvgOrderByAggregateInput
     _max?: PaymentPlanMaxOrderByAggregateInput
     _min?: PaymentPlanMinOrderByAggregateInput
+    _sum?: PaymentPlanSumOrderByAggregateInput
   }
 
   export type PaymentPlanScalarWhereWithAggregatesInput = {
@@ -1965,48 +2254,144 @@ export namespace Prisma {
     OR?: PaymentPlanScalarWhereWithAggregatesInput[]
     NOT?: PaymentPlanScalarWhereWithAggregatesInput | PaymentPlanScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"PaymentPlan"> | string
+    name?: StringWithAggregatesFilter<"PaymentPlan"> | string
+    description?: StringWithAggregatesFilter<"PaymentPlan"> | string
+    monthlyPrice?: StringWithAggregatesFilter<"PaymentPlan"> | string
+    maxProjectCount?: IntWithAggregatesFilter<"PaymentPlan"> | number
+    maxTeamMemberCount?: IntWithAggregatesFilter<"PaymentPlan"> | number
+    isCustomSubdomainIncluded?: BoolWithAggregatesFilter<"PaymentPlan"> | boolean
+    isEmbeddableFeedbackWidgetIncluded?: BoolWithAggregatesFilter<"PaymentPlan"> | boolean
+    isCustomHostnameIncluded?: BoolWithAggregatesFilter<"PaymentPlan"> | boolean
+    tag?: StringNullableWithAggregatesFilter<"PaymentPlan"> | string | null
+    sortIndex?: IntWithAggregatesFilter<"PaymentPlan"> | number
+    stripePricingTableId?: StringWithAggregatesFilter<"PaymentPlan"> | string
+    stripePublishableKey?: StringWithAggregatesFilter<"PaymentPlan"> | string
     createdAt?: DateTimeWithAggregatesFilter<"PaymentPlan"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"PaymentPlan"> | Date | string
   }
 
   export type PaymentPlanCreateInput = {
     id?: string
+    name: string
+    description: string
+    monthlyPrice: string
+    maxProjectCount?: number
+    maxTeamMemberCount?: number
+    isCustomSubdomainIncluded?: boolean
+    isEmbeddableFeedbackWidgetIncluded?: boolean
+    isCustomHostnameIncluded?: boolean
+    tag?: string | null
+    sortIndex?: number
+    stripePricingTableId: string
+    stripePublishableKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type PaymentPlanUncheckedCreateInput = {
     id?: string
+    name: string
+    description: string
+    monthlyPrice: string
+    maxProjectCount?: number
+    maxTeamMemberCount?: number
+    isCustomSubdomainIncluded?: boolean
+    isEmbeddableFeedbackWidgetIncluded?: boolean
+    isCustomHostnameIncluded?: boolean
+    tag?: string | null
+    sortIndex?: number
+    stripePricingTableId: string
+    stripePublishableKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type PaymentPlanUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    monthlyPrice?: StringFieldUpdateOperationsInput | string
+    maxProjectCount?: IntFieldUpdateOperationsInput | number
+    maxTeamMemberCount?: IntFieldUpdateOperationsInput | number
+    isCustomSubdomainIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isEmbeddableFeedbackWidgetIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isCustomHostnameIncluded?: BoolFieldUpdateOperationsInput | boolean
+    tag?: NullableStringFieldUpdateOperationsInput | string | null
+    sortIndex?: IntFieldUpdateOperationsInput | number
+    stripePricingTableId?: StringFieldUpdateOperationsInput | string
+    stripePublishableKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentPlanUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    monthlyPrice?: StringFieldUpdateOperationsInput | string
+    maxProjectCount?: IntFieldUpdateOperationsInput | number
+    maxTeamMemberCount?: IntFieldUpdateOperationsInput | number
+    isCustomSubdomainIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isEmbeddableFeedbackWidgetIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isCustomHostnameIncluded?: BoolFieldUpdateOperationsInput | boolean
+    tag?: NullableStringFieldUpdateOperationsInput | string | null
+    sortIndex?: IntFieldUpdateOperationsInput | number
+    stripePricingTableId?: StringFieldUpdateOperationsInput | string
+    stripePublishableKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentPlanCreateManyInput = {
     id?: string
+    name: string
+    description: string
+    monthlyPrice: string
+    maxProjectCount?: number
+    maxTeamMemberCount?: number
+    isCustomSubdomainIncluded?: boolean
+    isEmbeddableFeedbackWidgetIncluded?: boolean
+    isCustomHostnameIncluded?: boolean
+    tag?: string | null
+    sortIndex?: number
+    stripePricingTableId: string
+    stripePublishableKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type PaymentPlanUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    monthlyPrice?: StringFieldUpdateOperationsInput | string
+    maxProjectCount?: IntFieldUpdateOperationsInput | number
+    maxTeamMemberCount?: IntFieldUpdateOperationsInput | number
+    isCustomSubdomainIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isEmbeddableFeedbackWidgetIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isCustomHostnameIncluded?: BoolFieldUpdateOperationsInput | boolean
+    tag?: NullableStringFieldUpdateOperationsInput | string | null
+    sortIndex?: IntFieldUpdateOperationsInput | number
+    stripePricingTableId?: StringFieldUpdateOperationsInput | string
+    stripePublishableKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentPlanUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    monthlyPrice?: StringFieldUpdateOperationsInput | string
+    maxProjectCount?: IntFieldUpdateOperationsInput | number
+    maxTeamMemberCount?: IntFieldUpdateOperationsInput | number
+    isCustomSubdomainIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isEmbeddableFeedbackWidgetIncluded?: BoolFieldUpdateOperationsInput | boolean
+    isCustomHostnameIncluded?: BoolFieldUpdateOperationsInput | boolean
+    tag?: NullableStringFieldUpdateOperationsInput | string | null
+    sortIndex?: IntFieldUpdateOperationsInput | number
+    stripePricingTableId?: StringFieldUpdateOperationsInput | string
+    stripePublishableKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2026,6 +2411,37 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2037,22 +2453,75 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type PaymentPlanCountOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    monthlyPrice?: SortOrder
+    maxProjectCount?: SortOrder
+    maxTeamMemberCount?: SortOrder
+    isCustomSubdomainIncluded?: SortOrder
+    isEmbeddableFeedbackWidgetIncluded?: SortOrder
+    isCustomHostnameIncluded?: SortOrder
+    tag?: SortOrder
+    sortIndex?: SortOrder
+    stripePricingTableId?: SortOrder
+    stripePublishableKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
+  export type PaymentPlanAvgOrderByAggregateInput = {
+    maxProjectCount?: SortOrder
+    maxTeamMemberCount?: SortOrder
+    sortIndex?: SortOrder
+  }
+
   export type PaymentPlanMaxOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    monthlyPrice?: SortOrder
+    maxProjectCount?: SortOrder
+    maxTeamMemberCount?: SortOrder
+    isCustomSubdomainIncluded?: SortOrder
+    isEmbeddableFeedbackWidgetIncluded?: SortOrder
+    isCustomHostnameIncluded?: SortOrder
+    tag?: SortOrder
+    sortIndex?: SortOrder
+    stripePricingTableId?: SortOrder
+    stripePublishableKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type PaymentPlanMinOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    monthlyPrice?: SortOrder
+    maxProjectCount?: SortOrder
+    maxTeamMemberCount?: SortOrder
+    isCustomSubdomainIncluded?: SortOrder
+    isEmbeddableFeedbackWidgetIncluded?: SortOrder
+    isCustomHostnameIncluded?: SortOrder
+    tag?: SortOrder
+    sortIndex?: SortOrder
+    stripePricingTableId?: SortOrder
+    stripePublishableKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type PaymentPlanSumOrderByAggregateInput = {
+    maxProjectCount?: SortOrder
+    maxTeamMemberCount?: SortOrder
+    sortIndex?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2073,6 +2542,48 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2091,6 +2602,22 @@ export namespace Prisma {
     set?: string
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -2107,6 +2634,36 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -2137,7 +2694,7 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -2145,7 +2702,59 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {

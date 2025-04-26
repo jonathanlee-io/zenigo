@@ -8,7 +8,9 @@ import {Client} from 'pg';
 import {HelpersUtil} from './helpers.util';
 
 export class TestHelpersUtil {
-  static async initializePostgresTestContainer() {
+  static async initializePostgresTestContainer(
+    schemaOverride = './schema.prisma',
+  ) {
     const initializedPostgresContainer =
       await new PostgreSqlContainer().start();
     const initializedPostgresClient = new Client({
@@ -17,6 +19,7 @@ export class TestHelpersUtil {
     await initializedPostgresClient.connect();
     await HelpersUtil.runPrismaMigrations(
       initializedPostgresContainer.getConnectionUri(),
+      schemaOverride,
     );
     return {initializedPostgresContainer, initializedPostgresClient};
   }
