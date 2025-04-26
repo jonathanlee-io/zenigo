@@ -27,9 +27,7 @@ export class ClientsService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    const adminUserRecord = await this.usersRepository.findByEmail(
-      this.adminConfig.adminEmail,
-    );
+    const adminUserRecord = null;
     if (!adminUserRecord) {
       this.logger.log(
         `Unable to create default client as admin user does not exist, skipping...`,
