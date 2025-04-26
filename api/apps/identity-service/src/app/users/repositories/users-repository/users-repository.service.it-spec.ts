@@ -17,9 +17,10 @@ describe('UsersRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await TestHelpersUtil.initializePostgresTestContainer(
-        './apps/identity-service/prisma/schema.prisma',
-      );
+      await TestHelpersUtil.initializePostgresTestContainer({
+        databaseUrlKey: 'IDENTITY_DATABASE_URL',
+        schemaOverride: './apps/identity-service/prisma/schema.prisma',
+      });
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });

@@ -8,19 +8,24 @@ import {Client} from 'pg';
 import {HelpersUtil} from './helpers.util';
 
 export class TestHelpersUtil {
-  static async initializePostgresTestContainer(
+  static async initializePostgresTestContainer({
+    databaseUrlKey = 'DATABASE_URL',
     schemaOverride = './schema.prisma',
-  ) {
+  }: {
+    databaseUrlKey?: string;
+    schemaOverride?: string;
+  }) {
     const initializedPostgresContainer =
       await new PostgreSqlContainer().start();
     const initializedPostgresClient = new Client({
       connectionString: initializedPostgresContainer.getConnectionUri(),
     });
     await initializedPostgresClient.connect();
-    await HelpersUtil.runPrismaMigrations(
-      initializedPostgresContainer.getConnectionUri(),
+    await HelpersUtil.runPrismaMigrations({
+      databaseUrlKey,
       schemaOverride,
-    );
+      connectionUri: initializedPostgresContainer.getConnectionUri(),
+    });
     return {initializedPostgresContainer, initializedPostgresClient};
   }
 

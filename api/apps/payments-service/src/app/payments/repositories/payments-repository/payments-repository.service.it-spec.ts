@@ -16,9 +16,10 @@ describe('PaymentsRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await TestHelpersUtil.initializePostgresTestContainer(
-        './apps/payments-service/prisma/schema.prisma',
-      );
+      await TestHelpersUtil.initializePostgresTestContainer({
+        databaseUrlKey: 'PAYMENTS_DATABASE_URL',
+        schemaOverride: './apps/payments-service/prisma/schema.prisma',
+      });
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });

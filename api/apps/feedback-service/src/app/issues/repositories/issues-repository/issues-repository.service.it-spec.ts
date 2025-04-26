@@ -16,9 +16,10 @@ describe('IssuesRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await TestHelpersUtil.initializePostgresTestContainer(
-        './apps/feedback-service/prisma/schema.prisma',
-      );
+      await TestHelpersUtil.initializePostgresTestContainer({
+        databaseUrlKey: 'FEEDBACK_DATABASE_URL',
+        schemaOverride: './apps/feedback-service/prisma/schema.prisma',
+      });
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
