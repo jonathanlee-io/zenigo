@@ -1,9 +1,9 @@
-import {PrismaModule} from '@app/database';
 import {ConfigifyModule} from '@jdevel/configify';
+import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 
-import {PrismaClient as PaymentsPrismaClient} from '../../generated/client';
+import {PaymentsModule} from './payments/payments.module';
 
 @Module({
   imports: [
@@ -11,9 +11,8 @@ import {PrismaClient as PaymentsPrismaClient} from '../../generated/client';
       isGlobal: true,
     }),
     ConfigifyModule.forRootAsync(),
-    PrismaModule.register({client: PaymentsPrismaClient}),
+    CacheModule.register(),
+    PaymentsModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class PaymentsServiceModule {}

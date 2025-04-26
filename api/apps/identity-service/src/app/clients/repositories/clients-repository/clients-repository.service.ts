@@ -1,12 +1,12 @@
-import {PrismaService} from '@app/database';
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {PRISMA_SERVICE, PrismaService} from '@app/database';
+import {Inject, Injectable, InternalServerErrorException} from '@nestjs/common';
 
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 
 @Injectable()
 export class ClientsRepositoryService {
   constructor(
-    private readonly prismaService: PrismaService,
+    @Inject(PRISMA_SERVICE) private readonly prismaService: PrismaService,
     private readonly usersRepository: UsersRepositoryService,
   ) {}
 

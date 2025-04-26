@@ -1,5 +1,5 @@
-import {PrismaService} from '@app/database';
-import {Injectable, Logger} from '@nestjs/common';
+import {PRISMA_SERVICE, PrismaService} from '@app/database';
+import {Inject, Injectable, Logger} from '@nestjs/common';
 
 import {PaymentPlanDto} from '../../dto/PaymentPlan.dto';
 
@@ -7,7 +7,7 @@ import {PaymentPlanDto} from '../../dto/PaymentPlan.dto';
 export class PaymentsRepositoryService {
   constructor(
     private readonly logger: Logger,
-    private readonly prismaService: PrismaService,
+    @Inject(PRISMA_SERVICE) private readonly prismaService: PrismaService,
   ) {}
 
   async getAllPaymentPlans() {

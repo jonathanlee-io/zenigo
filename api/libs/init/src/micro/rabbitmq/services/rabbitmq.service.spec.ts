@@ -1,4 +1,4 @@
-import {Test, TestingModule} from '@nestjs/testing';
+import {TestBed} from '@suites/unit';
 
 import {RabbitmqService} from './rabbitmq.service';
 
@@ -6,11 +6,9 @@ describe('RabbitmqService', () => {
   let service: RabbitmqService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [RabbitmqService],
-    }).compile();
+    const {unit} = await TestBed.solitary(RabbitmqService).compile();
 
-    service = module.get<RabbitmqService>(RabbitmqService);
+    service = unit;
   });
 
   it('should be defined', () => {

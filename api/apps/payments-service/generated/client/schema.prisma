@@ -5,11 +5,23 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("PAYMENT_DATABASE_URL")
+  url      = env("PAYMENTS_DATABASE_URL")
 }
 
 model PaymentPlan {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id                                 String   @id @default(uuid())
+  name                               String
+  description                        String
+  monthlyPrice                       String
+  maxProjectCount                    Int      @default(0)
+  maxTeamMemberCount                 Int      @default(0)
+  isCustomSubdomainIncluded          Boolean  @default(true)
+  isEmbeddableFeedbackWidgetIncluded Boolean  @default(true)
+  isCustomHostnameIncluded           Boolean  @default(false)
+  tag                                String?
+  sortIndex                          Int      @default(0)
+  stripePricingTableId               String
+  stripePublishableKey               String
+  createdAt                          DateTime @default(now())
+  updatedAt                          DateTime @default(now())
 }
