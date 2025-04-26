@@ -14,7 +14,7 @@
     "build": "yarn run widget:build:prod && nest build",
     "orchestrate:build": "concurrently -c \"bgGreen.bold,blue.bold,cyan.bold,green.bold,magenta.bold\" yarn:orchestrate:build:*",
     "orchestrate:build:api-gateway": "nest build api-gateway",
-    "orchestrate:build:feature-flag-service": "nest build feature-flag-service",
+    "orchestrate:build:feature-flag-service": "cd apps/feature-flag-service && npx prisma generate && cd ../.. && nest build feature-flag-service",
     "orchestrate:build:feedback-service": "nest build feedback-service",
     "orchestrate:build:identity-service": "nest build identity-service",
     "orchestrate:build:payments-service": "nest build payments-service ",
