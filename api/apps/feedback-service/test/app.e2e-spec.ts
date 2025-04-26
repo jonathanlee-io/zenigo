@@ -2,14 +2,14 @@ import {INestApplication} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 
-import {EchonexusApiModule} from './../src/feedback-service.module';
+import {FeedbackServiceModule} from '../src/app/feedback-service.module';
 
-describe('EchonexusApiController (e2e)', () => {
+describe('FeedbackServiceApiController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [EchonexusApiModule],
+      imports: [FeedbackServiceModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

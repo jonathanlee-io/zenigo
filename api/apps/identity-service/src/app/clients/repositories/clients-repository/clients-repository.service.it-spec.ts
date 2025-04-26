@@ -10,7 +10,6 @@ import {Client} from 'pg';
 
 import {ClientsRepositoryService} from './clients-repository.service';
 import {PaymentsService} from '../../../../../../payments-service/src/app/services/payments/payments.service';
-import {PaymentsModule} from '../../../../../payments-service/src/payments.module';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 import {UsersModule} from '../../../users/users.module';
 
@@ -40,12 +39,7 @@ describe('ClientsRepositoryService', () => {
   beforeEach(async () => {
     process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        PrismaModule,
-        CacheModule.register(),
-        UsersModule,
-        PaymentsModule,
-      ],
+      imports: [PrismaModule, CacheModule.register(), UsersModule],
       providers: [
         {
           provide: Logger,

@@ -8,7 +8,7 @@ import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
 import {PaymentsRepositoryService} from './payments-repository.service';
-import {PaymentsModule} from '../../payments.module';
+import {PaymentsServiceModule} from '../../payments-service.module';
 
 describe('PaymentsRepositoryService', () => {
   jest.setTimeout(jestIntegrationTestTimeout);
@@ -34,7 +34,7 @@ describe('PaymentsRepositoryService', () => {
   beforeEach(async () => {
     process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule, CacheModule.register(), PaymentsModule],
+      imports: [PrismaModule, CacheModule.register(), PaymentsServiceModule],
       providers: [
         {
           provide: Logger,

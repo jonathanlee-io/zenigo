@@ -1,14 +1,12 @@
+import {jestIntegrationTestTimeout} from '@app/constants';
+import {PrismaModule} from '@app/database';
+import {TestHelpersUtil} from '@app/util';
 import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
 import {UsersRepositoryService} from './users-repository.service';
-import {jestIntegrationTestTimeout} from '../../../../src/lib/constants/testing/integration-testing.constants';
-import {PrismaModule} from '../../../../src/lib/prisma/prisma.module';
-import {
-  initializePostgresTestContainer,
-  tearDownPostgresTestContainer,
-} from '../../../../src/lib/util/tests.helpers.util';
+import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
 
 describe('UsersRepositoryService', () => {
   jest.setTimeout(jestIntegrationTestTimeout);
@@ -19,19 +17,22 @@ describe('UsersRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await initializePostgresTestContainer();
+      await TestHelpersUtil.initializePostgresTestContainer();
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
 
   afterAll(async () => {
-    await tearDownPostgresTestContainer(postgresContainer, postgresClient);
+    await TestHelpersUtil.tearDownPostgresTestContainer(
+      postgresContainer,
+      postgresClient,
+    );
   });
 
   beforeEach(async () => {
     process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule],
+      imports: [PrismaModule.register({client: IdentityPrismaClient})],
       providers: [UsersRepositoryService],
     }).compile();
 
