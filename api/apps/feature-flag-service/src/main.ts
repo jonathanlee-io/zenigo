@@ -2,12 +2,12 @@ import {featureFlagServiceConstants} from '@app/constants';
 import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
-import {AppModule} from './app/app.module';
+import {FeatureFlagServiceModule} from './app/feature-flag-service.module';
 
 configDotenv();
 
 bootstrapMicroservice(
-  AppModule,
+  FeatureFlagServiceModule,
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   featureFlagServiceConstants.queueName,
   'featureFlagUrl',
