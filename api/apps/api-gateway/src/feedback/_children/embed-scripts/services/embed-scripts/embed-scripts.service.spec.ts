@@ -1,4 +1,4 @@
-import {Test, TestingModule} from '@nestjs/testing';
+import {TestBed} from '@suites/unit';
 
 import {EmbedScriptsService} from './embed-scripts.service';
 
@@ -6,11 +6,9 @@ describe('EmbedScriptsService', () => {
   let service: EmbedScriptsService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [EmbedScriptsService],
-    }).compile();
+    const {unit} = await TestBed.solitary(EmbedScriptsService).compile();
 
-    service = module.get<EmbedScriptsService>(EmbedScriptsService);
+    service = unit;
   });
 
   it('should be defined', () => {
