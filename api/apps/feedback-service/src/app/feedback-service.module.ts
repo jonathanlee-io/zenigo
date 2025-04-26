@@ -12,7 +12,9 @@ import {ProductsModule} from './products/products.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ConfigifyModule.forRootAsync(),
+    ConfigifyModule.forRootAsync({
+      configFilePath: './apps/feedback-service/.env',
+    }),
     EventEmitterModule.forRoot({
       global: true,
     }),

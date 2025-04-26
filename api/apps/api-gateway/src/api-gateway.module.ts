@@ -14,7 +14,9 @@ import {FeedbackModule} from './feedback/feedback.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ConfigifyModule.forRootAsync(),
+    ConfigifyModule.forRootAsync({
+      configFilePath: './apps/api-gateway/.env',
+    }),
     ThrottlerModule.forRoot(),
     FeedbackModule,
   ],

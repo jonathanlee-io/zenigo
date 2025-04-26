@@ -13,7 +13,9 @@ import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ConfigifyModule.forRootAsync(),
+    ConfigifyModule.forRootAsync({
+      configFilePath: './apps/feature-flag-service/.env',
+    }),
     EventEmitterModule.forRoot({
       global: true,
     }),

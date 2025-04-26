@@ -11,7 +11,9 @@ import {UsersModule} from './users/users.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ConfigifyModule.forRootAsync(),
+    ConfigifyModule.forRootAsync({
+      configFilePath: './apps/identity-service/.env',
+    }),
     ClientsModule,
     UsersModule,
     ProjectsModule,

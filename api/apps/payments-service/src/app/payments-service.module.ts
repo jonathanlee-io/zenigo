@@ -10,7 +10,9 @@ import {PaymentsModule} from './payments/payments.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ConfigifyModule.forRootAsync(),
+    ConfigifyModule.forRootAsync({
+      configFilePath: './apps/payments-service/.env',
+    }),
     CacheModule.register(),
     PaymentsModule,
   ],

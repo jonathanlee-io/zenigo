@@ -18,7 +18,7 @@ describe('FeedbackServiceApiController (e2e)', () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
       await TestHelpersUtil.initializePostgresTestContainer({
         databaseUrlKey: 'FEEDBACK_DATABASE_URL',
-        schemaOverride: './apps/feature-flag-service/prisma/schema.prisma',
+        schemaOverride: './apps/feedback-service/prisma/schema.prisma',
       });
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
