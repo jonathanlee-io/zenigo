@@ -8,14 +8,13 @@ import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
 
 @Module({
   imports: [
-    // TODO: Move to individual modules
-    PrismaModule.register({client: FeatureFlagPrismaClient}),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     ConfigifyModule.forRootAsync({
       configFilePath: './apps/feature-flag-service/.env',
     }),
+    PrismaModule.register({client: FeatureFlagPrismaClient}),
     EventEmitterModule.forRoot({
       global: true,
     }),
