@@ -7,7 +7,7 @@ import {EventEmitterModule} from '@nestjs/event-emitter';
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
 import {IssuesModule} from './issues/issues.module';
 import {ProductsModule} from './products/products.module';
-import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
+import {PrismaClient as FeedbackPrismaClient} from '../../generated/client';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
     ConfigifyModule.forRootAsync({
       configFilePath: './apps/feedback-service/.env',
     }),
-    PrismaModule.register({client: FeatureFlagPrismaClient}),
+    PrismaModule.register({client: FeedbackPrismaClient}),
     EventEmitterModule.forRoot({
       global: true,
     }),
