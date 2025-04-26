@@ -10,7 +10,7 @@ bootstrapMicroservice({
   appModule: PaymentsServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: feedbackServiceConstants.queueName,
-  migrationUrlPropertyKey: 'paymentUrl',
+  databaseConfigObjectUrlKey: 'paymentUrl',
   databaseUrlKey: 'PAYMENTS_DATABASE_URL',
   schemaOverride: './apps/payments-service/prisma/schema.prisma',
 }).catch((error) => console.error(error));

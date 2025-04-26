@@ -6,14 +6,14 @@ export async function bootstrapMicroservice({
   appModule,
   rabbitMqUrls,
   rabbitMqQueueName,
-  migrationUrlPropertyKey,
+  databaseConfigObjectUrlKey,
   databaseUrlKey,
   schemaOverride,
 }: {
   appModule: unknown;
   rabbitMqUrls: string[];
   rabbitMqQueueName: string;
-  migrationUrlPropertyKey: DatabaseUrlKeys;
+  databaseConfigObjectUrlKey: DatabaseUrlKeys;
   databaseUrlKey: string;
   schemaOverride: string;
 }) {
@@ -25,7 +25,7 @@ export async function bootstrapMicroservice({
   const databaseConfig = app.get<DatabaseConfig>(DatabaseConfig);
 
   await HelpersUtil.runPrismaMigrations({
-    connectionUri: databaseConfig[migrationUrlPropertyKey],
+    connectionUri: databaseConfig[databaseConfigObjectUrlKey],
     databaseUrlKey,
     schemaOverride,
   });

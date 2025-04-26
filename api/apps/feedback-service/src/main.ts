@@ -10,7 +10,7 @@ bootstrapMicroservice({
   appModule: FeedbackServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: feedbackServiceConstants.queueName,
-  migrationUrlPropertyKey: 'feedbackUrl',
+  databaseConfigObjectUrlKey: 'feedbackUrl',
   databaseUrlKey: 'FEEDBACK_DATABASE_URL',
   schemaOverride: './apps/feedback-service/prisma/schema.prisma',
 }).catch((error) => console.error(error));

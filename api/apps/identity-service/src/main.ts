@@ -10,7 +10,7 @@ bootstrapMicroservice({
   appModule: IdentityServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: identityServiceConstants.queueName,
-  migrationUrlPropertyKey: 'identityUrl',
+  databaseConfigObjectUrlKey: 'identityUrl',
   databaseUrlKey: 'IDENTITY_DATABASE_URL',
   schemaOverride: './apps/identity-service/prisma/schema.prisma',
 }).catch((error) => console.error(error));
