@@ -33,7 +33,7 @@ describe('UsersRepositoryService', () => {
   });
 
   beforeEach(async () => {
-    process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
+    process.env['IDENTITY_DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
       imports: [PrismaModule.register({client: IdentityPrismaClient})],
       providers: [UsersRepositoryService],

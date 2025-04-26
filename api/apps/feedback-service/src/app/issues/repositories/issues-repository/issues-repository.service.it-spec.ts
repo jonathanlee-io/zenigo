@@ -32,7 +32,7 @@ describe('IssuesRepositoryService', () => {
   });
 
   beforeEach(async () => {
-    process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
+    process.env['FEEDBACK_DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
       imports: [IssuesModule],
     }).compile();
