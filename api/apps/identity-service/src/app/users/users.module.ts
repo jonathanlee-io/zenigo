@@ -5,13 +5,9 @@ import {AuthenticatedUsersController} from './controllers/authenticated-users/au
 import {UsersRepositoryService} from './repositories/users-repository/users-repository.service';
 import {AuthenticatedUsersService} from './services/authenticated-users/authenticated-users.service';
 import {PrismaClient as IdentityPrismaClient} from '../../../generated/client';
-import {ClientsModule} from '../clients/clients.module';
 
 @Module({
-  imports: [
-    PrismaModule.register({client: IdentityPrismaClient}),
-    ClientsModule,
-  ],
+  imports: [PrismaModule.register({client: IdentityPrismaClient})],
   controllers: [AuthenticatedUsersController],
   providers: [
     {
