@@ -72,7 +72,7 @@ jobs:
         working-directory: ./api
         run: yarn run test
         env:
-          FEATURE_FLAG_DATABASE_URL: ${{ secrets.FEATURE_FLAG_DATABASE_URL }}
+          FEATURE_FLAGS_DATABASE_URL: ${{ secrets.FEATURE_FLAGS_DATABASE_URL }}
           FEEDBACK_DATABASE_URL: ${{ secrets.FEEDBACK_DATABASE_URL }}
           IDENTITY_DATABASE_URL: ${{ secrets.IDENTITY_DATABASE_URL }}
           PAYMENTS_DATABASE_URL: ${{ secrets.PAYMENTS_DATABASE_URL }}
