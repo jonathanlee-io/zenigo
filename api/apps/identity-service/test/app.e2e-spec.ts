@@ -32,6 +32,7 @@ describe('FeedbackServiceApiController (e2e)', () => {
   });
 
   beforeEach(async () => {
+    process.env['IDENTITY_DATABASE_URL'] = postgresContainer.getConnectionUri();
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [IdentityServiceModule],
     }).compile();

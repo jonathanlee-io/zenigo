@@ -32,6 +32,8 @@ describe('FeedbackServiceApiController (e2e)', () => {
   });
 
   beforeEach(async () => {
+    process.env['FEATURE_FLAGS_DATABASE_URL'] =
+      postgresContainer.getConnectionUri();
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [FeatureFlagServiceModule],
     }).compile();
