@@ -146,7 +146,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.6.0",
@@ -159,13 +160,13 @@ const config = {
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "FEATURE_FLAG_DATABASE_URL",
+        "fromEnvVar": "FEATURE_FLAGS_DATABASE_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"FEATURE_FLAG_DATABASE_URL\")\n}\n\nmodel FeatureFlag {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n}\n\nmodel FeatureFlagAccessGroup {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n}\n",
-  "inlineSchemaHash": "4bf55ffd0436937564ba039b35aca06e28591bb56ee1c1034c0754d3e6244f58",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"FEATURE_FLAGS_DATABASE_URL\")\n}\n\nmodel FeatureFlag {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n}\n\nmodel FeatureFlagAccessGroup {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n}\n",
+  "inlineSchemaHash": "9e1ea90d5d773014a7a68ba6242e5a9b4e6ab774a97df7669d9ca2460ce481d6",
   "copyEngine": true
 }
 

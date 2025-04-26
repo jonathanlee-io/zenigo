@@ -11,5 +11,6 @@ bootstrapMicroservice(
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   identityServiceConstants.queueName,
   'identityUrl',
+  'IDENTITY_DATABASE_URL',
   './apps/identity-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));

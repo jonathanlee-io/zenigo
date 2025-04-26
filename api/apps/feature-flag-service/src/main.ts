@@ -11,5 +11,6 @@ bootstrapMicroservice(
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   featureFlagServiceConstants.queueName,
   'featureFlagUrl',
+  'FEATURE_FLAGS_DATABASE_URL',
   './apps/feature-flag-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));

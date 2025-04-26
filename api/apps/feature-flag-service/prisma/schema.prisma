@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("FEATURE_FLAG_DATABASE_URL")
+  url      = env("FEATURE_FLAGS_DATABASE_URL")
 }
 
 model FeatureFlag {

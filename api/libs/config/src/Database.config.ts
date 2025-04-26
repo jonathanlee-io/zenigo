@@ -7,7 +7,7 @@ export type DatabaseUrlKeys = keyof DatabaseConfig;
 export class DatabaseConfig {
   @IsDefined()
   @IsString()
-  @Value('FEATURE_FLAG_DATABASE_URL')
+  @Value('FEATURE_FLAGS_DATABASE_URL')
   featureFlagUrl: string;
 
   @IsDefined()

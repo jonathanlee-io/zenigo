@@ -11,5 +11,6 @@ bootstrapMicroservice(
   [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   feedbackServiceConstants.queueName,
   'feedbackUrl',
+  'FEEDBACK_DATABASE_URL',
   './apps/feedback-service/prisma/schema.prisma',
 ).catch((error) => console.error(error));

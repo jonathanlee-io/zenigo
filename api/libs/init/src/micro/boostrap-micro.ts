@@ -7,6 +7,7 @@ export async function bootstrapMicroservice(
   rabbitMqUrls: string[],
   rabbitMqQueueName: string,
   migrationUrlPropertyKey: DatabaseUrlKeys,
+  databaseUrlKey: string,
   schemaOverride: string,
 ) {
   const app = await createRabbitMQMicroservice(
@@ -18,6 +19,7 @@ export async function bootstrapMicroservice(
 
   await HelpersUtil.runPrismaMigrations(
     databaseConfig[migrationUrlPropertyKey],
+    databaseUrlKey,
     schemaOverride,
   );
 
