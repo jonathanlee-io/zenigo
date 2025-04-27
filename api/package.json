@@ -8,8 +8,8 @@
   "scripts": {
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "widget:build": "npx webpack --config webpack.config.js --env=development",
-    "widget:build:prod": "npx webpack --config webpack.config.js --env=production",
+    "widget:build": "npx webpack --config ./widget/webpack.config.js --env=development",
+    "widget:build:prod": "npx webpack --config ./widget/webpack.config.js --env=production",
     "widget:start": "npx webpack-dev-server --open",
     "build": "yarn run widget:build:prod && nest build",
     "orchestrate:build": "concurrently -c \"bgGreen.bold,blue.bold,cyan.bold,green.bold,magenta.bold\" yarn:orchestrate:build:*",
