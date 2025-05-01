@@ -6,10 +6,14 @@ import {FeedbackServiceModule} from './app/feedback-service.module';
 
 configDotenv();
 
-bootstrapMicroservice(
-  FeedbackServiceModule,
-  [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  feedbackServiceConstants.queueName,
-  'feedbackUrl',
-  './apps/feedback-service/prisma/schema.prisma',
-).catch((error) => console.error(error));
+bootstrapMicroservice({
+  appModule: FeedbackServiceModule,
+  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
+  rabbitMqQueueName: feedbackServiceConstants.queueName,
+  databaseConfigObjectUrlKey: 'feedbackUrl',
+  databaseUrlKey: 'FEEDBACK_DATABASE_URL',
+  schemaOverride:
+    process.env.NODE_ENV === 'development'
+      ? './apps/feedback-service/prisma/schema.prisma'
+      : '/dist/apps/feedback-service/apps/feedback-service/prisma/schema.prisma',
+}).catch((error) => console.error(error));

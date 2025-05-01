@@ -1,11 +1,11 @@
 import {jestIntegrationTestTimeout} from '@app/constants';
-import {PrismaModule} from '@app/database';
 import {TestHelpersUtil} from '@app/util';
 import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
 import {IssuesRepositoryService} from './issues-repository.service';
+import {IssuesModule} from '../../issues.module';
 
 describe('IssuesRepositoryService', () => {
   jest.setTimeout(jestIntegrationTestTimeout);
@@ -16,7 +16,10 @@ describe('IssuesRepositoryService', () => {
 
   beforeAll(async () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
-      await TestHelpersUtil.initializePostgresTestContainer();
+      await TestHelpersUtil.initializePostgresTestContainer({
+        databaseUrlKey: 'FEEDBACK_DATABASE_URL',
+        schemaOverride: './apps/feedback-service/prisma/schema.prisma',
+      });
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
   });
@@ -29,10 +32,9 @@ describe('IssuesRepositoryService', () => {
   });
 
   beforeEach(async () => {
-    process.env['DATABASE_URL'] = postgresContainer.getConnectionUri();
+    process.env['FEEDBACK_DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule],
-      providers: [IssuesRepositoryService],
+      imports: [IssuesModule],
     }).compile();
 
     repository = module.get<IssuesRepositoryService>(IssuesRepositoryService);

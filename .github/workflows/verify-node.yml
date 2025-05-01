@@ -1,0 +1,173 @@
+name: CI/CD Node.js
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  lint-api:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22.x]
+    name: Lint API (v${{ matrix.node-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./api
+      - name: Lint API (v${{ matrix.node-version }})
+        working-directory: ./api
+        run: yarn run lint
+
+  build-api:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22.x]
+    name: Build API (v${{ matrix.node-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./api
+      - name: Build API (v${{ matrix.node-version }})
+        working-directory: ./api
+        run: yarn run orchestrate:build
+
+  test-api:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22.x]
+    name: Test API (v${{ matrix.node-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./api
+      - name: Test API (v${{ matrix.node-version }})
+        working-directory: ./api
+        run: yarn run test
+        env:
+          FEATURE_FLAGS_DATABASE_URL: ${{ secrets.FEATURE_FLAGS_DATABASE_URL }}
+          FEEDBACK_DATABASE_URL: ${{ secrets.FEEDBACK_DATABASE_URL }}
+          IDENTITY_DATABASE_URL: ${{ secrets.IDENTITY_DATABASE_URL }}
+          PAYMENTS_DATABASE_URL: ${{ secrets.PAYMENTS_DATABASE_URL }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          RABBIT_MQ_URLS: ${{ secrets.RABBIT_MQ_URLS }}
+          RABBIT_MQ_FEATURE_FLAGS_QUEUE: FEATURE_FLAGS
+          RABBIT_MQ_FEEDBACK_QUEUE: FEEDBACK
+          RABBIT_MQ_IDENTITY_QUEUE: IDENTITY
+          RABBIT_MQ_PAYMENTS_QUEUE: PAYMENTS
+
+  lint-ui:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22.x]
+    name: Lint UI (v${{ matrix.node-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./ui
+      - name: Lint UI (v${{ matrix.node-version }})
+        working-directory: ./ui
+        run: yarn run lint
+
+  build-ui:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22.x]
+    name: Build UI (v${{ matrix.node-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./ui
+      - name: Build UI (v${{ matrix.node-version }})
+        working-directory: ./ui
+        run: yarn run build
+
+  test-ui:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22.x]
+    name: Test UI (v${{ matrix.node-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./ui
+      - name: Test (v${{ matrix.node-version }})
+        working-directory: ./ui
+        run: yarn run test
+
+  deploy-railway-staging-api:
+    needs: [lint-api, lint-ui, build-api, build-ui, test-api, test-ui]
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        target-service: [api-gateway, feature-flags-service, feedback-service, identity-service, payments-service]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - name: Install packages
+        run: yarn install --frozen-lockfile
+        working-directory: ./api
+      - name: Install Railway
+        run: npm i -g @railway/cli
+      - name: Deploy ${{ matrix.target-service }}
+        run: railway up --service ${{ matrix.target-service }}
+        working-directory: ./api
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PRODUCTION_TOKEN }}

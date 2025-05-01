@@ -2,13 +2,21 @@ import {DatabaseConfig, DatabaseUrlKeys} from '@app/config';
 import {createRabbitMQMicroservice} from '@app/init';
 import {HelpersUtil} from '@app/util';
 
-export async function bootstrapMicroservice(
-  appModule: unknown,
-  rabbitMqUrls: string[],
-  rabbitMqQueueName: string,
-  migrationUrlPropertyKey: DatabaseUrlKeys,
-  schemaOverride: string,
-) {
+export async function bootstrapMicroservice({
+  appModule,
+  rabbitMqUrls,
+  rabbitMqQueueName,
+  databaseConfigObjectUrlKey,
+  databaseUrlKey,
+  schemaOverride,
+}: {
+  appModule: unknown;
+  rabbitMqUrls: string[];
+  rabbitMqQueueName: string;
+  databaseConfigObjectUrlKey: DatabaseUrlKeys;
+  databaseUrlKey: string;
+  schemaOverride: string;
+}) {
   const app = await createRabbitMQMicroservice(
     appModule,
     rabbitMqUrls,
@@ -16,10 +24,11 @@ export async function bootstrapMicroservice(
   );
   const databaseConfig = app.get<DatabaseConfig>(DatabaseConfig);
 
-  await HelpersUtil.runPrismaMigrations(
-    databaseConfig[migrationUrlPropertyKey],
+  await HelpersUtil.runPrismaMigrations({
+    connectionUri: databaseConfig[databaseConfigObjectUrlKey],
+    databaseUrlKey,
     schemaOverride,
-  );
+  });
 
   await app.listen();
 }

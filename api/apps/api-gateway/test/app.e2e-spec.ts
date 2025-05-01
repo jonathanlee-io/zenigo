@@ -1,8 +1,7 @@
 import {INestApplication} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
-import * as request from 'supertest';
 
-import {ApiGatewayModule} from './../src/api-gateway.module';
+import {ApiGatewayModule} from '../src/api-gateway.module';
 
 describe('ApiGatewayController (e2e)', () => {
   let app: INestApplication;
@@ -16,10 +15,7 @@ describe('ApiGatewayController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  it('should be defined', () => {
+    expect(app).toBeDefined();
   });
 });

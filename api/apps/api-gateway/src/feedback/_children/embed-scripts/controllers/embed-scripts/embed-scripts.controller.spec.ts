@@ -1,4 +1,4 @@
-import {Test, TestingModule} from '@nestjs/testing';
+import {TestBed} from '@suites/unit';
 
 import {EmbedScriptsController} from './embed-scripts.controller';
 
@@ -6,11 +6,9 @@ describe('EmbedScriptsController', () => {
   let controller: EmbedScriptsController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [EmbedScriptsController],
-    }).compile();
+    const {unit} = await TestBed.solitary(EmbedScriptsController).compile();
 
-    controller = module.get<EmbedScriptsController>(EmbedScriptsController);
+    controller = unit;
   });
 
   it('should be defined', () => {
