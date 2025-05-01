@@ -5,7 +5,7 @@ import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
-import {FeatureFlagServiceModule} from '../src/app/feature-flags-service.module';
+import {FeatureFlagsServiceModule} from '../src/app/feature-flags-service.module';
 
 describe('FeedbackServiceApiController (e2e)', () => {
   jest.setTimeout(e2eTestTimeout);
@@ -35,7 +35,7 @@ describe('FeedbackServiceApiController (e2e)', () => {
     process.env['FEATURE_FLAGS_DATABASE_URL'] =
       postgresContainer.getConnectionUri();
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [FeatureFlagServiceModule],
+      imports: [FeatureFlagsServiceModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
