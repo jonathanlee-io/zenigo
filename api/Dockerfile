@@ -42,10 +42,10 @@ COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 COPY --chown=node:node --from=build /usr/src/app/widget/dist ./widget/dist
 
-COPY --chown=node:node --from=build /usr/src/app/apps/feature-flags-service/generated ./dist/apps/feature-flags-service/generated
-COPY --chown=node:node --from=build /usr/src/app/apps/feedback-service/generated ./dist/apps/feedback-service/generated
-COPY --chown=node:node --from=build /usr/src/app/apps/identity-service/generated ./dist/apps/identity-service/generated
-COPY --chown=node:node --from=build /usr/src/app/apps/payments-service/generated ./dist/apps/payments-service/generated
+COPY --chown=node:node --from=build /usr/src/app/apps/feature-flags-service/generated /usr/src/app/apps/feature-flags-service/generated
+COPY --chown=node:node --from=build /usr/src/app/apps/feedback-service/generated /usr/src/app/apps/feedback-service/generated
+COPY --chown=node:node --from=build /usr/src/app/apps/identity-service/generated /usr/src/app/apps/identity-service/generated
+COPY --chown=node:node --from=build /usr/src/app/apps/payments-service/generated /usr/src/app/apps/payments-service/generated
 
 COPY --chown=node:node --from=build /usr/src/app/apps/feature-flags-service/prisma ./dist/apps/feature-flags-service/apps/feature-flags-service/prisma
 COPY --chown=node:node --from=build /usr/src/app/apps/feedback-service/prisma ./dist/apps/feedback-service/apps/feedback-service/prisma
