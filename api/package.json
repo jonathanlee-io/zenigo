@@ -11,7 +11,7 @@
     "widget:build": "npx webpack --config ./widget/webpack.config.js --env=development",
     "widget:build:prod": "npx webpack --config ./widget/webpack.config.js --env=production",
     "widget:start": "npx webpack-dev-server --open",
-    "build": "yarn run widget:build:prod && nest build",
+    "build": "yarn run orchestrate:build",
     "orchestrate:build": "concurrently -c \"bgGreen.bold,blue.bold,cyan.bold,green.bold,magenta.bold\" yarn:orchestrate:build:*",
     "orchestrate:build:api-gateway": "nest build api-gateway",
     "orchestrate:build:feature-flags-service": "cd apps/feature-flags-service && npx prisma generate && cd ../.. && nest build feature-flags-service",
