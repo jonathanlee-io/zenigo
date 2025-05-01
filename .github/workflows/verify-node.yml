@@ -149,6 +149,7 @@ jobs:
         run: yarn run test
 
   deploy-railway-staging-api:
+    name: Deploy API to Railway
     needs: [lint-api, lint-ui, build-api, build-ui, test-api, test-ui]
     runs-on: ubuntu-22.04
     strategy:
