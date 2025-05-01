@@ -12,5 +12,8 @@ bootstrapMicroservice({
   rabbitMqQueueName: feedbackServiceConstants.queueName,
   databaseConfigObjectUrlKey: 'paymentUrl',
   databaseUrlKey: 'PAYMENTS_DATABASE_URL',
-  schemaOverride: './apps/payments-service/prisma/schema.prisma',
+  schemaOverride:
+    process.env.NODE_ENV === 'development'
+      ? './apps/payments-service/prisma/schema.prisma'
+      : '/dist/apps/payments-service/apps/payments-service/prisma/schema.prisma',
 }).catch((error) => console.error(error));

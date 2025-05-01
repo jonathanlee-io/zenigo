@@ -12,5 +12,8 @@ bootstrapMicroservice({
   rabbitMqQueueName: featureFlagServiceConstants.queueName,
   databaseConfigObjectUrlKey: 'featureFlagUrl',
   databaseUrlKey: 'FEATURE_FLAGS_DATABASE_URL',
-  schemaOverride: './apps/feature-flags-service/prisma/schema.prisma',
+  schemaOverride:
+    process.env.NODE_ENV === 'development'
+      ? './apps/feature-flags-service/prisma/schema.prisma'
+      : '/dist/apps/feature-flags-service/apps/feature-flags-service/prisma/schema.prisma',
 }).catch((error) => console.error(error));

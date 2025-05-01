@@ -12,5 +12,8 @@ bootstrapMicroservice({
   rabbitMqQueueName: feedbackServiceConstants.queueName,
   databaseConfigObjectUrlKey: 'feedbackUrl',
   databaseUrlKey: 'FEEDBACK_DATABASE_URL',
-  schemaOverride: './apps/feedback-service/prisma/schema.prisma',
+  schemaOverride:
+    process.env.NODE_ENV === 'development'
+      ? './apps/feedback-service/prisma/schema.prisma'
+      : '/dist/apps/feedback-service/apps/feedback-service/prisma/schema.prisma',
 }).catch((error) => console.error(error));
