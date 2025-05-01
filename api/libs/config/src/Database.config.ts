@@ -8,7 +8,7 @@ export class DatabaseConfig {
   @IsDefined()
   @IsString()
   @Value('FEATURE_FLAGS_DATABASE_URL')
-  featureFlagUrl: string;
+  featureFlagsUrl: string;
 
   @IsDefined()
   @IsString()
@@ -23,5 +23,5 @@ export class DatabaseConfig {
   @IsDefined()
   @IsString()
   @Value('PAYMENTS_DATABASE_URL')
-  paymentUrl: string;
+  paymentsUrl: string;
 }

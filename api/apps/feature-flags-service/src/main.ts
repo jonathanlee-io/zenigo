@@ -10,7 +10,7 @@ bootstrapMicroservice({
   appModule: FeatureFlagsServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: featureFlagServiceConstants.queueName,
-  databaseConfigObjectUrlKey: 'featureFlagUrl',
+  databaseConfigObjectUrlKey: 'featureFlagsUrl',
   databaseUrlKey: 'FEATURE_FLAGS_DATABASE_URL',
   schemaOverride:
     process.env.NODE_ENV === 'development'

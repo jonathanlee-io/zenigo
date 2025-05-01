@@ -10,7 +10,7 @@ bootstrapMicroservice({
   appModule: PaymentsServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: feedbackServiceConstants.queueName,
-  databaseConfigObjectUrlKey: 'paymentUrl',
+  databaseConfigObjectUrlKey: 'paymentsUrl',
   databaseUrlKey: 'PAYMENTS_DATABASE_URL',
   schemaOverride:
     process.env.NODE_ENV === 'development'
