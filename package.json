@@ -11,7 +11,7 @@
     "test": "concurrently -c \"green.bold,blue.bold\" yarn:test:*",
     "test:ui": "cd ui && yarn run test",
     "test:api": "cd api && yarn run test",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "keywords": [
     "feature flag",
