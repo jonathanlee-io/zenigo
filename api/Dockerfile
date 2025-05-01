@@ -38,6 +38,10 @@ COPY --chown=node:node --from=build /usr/src/app/package.json ./package.json
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 COPY --chown=node:node --from=build /usr/src/app/widget/dist ./widget/dist
+COPY --chown=node:node --from=build /usr/src/app/apps/feature-flags-service/prisma ./dist/apps/feature-flags-service/prisma
+COPY --chown=node:node --from=build /usr/src/app/apps/feedback-service/prisma ./dist/apps/feedback-service/prisma
+COPY --chown=node:node --from=build /usr/src/app/apps/identity-service/prisma ./dist/apps/identity-service/prisma
+COPY --chown=node:node --from=build /usr/src/app/apps/payments-service/prisma ./dist/apps/payments-service/prisma
 
 ARG TARGET_SERVICE=api-gateway
 ENV SERVICE_PATH="./dist/apps/${TARGET_SERVICE}/main.js"
