@@ -2,15 +2,15 @@ import {featureFlagServiceConstants} from '@app/constants';
 import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
-import {FeatureFlagServiceModule} from './app/feature-flag-service.module';
+import {FeatureFlagsServiceModule} from './app/feature-flags-service.module';
 
 configDotenv();
 
 bootstrapMicroservice({
-  appModule: FeatureFlagServiceModule,
+  appModule: FeatureFlagsServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: featureFlagServiceConstants.queueName,
   databaseConfigObjectUrlKey: 'featureFlagUrl',
   databaseUrlKey: 'FEATURE_FLAGS_DATABASE_URL',
-  schemaOverride: './apps/feature-flag-service/prisma/schema.prisma',
+  schemaOverride: './apps/feature-flags-service/prisma/schema.prisma',
 }).catch((error) => console.error(error));

@@ -12,7 +12,7 @@ import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
       isGlobal: true,
     }),
     ConfigifyModule.forRootAsync({
-      configFilePath: './apps/feature-flag-service/.env',
+      configFilePath: './apps/feature-flags-service/.env',
     }),
     PrismaModule.register({client: FeatureFlagPrismaClient}),
     EventEmitterModule.forRoot({
@@ -20,4 +20,4 @@ import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
     }),
   ],
 })
-export class FeatureFlagServiceModule {}
+export class FeatureFlagsServiceModule {}

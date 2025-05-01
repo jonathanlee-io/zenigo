@@ -5,7 +5,7 @@ import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
-import {FeatureFlagServiceModule} from '../src/app/feature-flag-service.module';
+import {FeatureFlagServiceModule} from '../src/app/feature-flags-service.module';
 
 describe('FeedbackServiceApiController (e2e)', () => {
   jest.setTimeout(e2eTestTimeout);
@@ -18,7 +18,7 @@ describe('FeedbackServiceApiController (e2e)', () => {
     const {initializedPostgresContainer, initializedPostgresClient} =
       await TestHelpersUtil.initializePostgresTestContainer({
         databaseUrlKey: 'FEATURE_FLAGS_DATABASE_URL',
-        schemaOverride: './apps/feature-flag-service/prisma/schema.prisma',
+        schemaOverride: './apps/feature-flags-service/prisma/schema.prisma',
       });
     postgresContainer = initializedPostgresContainer;
     postgresClient = initializedPostgresClient;
