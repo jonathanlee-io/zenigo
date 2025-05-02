@@ -2,12 +2,14 @@ import {jestIntegrationTestTimeout} from '@app/constants';
 import {PrismaModule} from '@app/database';
 import {TestHelpersUtil} from '@app/util';
 import {CacheModule} from '@nestjs/cache-manager';
+import {ConfigModule} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {StartedPostgreSqlContainer} from '@testcontainers/postgresql';
 import {Client} from 'pg';
 
 import {ClientsRepositoryService} from './clients-repository.service';
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
+import {IDENTITY_PRISMA} from '../../../../config/db.config';
 import {ClientsModule} from '../../clients.module';
 
 describe('ClientsRepositoryService', () => {
@@ -38,7 +40,13 @@ describe('ClientsRepositoryService', () => {
     process.env['IDENTITY_DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        PrismaModule.register({client: IdentityPrismaClient}),
+        await ConfigModule.forRoot({
+          isGlobal: true,
+        }),
+        PrismaModule.register(
+          {client: IdentityPrismaClient},
+          {injectionKey: IDENTITY_PRISMA},
+        ),
         CacheModule.register(),
         ClientsModule,
       ],

@@ -54,7 +54,6 @@ describe('ClientsService', () => {
       createdClient: null,
       createdSubdomain: null,
       createdProject: null,
-      createdProduct: null,
     });
 
     await expect(

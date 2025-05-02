@@ -1,6 +1,6 @@
-import {SupabaseConfig} from '@app/config/Supabase.config';
 import {StorageService} from '@app/storage/storage-service.interface';
 import {Injectable, OnModuleInit} from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
 import {createClient, SupabaseClient} from '@supabase/supabase-js';
 import {decode} from 'base64-arraybuffer';
 
@@ -8,12 +8,12 @@ import {decode} from 'base64-arraybuffer';
 export class SupabaseStorageService implements StorageService, OnModuleInit {
   private supabase: SupabaseClient;
 
-  constructor(private readonly supabaseConfig: SupabaseConfig) {}
+  constructor(private readonly configService: ConfigService) {}
 
   onModuleInit() {
     this.supabase = createClient(
-      this.supabaseConfig.url,
-      this.supabaseConfig.secretKey,
+      this.configService.getOrThrow('SUPABASE_URL'),
+      this.configService.getOrThrow('SUPABASE_SECRET_KEY'),
     );
   }
 

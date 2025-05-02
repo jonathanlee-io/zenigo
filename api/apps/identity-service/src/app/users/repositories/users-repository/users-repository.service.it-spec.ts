@@ -7,6 +7,7 @@ import {Client} from 'pg';
 
 import {UsersRepositoryService} from './users-repository.service';
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
+import {IDENTITY_PRISMA} from '../../../../config/db.config';
 
 describe('UsersRepositoryService', () => {
   jest.setTimeout(jestIntegrationTestTimeout);
@@ -35,7 +36,12 @@ describe('UsersRepositoryService', () => {
   beforeEach(async () => {
     process.env['IDENTITY_DATABASE_URL'] = postgresContainer.getConnectionUri();
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule.register({client: IdentityPrismaClient})],
+      imports: [
+        PrismaModule.register(
+          {client: IdentityPrismaClient},
+          {injectionKey: IDENTITY_PRISMA},
+        ),
+      ],
       providers: [UsersRepositoryService],
     }).compile();
 
