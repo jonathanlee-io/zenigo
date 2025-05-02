@@ -31,8 +31,7 @@
     "test": "yarn run orchestrate:build && jest --config ./jest.config.ts --coverage",
     "test:watch": "yarn run orchestrate:build && jest --watch",
     "test:cov": "yarn run orchestrate:build && jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "prepare": "husky || true"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
@@ -110,7 +109,6 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.1",
     "html-loader": "^0.5.1",
-    "husky": "^9.1.6",
     "jest": "^29.7.0",
     "jest-serial-runner": "^1.2.1",
     "postcss": "^8.4.49",
