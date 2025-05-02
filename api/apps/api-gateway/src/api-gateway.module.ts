@@ -1,5 +1,4 @@
 import {JwtAuthGuard} from '@app/auth';
-import {ConfigifyModule} from '@jdevel/configify';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 import {APP_GUARD, RouterModule} from '@nestjs/core';
@@ -13,9 +12,7 @@ import {FeedbackModule} from './feedback/feedback.module';
     RouterModule.register(appRoutes),
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
-    ConfigifyModule.forRootAsync({
-      configFilePath: './apps/api-gateway/.env',
+      envFilePath: './apps/api-gateway/.env',
     }),
     ThrottlerModule.forRoot(),
     FeedbackModule,

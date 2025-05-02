@@ -1,5 +1,4 @@
 import {PrismaModule} from '@app/database';
-import {ConfigifyModule} from '@jdevel/configify';
 import {Logger, Module} from '@nestjs/common';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../generated/client';
@@ -8,11 +7,7 @@ import {ClientsRepositoryService} from './repositories/clients-repository/client
 import {ClientsService} from './services/clients/clients.service';
 
 @Module({
-  imports: [
-    ConfigifyModule.forRootAsync(),
-    PrismaModule.register({client: IdentityPrismaClient}),
-    UsersModule,
-  ],
+  imports: [PrismaModule.register({client: IdentityPrismaClient}), UsersModule],
   providers: [
     {
       provide: Logger,

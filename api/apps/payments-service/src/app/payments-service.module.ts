@@ -1,4 +1,3 @@
-import {ConfigifyModule} from '@jdevel/configify';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
@@ -9,9 +8,7 @@ import {PaymentsModule} from './payments/payments.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
-    ConfigifyModule.forRootAsync({
-      configFilePath: './apps/payments-service/.env',
+      envFilePath: './apps/payments-service/.env',
     }),
     CacheModule.register(),
     PaymentsModule,

@@ -1,4 +1,3 @@
-import {AdminConfig} from '@app/config/AdminConfig';
 import {reservedSubdomains} from '@app/constants';
 import {POSTSuccessDto} from '@app/dto';
 import {
@@ -10,8 +9,10 @@ import {
   NotFoundException,
   OnModuleInit,
 } from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
 
 import {PaymentsService} from '../../../../../../payments-service/src/app/payments/services/payments/payments.service';
+import {IdentityEnvironment} from '../../../../config/environment';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 import {CreateClientDto} from '../../dto/CreateClient.dto';
 import {IsSubdomainAvailableDto} from '../../dto/IsSubdomainAvailable.dto';
@@ -21,7 +22,7 @@ import {ClientsRepositoryService} from '../../repositories/clients-repository/cl
 export class ClientsService implements OnModuleInit {
   constructor(
     private readonly logger: Logger,
-    private readonly adminConfig: AdminConfig,
+    private readonly configService: ConfigService<IdentityEnvironment>,
     private readonly clientsRepository: ClientsRepositoryService,
     private readonly usersRepository: UsersRepositoryService,
   ) {}
@@ -39,7 +40,7 @@ export class ClientsService implements OnModuleInit {
     if (!defaultClientRecord) {
       this.logger.log('Creating default client as no client exists yet');
       const creationResult = await this.createClient(
-        this.adminConfig.adminEmail,
+        this.configService.getOrThrow('ADMIN_EMAIL'),
         {
           clientDisplayName: 'EchoNexus',
           projectDisplayName: 'EchoNexus',
@@ -67,14 +68,14 @@ export class ClientsService implements OnModuleInit {
     if (
       !defaultClientRecord.admins
         .map((admin) => admin.email)
-        .includes(this.adminConfig.adminEmail)
+        .includes(this.configService.getOrThrow('ADMIN_EMAIL'))
     ) {
       this.logger.log(
         `Default client exists but admin email is not set, updating now`,
       );
       await this.clientsRepository.addAdminToClientById(
         defaultClientRecord.id,
-        this.adminConfig.adminEmail,
+        this.configService.getOrThrow('ADMIN_EMAIL'),
       );
       return;
     }

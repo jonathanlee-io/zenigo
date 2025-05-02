@@ -1,14 +1,15 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-import {ApplicationConfig} from '@app/config/Application.config';
 import {
   BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
 
+import {IdentityEnvironment} from '../../../../config/environment';
 import {ClientsService} from '../../../clients/services/clients/clients.service';
 import {CreateProjectDto} from '../../dto/CreateProject.dto';
 import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
@@ -19,7 +20,7 @@ export class ProjectsService {
   constructor(
     private readonly projectsRepository: ProjectsRepositoryService,
     private readonly clientsService: ClientsService,
-    private readonly applicationConfig: ApplicationConfig,
+    private readonly configService: ConfigService<IdentityEnvironment>,
   ) {}
 
   async createProject(
@@ -148,9 +149,9 @@ export class ProjectsService {
     returnedProject: unknown,
   ) {
     let widgetSrc: string;
-    if (this.applicationConfig.nodeEnv === 'production') {
+    if (this.configService.getOrThrow('NODE_ENV') === 'production') {
       widgetSrc = `https://${clientSubdomain}.api.echonexus.io/v1/scripts/echonexus-widget.js`;
-    } else if (this.applicationConfig.nodeEnv === 'staging') {
+    } else if (this.configService.getOrThrow('NODE_ENV') === 'staging') {
       widgetSrc = `https://${clientSubdomain}.api.echonexus-staging.com/v1/scripts/echonexus-widget.js`;
     } else {
       widgetSrc = `http://${clientSubdomain}.api.echonexus-local.io:8000/v1/scripts/echonexus-widget.js`;

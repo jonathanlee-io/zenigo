@@ -1,5 +1,2 @@
-export * from './config.module';
-export * from './AdminConfig';
-export * from './Application.config';
+export * from './environment';
 export * from './Database.config';
-export * from './Supabase.config';

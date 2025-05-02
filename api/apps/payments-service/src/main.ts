@@ -3,6 +3,7 @@ import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
 import {PaymentsServiceModule} from './app/payments-service.module';
+import {dummyPaymentsEnvironment} from './config/environment';
 
 configDotenv();
 
@@ -10,7 +11,7 @@ bootstrapMicroservice({
   appModule: PaymentsServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: feedbackServiceConstants.queueName,
-  databaseConfigObjectUrlKey: 'paymentsUrl',
+  requiredConfigKeys: Object.keys(dummyPaymentsEnvironment),
   databaseUrlKey: 'PAYMENTS_DATABASE_URL',
   schemaOverride:
     process.env.NODE_ENV === 'development'

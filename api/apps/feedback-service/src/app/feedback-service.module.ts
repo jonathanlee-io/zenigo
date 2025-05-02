@@ -1,5 +1,4 @@
 import {PrismaModule} from '@app/database';
-import {ConfigifyModule} from '@jdevel/configify';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 import {EventEmitterModule} from '@nestjs/event-emitter';
@@ -13,9 +12,7 @@ import {PrismaClient as FeedbackPrismaClient} from '../../generated/client';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
-    ConfigifyModule.forRootAsync({
-      configFilePath: './apps/feedback-service/.env',
+      envFilePath: './apps/feedback-service/.env',
     }),
     PrismaModule.register({client: FeedbackPrismaClient}),
     EventEmitterModule.forRoot({

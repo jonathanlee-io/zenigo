@@ -1,4 +1,3 @@
-import {ConfigifyModule} from '@jdevel/configify';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 
@@ -10,9 +9,7 @@ import {UsersModule} from './users/users.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
-    ConfigifyModule.forRootAsync({
-      configFilePath: './apps/identity-service/.env',
+      envFilePath: './apps/identity-service/.env',
     }),
     ClientsModule,
     UsersModule,

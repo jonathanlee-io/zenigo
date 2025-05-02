@@ -3,6 +3,7 @@ import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
 import {FeatureFlagsServiceModule} from './app/feature-flags-service.module';
+import {dummyFeatureFlagsEnvironment} from './config/environment';
 
 configDotenv();
 
@@ -10,7 +11,7 @@ bootstrapMicroservice({
   appModule: FeatureFlagsServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: featureFlagServiceConstants.queueName,
-  databaseConfigObjectUrlKey: 'featureFlagsUrl',
+  requiredConfigKeys: Object.keys(dummyFeatureFlagsEnvironment),
   databaseUrlKey: 'FEATURE_FLAGS_DATABASE_URL',
   schemaOverride:
     process.env.NODE_ENV === 'development'
