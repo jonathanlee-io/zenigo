@@ -93,6 +93,7 @@ jobs:
     needs: [lint, build, test]
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         target-service: [api-gateway, feature-flags-service, feedback-service, identity-service, payments-service]
     steps:
