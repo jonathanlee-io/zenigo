@@ -111,13 +111,11 @@ jobs:
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Set Production Environment Variables
         run: |
-          echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_PRODUCTION_TOKEN }} >> $GITHUB_ENV
+          echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_PRODUCTION_TOKEN }}" >> $GITHUB_ENV
       - if: ${{ github.ref == 'refs/heads/staging' }}
         name: Set Staging Environment Variables
         run: |
-          echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }} >> $GITHUB_ENV
+          echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
       - name: Deploy ${{ matrix.target-service }}
         run: railway up --service ${{ matrix.target-service }}
         working-directory: ./api
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PRODUCTION_TOKEN }}
