@@ -1,0 +1,1 @@
+export const FEEDBACK_PRISMA = 'FEEDBACK_PRISMA';

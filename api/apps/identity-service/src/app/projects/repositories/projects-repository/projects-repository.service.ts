@@ -1,6 +1,7 @@
-import {PrismaService} from '@app/database';
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Inject, Injectable, InternalServerErrorException} from '@nestjs/common';
 
+import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
+import {IDENTITY_PRISMA} from '../../../../config/db.config';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 import {CreateProjectDto} from '../../dto/CreateProject.dto';
 import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
@@ -8,7 +9,8 @@ import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
 @Injectable()
 export class ProjectsRepositoryService {
   constructor(
-    private readonly prismaService: PrismaService,
+    @Inject(IDENTITY_PRISMA)
+    private readonly prismaService: IdentityPrismaClient,
     private readonly usersRepository: UsersRepositoryService,
   ) {}
 
@@ -29,7 +31,7 @@ export class ProjectsRepositoryService {
         `Could not find user with id: ${requestingUserId}`,
       );
     }
-    const [createdProject, createdSubdomain, createdProduct] =
+    const [createdProject, createdSubdomain] =
       await this.prismaService.$transaction(async (prisma) => {
         const createdProject = await prisma.project.create({
           data: {
@@ -67,23 +69,11 @@ export class ProjectsRepositoryService {
           },
         });
 
-        // Creates the product here to avoid race conditions and circular dependency with products/projects services
-        const createdProduct = await prisma.product.create({
-          data: {
-            project: {
-              connect: {
-                id: createdProject.id,
-              },
-            },
-          },
-        });
-
-        return [createdProject, createdSubdomain, createdProduct];
+        return [createdProject, createdSubdomain];
       });
     return {
       ...createdProject,
       subdomains: [createdSubdomain],
-      createdProduct,
     };
   }
 

@@ -1,0 +1,1 @@
+export const PAYMENTS_PRISMA = 'PAYMENTS_PRISMA';

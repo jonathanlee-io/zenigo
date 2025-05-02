@@ -5,9 +5,15 @@ import {AuthenticatedUsersController} from './controllers/authenticated-users/au
 import {UsersRepositoryService} from './repositories/users-repository/users-repository.service';
 import {AuthenticatedUsersService} from './services/authenticated-users/authenticated-users.service';
 import {PrismaClient as IdentityPrismaClient} from '../../../generated/client';
+import {IDENTITY_PRISMA} from '../../config/db.config';
 
 @Module({
-  imports: [PrismaModule.register({client: IdentityPrismaClient})],
+  imports: [
+    PrismaModule.register(
+      {client: IdentityPrismaClient},
+      {injectionKey: IDENTITY_PRISMA},
+    ),
+  ],
   controllers: [AuthenticatedUsersController],
   providers: [
     {

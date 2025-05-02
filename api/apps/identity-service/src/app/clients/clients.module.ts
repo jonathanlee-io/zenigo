@@ -5,9 +5,16 @@ import {PrismaClient as IdentityPrismaClient} from '../../../generated/client';
 import {UsersModule} from '../users/users.module';
 import {ClientsRepositoryService} from './repositories/clients-repository/clients-repository.service';
 import {ClientsService} from './services/clients/clients.service';
+import {IDENTITY_PRISMA} from '../../config/db.config';
 
 @Module({
-  imports: [PrismaModule.register({client: IdentityPrismaClient}), UsersModule],
+  imports: [
+    PrismaModule.register(
+      {client: IdentityPrismaClient},
+      {injectionKey: IDENTITY_PRISMA},
+    ),
+    UsersModule,
+  ],
   providers: [
     {
       provide: Logger,

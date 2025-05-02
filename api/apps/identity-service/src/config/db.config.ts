@@ -1,0 +1,1 @@
+export const IDENTITY_PRISMA = 'IDENTITY_PRISMA';

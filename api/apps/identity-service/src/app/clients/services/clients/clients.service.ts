@@ -102,7 +102,7 @@ export class ClientsService implements OnModuleInit {
     ) {
       throw new BadRequestException('Subdomain already exists');
     }
-    const {createdClient, createdSubdomain, createdProject, createdProduct} =
+    const {createdClient, createdSubdomain, createdProject} =
       await this.clientsRepository.registerNewClientWithTransaction(
         requestingUserEmail,
         clientDisplayName,
@@ -115,12 +115,7 @@ export class ClientsService implements OnModuleInit {
           isFeatureFeedbackEnabled,
         },
       );
-    if (
-      !createdClient ||
-      !createdSubdomain ||
-      !createdProject ||
-      !createdProduct
-    ) {
+    if (!createdClient || !createdSubdomain || !createdProject) {
       throw new InternalServerErrorException();
     }
     return <POSTSuccessDto & {clientId: string; projectId: string}>{

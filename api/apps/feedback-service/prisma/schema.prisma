@@ -8,6 +8,53 @@ datasource db {
   url      = env("FEEDBACK_DATABASE_URL")
 }
 
+model Product {
+  id                        String                      @id @default(uuid())
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @default(now())
+  projectId                 String                      @unique
+  ProductFeedbackSubmission ProductFeedbackSubmission[]
+  ProductPost               ProductPost?
+}
+
+enum ProductPostType {
+  OWNER_UPDATE
+  OWNER_ISSUE
+  USER_ISSUE
+}
+
+model ProductPost {
+  id          String               @id @default(uuid())
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @default(now())
+  type        ProductPostType
+  title       String
+  description String
+  upvotes     ProductPostUpvote[]
+  comments    ProductPostComment[]
+  product     Product              @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String               @unique
+}
+
+model ProductPostUpvote {
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now())
+  ProductPost   ProductPost? @relation(fields: [productPostId], references: [id], onDelete: Cascade)
+  productPostId String?
+  userId        String
+}
+
+model ProductPostComment {
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now())
+  text          String
+  ProductPost   ProductPost? @relation(fields: [productPostId], references: [id], onDelete: Cascade)
+  productPostId String?
+  userId        String
+}
+
 enum ProductFeedbackSubmissionType {
   BUG_REPORT
   FEATURE_REQUEST
@@ -18,6 +65,8 @@ model ProductFeedbackSubmission {
   id                     String                        @id @default(uuid())
   createdAt              DateTime                      @default(now())
   updatedAt              DateTime                      @default(now())
+  product                Product                       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId              String
   clientIp               String
   clientSubdomain        String
   widgetMetadataType     ProductFeedbackSubmissionType

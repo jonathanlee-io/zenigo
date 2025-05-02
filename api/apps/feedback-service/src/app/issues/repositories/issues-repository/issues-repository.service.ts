@@ -1,9 +1,11 @@
-import {PRISMA_SERVICE, PrismaService} from '@app/database';
+import {PrismaService} from '@app/database';
 import {Inject, Injectable} from '@nestjs/common';
+
+import {FEEDBACK_PRISMA} from '../../../../config/db.config';
 
 @Injectable()
 export class IssuesRepositoryService {
   constructor(
-    @Inject(PRISMA_SERVICE) private readonly prismaService: PrismaService,
+    @Inject(FEEDBACK_PRISMA) private readonly prismaService: PrismaService,
   ) {}
 }

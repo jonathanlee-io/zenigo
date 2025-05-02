@@ -10,13 +10,14 @@ export interface PrismaModuleOptions {
   client: new (...args: any[]) => any;
 }
 
-export const PRISMA_SERVICE = 'PRISMA_SERVICE';
-
 @Module({})
 export class PrismaModule {
-  static register(options: PrismaModuleOptions): DynamicModule {
+  static register(
+    options: PrismaModuleOptions,
+    {injectionKey}: {injectionKey: string},
+  ): DynamicModule {
     const prismaServiceProvider: Provider = {
-      provide: PRISMA_SERVICE,
+      provide: injectionKey,
       useFactory: async () => {
         class DynamicPrismaService
           extends options.client

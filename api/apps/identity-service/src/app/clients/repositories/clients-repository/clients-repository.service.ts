@@ -1,12 +1,14 @@
-import {PRISMA_SERVICE, PrismaService} from '@app/database';
 import {Inject, Injectable, InternalServerErrorException} from '@nestjs/common';
 
+import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
+import {IDENTITY_PRISMA} from '../../../../config/db.config';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 
 @Injectable()
 export class ClientsRepositoryService {
   constructor(
-    @Inject(PRISMA_SERVICE) private readonly prismaService: PrismaService,
+    @Inject(IDENTITY_PRISMA)
+    private readonly prismaService: IdentityPrismaClient,
     private readonly usersRepository: UsersRepositoryService,
   ) {}
 
@@ -32,16 +34,12 @@ export class ClientsRepositoryService {
         `Could not find user with e-mail: ${requestingUserEmail}`,
       );
     }
-    const [createdClient, createdProject, createdSubdomain, createdProduct] =
+    const [createdClient, createdProject, createdSubdomain] =
       await this.prismaService.$transaction(async (prisma) => {
         const createdClient = await prisma.client.create({
           data: {
             displayName: clientDisplayName,
-            paymentPlan: {
-              connect: {
-                id: paymentPlanId,
-              },
-            },
+            paymentPlanId,
             createdBy: {
               connect: {
                 id: user.id,
@@ -89,26 +87,10 @@ export class ClientsRepositoryService {
           },
         });
 
-        // Creates the product here to avoid race conditions and circular dependency with products/projects services
-        const createdProduct = await prisma.product.create({
-          data: {
-            project: {
-              connect: {
-                id: createdProject.id,
-              },
-            },
-          },
-        });
-
-        return [
-          createdClient,
-          createdProject,
-          createdSubdomain,
-          createdProduct,
-        ];
+        return [createdClient, createdProject, createdSubdomain];
       });
 
-    return {createdClient, createdSubdomain, createdProject, createdProduct};
+    return {createdClient, createdSubdomain, createdProject};
   }
 
   async addSubdomainToProject(subdomain: string, projectId: string) {

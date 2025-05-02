@@ -1,9 +1,13 @@
-import {PRISMA_SERVICE, PrismaService} from '@app/database';
 import {Inject, Injectable} from '@nestjs/common';
+
+import {PrismaClient as FeedbackPrismaClient} from '../../../../../generated/client';
+import {FEEDBACK_PRISMA} from '../../../../config/db.config';
 
 @Injectable()
 export class ProductsRepositoryService {
-  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(FEEDBACK_PRISMA) private readonly prisma: FeedbackPrismaClient,
+  ) {}
 
   async createProductFeedback(
     productId: string,

@@ -1,13 +1,15 @@
-import {PRISMA_SERVICE, PrismaService} from '@app/database';
 import {Inject, Injectable, Logger} from '@nestjs/common';
 
+import {PrismaClient as PaymentsPrismaClient} from '../../../../../generated/client';
+import {PAYMENTS_PRISMA} from '../../../../config/db.config';
 import {PaymentPlanDto} from '../../dto/PaymentPlan.dto';
 
 @Injectable()
 export class PaymentsRepositoryService {
   constructor(
     private readonly logger: Logger,
-    @Inject(PRISMA_SERVICE) private readonly prismaService: PrismaService,
+    @Inject(PAYMENTS_PRISMA)
+    private readonly prismaService: PaymentsPrismaClient,
   ) {}
 
   async getAllPaymentPlans() {

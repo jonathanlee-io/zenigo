@@ -1,9 +1,13 @@
-import {PRISMA_SERVICE, PrismaService} from '@app/database';
 import {Inject, Injectable} from '@nestjs/common';
+
+import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
+import {IDENTITY_PRISMA} from '../../../../config/db.config';
 
 @Injectable()
 export class UsersRepositoryService {
-  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(IDENTITY_PRISMA) private readonly prisma: IdentityPrismaClient,
+  ) {}
 
   async findBySupabaseId(supabaseId: string) {
     return this.prisma.user.findUnique({

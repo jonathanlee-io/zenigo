@@ -1,4 +1,3 @@
-import {PrismaModule} from '@app/database';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 import {EventEmitterModule} from '@nestjs/event-emitter';
@@ -6,7 +5,6 @@ import {EventEmitterModule} from '@nestjs/event-emitter';
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
 import {IssuesModule} from './issues/issues.module';
 import {ProductsModule} from './products/products.module';
-import {PrismaClient as FeedbackPrismaClient} from '../../generated/client';
 
 @Module({
   imports: [
@@ -14,7 +12,6 @@ import {PrismaClient as FeedbackPrismaClient} from '../../generated/client';
       isGlobal: true,
       envFilePath: './apps/feedback-service/.env',
     }),
-    PrismaModule.register({client: FeedbackPrismaClient}),
     EventEmitterModule.forRoot({
       global: true,
     }),
