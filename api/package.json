@@ -32,7 +32,7 @@
     "test:watch": "yarn run orchestrate:build && jest --watch",
     "test:cov": "yarn run orchestrate:build && jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
