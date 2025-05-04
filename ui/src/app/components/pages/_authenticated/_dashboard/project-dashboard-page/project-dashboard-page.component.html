@@ -1,0 +1,46 @@
+<div class="py-8 px-8 border-8 border-black rounded-3xl min-h-screen bg-light-primary dark:bg-dark-primary"
+     style="box-shadow: 5px 5px 0 black; outline: 3px solid black;">
+  <div class="space-y-12 animate-fadeinup px-8">
+    <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+      <div>
+        <h2 class="text-4xl font-extrabold tracking-wide text-light-text-primary dark:text-dark-text-primary">
+          Organization:&nbsp;<span
+          class="text-xl text-light-text-primary dark:text-dark-text-primary">{{ projectStore.projectById()?.client?.displayName }}</span>
+        </h2>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+      <div>
+        <h2 class="text-4xl font-extrabold tracking-wide text-light-text-primary dark:text-dark-text-primary">
+          Project:&nbsp;<span
+          class="text-xl text-light-text-primary dark:text-dark-text-primary">{{ projectStore.projectById()?.name }}</span>
+        </h2>
+      </div>
+    </div>
+    <div>
+      <app-project-features-switches
+        [bugReportsEnabledFormControl]="bugReportsEnabledFormControl"
+        [featureFeedbackEnabledFormControl]="featureFeedbackEnabledFormControl"
+        [featureRequestsEnabledFormControl]="featureRequestsEnabledFormControl"
+        [isHintEnabled]="false"
+        [ownerIssuesEnabledFormControl]="ownerIssuesEnabledFormControl"
+        [ownerUpdatesEnabledFormControl]="ownerUpdatesEnabledFormControl"
+        [userIssuesEnabledFormControl]="userIssuesEnabledFormControl"
+      />
+    </div>
+    <div>
+      <app-project-actions-panel/>
+    </div>
+    <div>
+      <h2 class="text-4xl py-4 my-4 font-extrabold tracking-wide text-light-text-primary dark:text-dark-text-primary">
+        Product Feedback:
+      </h2>
+      <ng-container *ngIf="projectStore.isFeedbackLoading() else feedbackLoaded">
+        <p-progressSpinner styleClass="mt-8" />
+      </ng-container>
+      <ng-template #feedbackLoaded>
+        <app-product-feedback-dashboard-panel [productFeedbackSubmissions]="projectStore.productFeedbackSubmissions()" />
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="relative pl-16">
+  <dt class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary">
+    <div
+      class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-full bg-light-blue dark:bg-dark-blue
+         shadow-md transition-transform hover:scale-110">
+      <i
+        class="pi text-light-text-primary dark:text-dark-text-primary text-2xl"
+        [ngClass]="primeIconClass()">
+      </i>
+    </div>
+    {{ title() }}
+  </dt>
+  <dd class="mt-2 text-base leading-7 text-light-text-primary dark:text-dark-text-primary">{{ description() }}</dd>
+</div>

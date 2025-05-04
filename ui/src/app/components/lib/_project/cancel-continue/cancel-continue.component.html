@@ -1,0 +1,21 @@
+<div class="mt-6 flex items-center justify-end gap-x-6 animate-fadeindown">
+  <a
+    pButton
+    [routerLink]="cancelRoutePath()"
+    [severity]="'info'"
+    type="button"
+    class="px-8 py-4 text-2xl font-bold text-light-text-primary dark:text-dark-text-primary dark:outline-dark-text-primary dark:outline rounded-full shadow-lg transform transition-transform hover:scale-105 hover:bg-yellow-400 hover:rotate-3">
+    Cancel
+  </a>
+  <button
+    pButton
+    [disabled]="!isReadyToContinue()"
+    [loading]="clientStore.isLoading()"
+    (click)="doCreateProject()"
+    [severity]="(isReadyToContinue()) ? 'primary': 'info'"
+    class="px-8 py-4 text-2xl font-bold text-light-text-primary dark:text-dark-text-primary dark:outline-dark-text-primary dark:outline
+         rounded-full shadow-lg transform transition-transform hover:scale-105 hover:bg-yellow-400 hover:rotate-3" type="button">
+    Continue
+    <ArrowRightIcon *ngIf="isReadyToContinue()" />
+  </button>
+</div>

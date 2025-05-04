@@ -1,0 +1,50 @@
+<!-- Example Post with Subtle Hover Effect -->
+<div
+  class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-10 my-6 border border-gray-300 dark:border-gray-700
+         transition-all ease-in-out duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-blue-400 dark:hover:border-blue-600"
+>
+  <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between">
+    <div>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+        {{ post().title }}
+      </h3>
+      <p class="text-gray-600 dark:text-gray-400 mt-2 text-sm leading-relaxed">
+        {{ post().summary }}
+      </p>
+    </div>
+    <div class="flex gap-6 mt-4 sm:mt-0 text-gray-700 dark:text-gray-300">
+      <!-- Upvote Button -->
+      <div class="flex items-center">
+        <button
+          (click)="doUpVote(post())"
+          [ngClass]="{
+    'border-green-500 bg-green-100 text-green-600 cursor-not-allowed opacity-50': isAlreadyUpvoted(post()),
+    'border-gray-300 hover:border-blue-400 bg-gray-200 hover:bg-blue-100 text-blue-500 hover:text-blue-600': !isAlreadyUpvoted(post())
+  }"
+          aria-label="Upvote Post"
+          class="flex items-center p-2 rounded-md transition-all ease-in-out hover:shadow-lg transform hover:-translate-y-1"
+        >
+  <span
+    class="pi pi-arrow-up transform transition-transform ease-in-out duration-300 hover:scale-125 hover:rotate-12"
+  ></span>
+        </button>
+        <span class="ml-1 font-semibold">{{ post().upVotes }}</span>
+      </div>
+
+      <!-- Comments Button -->
+      <div class="flex items-center">
+        <button
+          aria-label="View Comments"
+          class="flex items-center p-2 rounded-md bg-gray-200 hover:bg-blue-100 dark:bg-gray-700 dark:hover:bg-blue-900
+             text-gray-500 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-200
+             transition-all ease-in-out hover:shadow-lg transform hover:-translate-y-1"
+        >
+          <span
+            class="pi pi-comments transform transition-transform ease-in-out duration-300 hover:scale-125 hover:rotate-12"
+          ></span>
+        </button>
+        <span class="ml-1 font-semibold">{{ post().comments }}</span>
+      </div>
+    </div>
+  </div>
+</div>

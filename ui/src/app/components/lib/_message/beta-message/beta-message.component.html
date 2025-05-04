@@ -1,0 +1,5 @@
+<ng-container *ngIf="featureFlagStore.isDevelopmentMessageEnabled()">
+  <p-message (onClose)="handleBetaMessageClosed()" *ngIf="isShown()" closable severity="warn">This application is
+    currently in an early phase of development. Breaking changes and occasional downtime may occur.
+  </p-message>
+</ng-container>

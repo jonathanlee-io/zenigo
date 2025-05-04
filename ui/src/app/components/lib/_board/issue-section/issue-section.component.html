@@ -1,0 +1,8 @@
+<li>
+  <div class="card bg-gray-100 rounded-2xl shadow-lg px-2 min-h-[50rem]">
+    <h3 class="mt-6 text-lg/8 font-semibold tracking-tight text-gray-900 text-center">{{ title() }}</h3>
+    @for(issue of issues(); track $index;) {
+      <app-issue-card *ngIf="issue.isVisible" pDraggable [issue]="issue" (onDragStart)="demoStore.handleDragStart(issue, sectionId())" />
+    }
+  </div>
+</li>

@@ -1,0 +1,44 @@
+<div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+  <div>
+    <h2 class="text-4xl font-extrabold tracking-wide text-light-text-primary dark:text-dark-text-primary">
+      Organization
+    </h2>
+    <p *ngIf="!isReadonly()" class="mt-1 text-xl text-light-text-primary dark:text-dark-text-primary">This is just a display name for
+      your organization, for example, your company name.</p>
+  </div>
+
+  <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+    <div class="sm:col-span-4">
+      <div class="mt-2">
+        <div class="mt-2">
+          <div
+            [ngClass]="{'outline-light-error text-light-error': (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty), 'outline-light-success': clientDisplayNameFormControl().valid}"
+            class="flex items-center rounded-full py-2 px-4 shadow-lg outline outline-2 dark:outline-dark-text-primary focus-within:outline-pink-500">
+            <input type="text" name="clientDisplayName" id="clientDisplayName"
+                   autocomplete="off"
+                   [formControl]="clientDisplayNameFormControl()"
+                   [ngClass]="{'placeholder-light-error': (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty), 'text-light-success outline-light-success': clientDisplayNameFormControl().valid}"
+                   class="w-full text-lg rounded-full focus:outline-none text-light-text-primary dark:text-light-text-primary"
+                   placeholder="Enter Organization Display Name">
+            <div class="flex items-center ml-2 mt-2 pb-2">
+              <i *ngIf="clientDisplayNameFormControl().valid" class="pi pi-thumbs-up text-light-success"></i>
+              <i *ngIf="clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty"
+                 class="pi pi-thumbs-down text-light-error"></i>
+            </div>
+          </div>
+
+          <div
+            *ngIf="clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty"
+            class="text-light-error mt-4" style="font-size: 1.25rem;">
+            Please enter a valid display name between 3 and 100 characters long.
+          </div>
+          <div
+            *ngIf="clientDisplayNameFormControl().valid"
+            class="text-light-success mt-4" style="font-size: 1.25rem;">
+            Valid display name.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
