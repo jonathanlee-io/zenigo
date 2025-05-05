@@ -31,7 +31,7 @@ export const TenantStore = signalStore(
           if (window.location.hostname.toLowerCase().includes('localhost')) {
             return `${scheme}://${window.location.hostname}:${port}/${apiPath}`;
           }
-          const domain = store.apiEnvironment() === 'production' ? 'echonexus.io' : 'echonexus-local.io';
+          const domain = store.apiEnvironment() === 'production' ? 'zenigo.io' : 'echonexus-local.io';
           const apiUrl = `${scheme}://${window.location.hostname.toLowerCase().split('.')?.[0] ?? 'www'}.api.${domain}:${port}/${apiPath}`;
           return store.customHostname() ? `https://${store.customHostname()}/${apiPath}` : apiUrl;
         },
