@@ -1,4 +1,6 @@
+import {identityServiceConstants} from '@app/constants';
 import {PrismaModule} from '@app/database';
+import {RabbitmqModule} from '@app/init';
 import {Logger, Module} from '@nestjs/common';
 
 import {ProductsController} from './controllers/products/products.controller';
@@ -13,6 +15,7 @@ import {FEEDBACK_PRISMA} from '../../config/db.config';
       {client: FeedbackPrismaClient},
       {injectionKey: FEEDBACK_PRISMA},
     ),
+    RabbitmqModule.register({serviceName: identityServiceConstants.queueName}),
   ],
   controllers: [ProductsController],
   providers: [
