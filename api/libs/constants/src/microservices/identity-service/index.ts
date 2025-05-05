@@ -1,21 +1,9 @@
-import {MicroservicesConstants} from '@app/constants/microservices';
-
-type MessageCategories = 'embedScripts';
-
-type MessageKeys = 'getBootstrapScript' | 'getWidgetScript';
-
-type MessagePatterns = 'GET_BOOTSTRAP_SCRIPT' | 'GET_WIDGET_SCRIPT';
-
-export const identityServiceConstants: MicroservicesConstants<
-  MessageCategories,
-  MessageKeys,
-  MessagePatterns
-> = {
+export const identityServiceConstants = {
   queueName: 'IDENTITY',
   messagePatterns: {
-    embedScripts: {
-      getBootstrapScript: 'GET_BOOTSTRAP_SCRIPT',
-      getWidgetScript: 'GET_WIDGET_SCRIPT',
+    projects: {
+      getProjectById: 'GET_PROJECT_BY_ID',
+      getProjectByClientSubdomain: 'GET_PROJECT_BY_SUBDOMAIN',
     },
   },
-};
+} as const;

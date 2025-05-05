@@ -1,6 +1,8 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
+import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
+import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {
   BadRequestException,
   ForbiddenException,
@@ -11,8 +13,6 @@ import {ConfigService} from '@nestjs/config';
 
 import {IdentityEnvironment} from '../../../../config/environment';
 import {ClientsService} from '../../../clients/services/clients/clients.service';
-import {CreateProjectDto} from '../../dto/CreateProject.dto';
-import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
 import {ProjectsRepositoryService} from '../../repositories/projects-repository/projects-repository.service';
 
 @Injectable()

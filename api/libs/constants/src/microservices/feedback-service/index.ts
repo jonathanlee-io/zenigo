@@ -1,21 +1,14 @@
-import {MicroservicesConstants} from '@app/constants/microservices';
-
-type MessageCategories = 'embedScripts';
-
-type MessageKeys = 'getBootstrapScript' | 'getWidgetScript';
-
-type MessagePatterns = 'GET_BOOTSTRAP_SCRIPT' | 'GET_WIDGET_SCRIPT';
-
-export const feedbackServiceConstants: MicroservicesConstants<
-  MessageCategories,
-  MessageKeys,
-  MessagePatterns
-> = {
+export const feedbackServiceConstants = {
   queueName: 'FEEDBACK',
   messagePatterns: {
     embedScripts: {
       getBootstrapScript: 'GET_BOOTSTRAP_SCRIPT',
       getWidgetScript: 'GET_WIDGET_SCRIPT',
     },
+    products: {
+      submitFeedback: 'SUBMIT_FEEDBACK',
+      getConfig: 'GET_CONFIG',
+      getFeedbackForProductById: 'GET_FEEDBACK_FOR_PRODUCT_BY_ID',
+    },
   },
-};
+} as const;

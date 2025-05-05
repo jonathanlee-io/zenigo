@@ -1,4 +1,6 @@
 import {CurrentUser, CurrentUserDto} from '@app/auth';
+import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
+import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {IdParamDto} from '@app/validation';
 import {
   BadRequestException,
@@ -11,8 +13,6 @@ import {
   Put,
 } from '@nestjs/common';
 
-import {CreateProjectDto} from '../../dto/CreateProject.dto';
-import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
 import {ProjectsService} from '../../services/projects/projects.service';
 
 @Controller()

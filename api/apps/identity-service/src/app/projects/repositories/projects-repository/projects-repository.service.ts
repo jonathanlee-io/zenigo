@@ -1,10 +1,10 @@
+import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
+import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {Inject, Injectable, InternalServerErrorException} from '@nestjs/common';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
 import {IDENTITY_PRISMA} from '../../../../config/db.config';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
-import {CreateProjectDto} from '../../dto/CreateProject.dto';
-import {UpdateProjectDto} from '../../dto/UpdateProject.dto';
 
 @Injectable()
 export class ProjectsRepositoryService {

@@ -1,21 +1,8 @@
-import {MicroservicesConstants} from '@app/constants/microservices';
-
-type MessageCategories = 'embedScripts';
-
-type MessageKeys = 'getBootstrapScript' | 'getWidgetScript';
-
-type MessagePatterns = 'GET_BOOTSTRAP_SCRIPT' | 'GET_WIDGET_SCRIPT';
-
-export const featureFlagServiceConstants: MicroservicesConstants<
-  MessageCategories,
-  MessageKeys,
-  MessagePatterns
-> = {
+export const featureFlagServiceConstants = {
   queueName: 'FEATURE_FLAGS',
   messagePatterns: {
-    embedScripts: {
-      getBootstrapScript: 'GET_BOOTSTRAP_SCRIPT',
-      getWidgetScript: 'GET_WIDGET_SCRIPT',
+    featureFlags: {
+      getAllFlagStates: 'GET_ALL_FLAG_STATES',
     },
   },
-};
+} as const;

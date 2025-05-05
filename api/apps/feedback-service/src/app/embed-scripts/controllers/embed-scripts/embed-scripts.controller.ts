@@ -1,11 +1,13 @@
 import {feedbackServiceConstants} from '@app/constants';
 import {Controller} from '@nestjs/common';
 import {MessagePattern, Payload} from '@nestjs/microservices';
-import {ApiTags} from '@nestjs/swagger';
 
-@ApiTags('Embed Scripts')
+import {EmbedScriptsService} from '../../services/embed-scripts/embed-scripts.service';
+
 @Controller()
 export class EmbedScriptsController {
+  constructor(private readonly embedScriptsService: EmbedScriptsService) {}
+
   @MessagePattern(
     feedbackServiceConstants.messagePatterns.embedScripts.getBootstrapScript,
   )
@@ -13,13 +15,13 @@ export class EmbedScriptsController {
     @Payload()
     {clientSubdomain}: {clientSubdomain: string},
   ) {
-    return `console.log(${clientSubdomain})`;
+    return this.embedScriptsService.getBootstrapWidgetScript({clientSubdomain});
   }
 
   @MessagePattern(
     feedbackServiceConstants.messagePatterns.embedScripts.getWidgetScript,
   )
   async getWidgetScript() {
-    return `console.log('hello world')`;
+    return this.embedScriptsService.getWidgetScript();
   }
 }

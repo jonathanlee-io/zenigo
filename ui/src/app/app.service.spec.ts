@@ -16,7 +16,7 @@ describe('AppService', () => {
   beforeEach(() => {
     supabaseService = jasmine.createSpyObj<SupabaseService>(['authChanges']);
     authService = jasmine.createSpyObj<AuthService>([
-      'setNextParamInLocalStorageIfNotAnonymous',
+      'setNextParamInLocalStorage',
     ]);
 
     TestBed.configureTestingModule({

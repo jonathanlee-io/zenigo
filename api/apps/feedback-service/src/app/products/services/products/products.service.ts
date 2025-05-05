@@ -1,98 +1,155 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import {identityServiceConstants} from '@app/constants';
+import {MicroserviceSendResult, ProjectDto} from '@app/dto';
+import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
+import {ClientProxy} from '@nestjs/microservices';
+import {firstValueFrom} from 'rxjs';
 
-import {WidgetMetadataType} from '../../dto/SubmitProductFeedbackRequest.dto';
 import {ProductsRepositoryService} from '../../repositories/products-repository/products-repository.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
+    private readonly logger: Logger,
+    @Inject(identityServiceConstants.queueName)
+    private readonly identityClient: ClientProxy,
     private readonly productsRepository: ProductsRepositoryService,
-    // private readonly projectsService: ProjectsService,
   ) {}
 
-  async submitProductFeedback(productFeedback: {
+  async submitProductFeedback({
+    clientIp,
+    clientSubdomain,
+    submittedAt,
+    userFeedback,
+    widgetMetadataTimezone,
+    widgetMetadataType,
+    widgetMetadataUrl,
+  }: {
     clientSubdomain: string;
     userFeedback: string;
-    widgetMetadataType: WidgetMetadataType;
+    widgetMetadataType: 'bug_report' | 'feature_request' | 'feature_feedback';
     widgetMetadataUrl: string;
     widgetMetadataTimezone: string;
-    ip: string;
+    clientIp: string;
     submittedAt: string;
+  }): Promise<MicroserviceSendResult<{isSuccessful: boolean}>> {
+    try {
+      const getProjectResult = await firstValueFrom(
+        this.identityClient.send<
+          MicroserviceSendResult<ProjectDto>,
+          {clientSubdomain: string}
+        >(
+          identityServiceConstants.messagePatterns.projects
+            .getProjectByClientSubdomain,
+          {
+            clientSubdomain,
+          },
+        ),
+      );
+      if (getProjectResult.status !== HttpStatus.OK) {
+        return {status: HttpStatus.NOT_FOUND, data: {isSuccessful: false}};
+      }
+      await this.productsRepository.createProductFeedback(
+        {projectId: getProjectResult.data.id},
+        {
+          clientSubdomain: clientSubdomain,
+          userFeedback,
+          widgetMetadataType,
+          widgetMetadataUrl,
+          widgetMetadataTimezone,
+          submittedAt,
+          clientIp,
+        },
+      );
+    } catch (err) {
+      this.logger.error(err);
+      return {
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        data: {isSuccessful: false},
+      };
+    }
+    return {status: HttpStatus.CREATED, data: {isSuccessful: true}};
+  }
+
+  async getProductConfig({
+    clientSubdomain,
+  }: {
+    clientSubdomain: string;
+  }): Promise<MicroserviceSendResult<unknown>> {
+    try {
+      const getProjectResult = await firstValueFrom(
+        this.identityClient.send<
+          MicroserviceSendResult<ProjectDto>,
+          {clientSubdomain: string}
+        >(
+          identityServiceConstants.messagePatterns.projects
+            .getProjectByClientSubdomain,
+          {
+            clientSubdomain,
+          },
+        ),
+      );
+      if (getProjectResult.status !== HttpStatus.OK) {
+        return {status: HttpStatus.NOT_FOUND, data: null};
+      }
+      const productConfig =
+        await this.productsRepository.getProductConfigByProjectId({
+          projectId: getProjectResult.data.id,
+        });
+      return {status: HttpStatus.OK, data: productConfig};
+    } catch (err) {
+      this.logger.error(err);
+      return {
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        data: {isSuccessful: false},
+      };
+    }
+  }
+
+  async getProductFeedbackForProjectId({
+    requestingUserEmail,
+    projectId,
+    offset,
+    limit,
+  }: {
+    requestingUserEmail: string;
+    projectId: string;
+    limit: number;
+    offset: number;
   }) {
-    // const [project] = await this.projectsService.getProjectFromSubdomain(
-    //   productFeedback.clientSubdomain,
-    // );
-    const [project] = [undefined];
-    if (!project) {
-      throw new NotFoundException(
-        `Project with subdomain ${productFeedback.clientSubdomain} not found`,
+    try {
+      const getProjectResult = await firstValueFrom(
+        this.identityClient.send<
+          MicroserviceSendResult<ProjectDto>,
+          {projectId: string}
+        >(identityServiceConstants.messagePatterns.projects.getProjectById, {
+          projectId,
+        }),
       );
-    }
-    if (
-      (productFeedback.widgetMetadataType === 'bug_report' &&
-        !project.isBugReportsEnabled) ||
-      (productFeedback.widgetMetadataType === 'feature_request' &&
-        !project.isFeatureRequestsEnabled) ||
-      (productFeedback.widgetMetadataType === 'feature_feedback' &&
-        !project.isFeatureFeedbackEnabled)
-    ) {
-      throw new BadRequestException(`Feature not enabled for this project`);
-    }
-    const product = await this.productsRepository.findProductFromProject(
-      project.id,
-    );
-    await this.productsRepository.createProductFeedback(
-      product.id,
-      productFeedback,
-    );
-    return {isSuccessful: true};
-  }
+      if (getProjectResult.status !== HttpStatus.OK) {
+        return {status: HttpStatus.NOT_FOUND, data: null};
+      }
+      const {
+        client: {admins: projectAdmins, members: projectMembers},
+      } = getProjectResult.data;
+      if (
+        !projectAdmins
+          .map((admin) => admin.email)
+          .includes(requestingUserEmail) &&
+        !projectMembers
+          .map((member) => member.email)
+          .includes(requestingUserEmail)
+      ) {
+        return {status: HttpStatus.FORBIDDEN, data: null};
+      }
 
-  async getProductFeedbackForProjectId(
-    requestingUserId: string,
-    projectId: string,
-    limit: number,
-    offset: number,
-  ) {
-    // const project = await this.projectsService.getProjectById(
-    // requestingUserId,
-    // projectId,
-    // ); // Will throw a forbidden exception
-    // const project = undefined;
-    // if (!project) {
-    //   throw new NotFoundException(`Project with id ${projectId} not found`);
-    // }
-    // const product = await this.productsRepository.findProductFromProject(
-    //   project.id,
-    // );
-    // if (!product) {
-    //   throw new NotFoundException(`Product for project ${projectId} not found`);
-    // }
-    return this.productsRepository.getFeedbackForProduct(
-      '12345',
-      // product.id,
-      limit,
-      offset,
-    );
-  }
-
-  async getProductConfig(clientSubdomain: string) {
-    const [project] =
-      // await this.projectsService.getProjectFromSubdomain(clientSubdomain);
-      [undefined];
-    if (!project) {
-      throw new NotFoundException(
-        `Product with subdomain ${clientSubdomain} not found`,
+      const feedback = await this.productsRepository.getFeedbackForProduct(
+        projectId,
+        limit,
+        offset,
       );
+      return {status: HttpStatus.OK, data: feedback};
+    } catch (err) {
+      this.logger.error(err);
     }
-    return {
-      isBugReportsEnabled: project.isBugReportsEnabled,
-      isFeatureRequestsEnabled: project.isFeatureRequestsEnabled,
-      isFeatureFeedbackEnabled: project.isFeatureFeedbackEnabled,
-    };
   }
 }

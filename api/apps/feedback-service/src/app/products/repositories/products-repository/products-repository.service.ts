@@ -10,10 +10,10 @@ export class ProductsRepositoryService {
   ) {}
 
   async createProductFeedback(
-    productId: string,
+    {projectId}: {projectId: string},
     {
       clientSubdomain,
-      ip: clientIp,
+      clientIp,
       userFeedback,
       widgetMetadataType,
       widgetMetadataUrl,
@@ -25,7 +25,7 @@ export class ProductsRepositoryService {
       widgetMetadataType: 'bug_report' | 'feature_request' | 'feature_feedback';
       widgetMetadataUrl: string;
       widgetMetadataTimezone: string;
-      ip: string;
+      clientIp: string;
       submittedAt: string;
     },
   ) {
@@ -33,7 +33,7 @@ export class ProductsRepositoryService {
       data: {
         product: {
           connect: {
-            id: productId,
+            projectId,
           },
         },
         userFeedback,
@@ -43,14 +43,6 @@ export class ProductsRepositoryService {
         clientIp,
         clientSubdomain,
         submittedAt,
-      },
-    });
-  }
-
-  async findProductFromProject(projectId: string) {
-    return this.prisma.product.findUnique({
-      where: {
-        projectId,
       },
     });
   }
@@ -76,5 +68,13 @@ export class ProductsRepositoryService {
         },
       }),
     };
+  }
+
+  async getProductConfigByProjectId({projectId}: {projectId: string}) {
+    return this.prisma.product.findUnique({
+      where: {
+        projectId,
+      },
+    });
   }
 }

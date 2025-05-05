@@ -8,6 +8,14 @@ export interface ProjectDto {
   hostnames: string[];
   client: {
     displayName: string;
+    admins: {
+      id: string;
+      email: string;
+    }[];
+    members: {
+      id: string;
+      email: string;
+    }[];
   };
   clientId: string;
   userId: string;
