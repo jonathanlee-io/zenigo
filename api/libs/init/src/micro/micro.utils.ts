@@ -15,6 +15,7 @@ export const createRabbitMQMicroservice = async (
       queueOptions: {
         durable: true,
       },
+      noAck: true,
     },
   });
 };

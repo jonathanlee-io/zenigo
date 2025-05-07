@@ -1,4 +1,5 @@
 import {CurrentUser, CurrentUserDto} from '@app/auth';
+import {identityServiceConstants} from '@app/constants';
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
 import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {IdParamDto} from '@app/validation';
@@ -12,6 +13,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import {MessagePattern, Payload} from '@nestjs/microservices';
 
 import {ProjectsService} from '../../services/projects/projects.service';
 
@@ -90,5 +92,15 @@ export class ProjectsController {
       requestingUserId,
       createProjectDto,
     );
+  }
+
+  @MessagePattern(
+    identityServiceConstants.messagePatterns.projects
+      .getProjectByClientSubdomain,
+  )
+  async getProjectFromSubdomain(
+    @Payload() {clientSubdomain}: {clientSubdomain: string},
+  ) {
+    return this.projectsService.getProjectFromSubdomain(clientSubdomain);
   }
 }

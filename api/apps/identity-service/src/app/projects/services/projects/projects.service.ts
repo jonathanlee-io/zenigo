@@ -1,11 +1,13 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
+import {MicroserviceSendResult} from '@app/dto';
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
 import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {
   BadRequestException,
   ForbiddenException,
+  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -137,11 +139,16 @@ export class ProjectsService {
     return this.projectsRepository.deleteProjectById(projectId);
   }
 
-  async getProjectFromSubdomain(clientSubdomain: string) {
-    return this.projectsRepository.findBySubdomain(clientSubdomain, {
-      isIncludeClient: true,
-      isIncludeCreatedBy: true,
-    });
+  async getProjectFromSubdomain(
+    clientSubdomain: string,
+  ): Promise<MicroserviceSendResult<unknown>> {
+    return {
+      status: HttpStatus.OK,
+      data: await this.projectsRepository.findBySubdomain(clientSubdomain, {
+        isIncludeClient: true,
+        isIncludeCreatedBy: true,
+      }),
+    };
   }
 
   private async generateWidgetInitScript(

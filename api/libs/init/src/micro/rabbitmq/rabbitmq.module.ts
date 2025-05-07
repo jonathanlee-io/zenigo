@@ -36,6 +36,7 @@ export class RabbitmqModule {
               queueOptions: {
                 durable: true,
               },
+              noAck: true,
             },
           });
         },

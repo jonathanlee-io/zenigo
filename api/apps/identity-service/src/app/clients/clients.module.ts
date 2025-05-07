@@ -23,5 +23,6 @@ import {IDENTITY_PRISMA} from '../../config/db.config';
     ClientsRepositoryService,
     ClientsService,
   ],
+  exports: [ClientsService],
 })
 export class ClientsModule {}
