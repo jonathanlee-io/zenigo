@@ -1,40 +1,42 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import {IdentityServiceContract, TypedClientProxy} from '@app/comms';
 import {identityServiceConstants} from '@app/constants';
-import {MicroserviceSendResult, ProjectDto} from '@app/dto';
+import {MicroserviceSendResult} from '@app/dto';
 import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {ClientProxy} from '@nestjs/microservices';
-import {firstValueFrom} from 'rxjs';
 
 import {FeedbackEnvironment} from '../../../../config/environment';
 
 @Injectable()
 export class EmbedScriptsService {
+  private readonly identityClient: TypedClientProxy<
+    keyof IdentityServiceContract,
+    IdentityServiceContract
+  >;
+
   constructor(
     private readonly logger: Logger,
     private readonly configService: ConfigService<FeedbackEnvironment>,
     @Inject(identityServiceConstants.queueName)
-    private readonly identityClient: ClientProxy,
-  ) {}
+    readonly untypedIdentityClientProxy: ClientProxy,
+  ) {
+    this.identityClient = new TypedClientProxy<
+      keyof IdentityServiceContract,
+      IdentityServiceContract
+    >(this.untypedIdentityClientProxy);
+  }
 
   async getBootstrapWidgetScript({
     clientSubdomain,
   }: {
     clientSubdomain: string;
   }): Promise<MicroserviceSendResult<string>> {
-    const getProjectResult = await firstValueFrom(
-      this.identityClient.send<
-        MicroserviceSendResult<ProjectDto>,
-        {clientSubdomain: string}
-      >(
-        identityServiceConstants.messagePatterns.projects
-          .getProjectByClientSubdomain,
-        {
-          clientSubdomain,
-        },
-      ),
+    const getProjectResult = await this.identityClient.sendAsync(
+      'GET_PROJECT_BY_SUBDOMAIN',
+      {clientSubdomain},
     );
     if (getProjectResult.status !== HttpStatus.OK) {
       return null;

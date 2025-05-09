@@ -32,6 +32,12 @@
       "@app/clients/*": [
         "libs/clients/src/*"
       ],
+      "@app/comms": [
+        "libs/comms/src"
+      ],
+      "@app/comms/*": [
+        "libs/comms/src/*"
+      ],
       "@app/config": [
         "libs/config/src"
       ],
