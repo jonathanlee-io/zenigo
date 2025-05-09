@@ -1,5 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 import {IdentityServiceContract, TypedClientProxy} from '@app/comms';
 import {identityServiceConstants} from '@app/constants';
@@ -51,10 +51,15 @@ export class EmbedScriptsService {
   }
 
   async getWidgetScript() {
-    return fs.readFileSync(
-      path.join(__dirname, '../../../../..', 'widget/dist/echonexus-widget.js'),
+    const widgetContents = fs.readFileSync(
+      path.join(__dirname, '../../..', 'widget/dist/echonexus-widget.js'),
       'utf8',
     );
+
+    return {
+      status: widgetContents ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR,
+      data: widgetContents,
+    };
   }
 
   private async generateWidgetBootstrapScript({

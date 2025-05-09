@@ -30,7 +30,7 @@ export class EmbedScriptsService {
   async getFeedbackWidgetScript() {
     const result = await this.feedbackClient.sendAsync(
       'GET_WIDGET_SCRIPT',
-      null,
+      {} as never,
     );
     return HttpHelpersUtil.returnDataOrThrowError(result);
   }

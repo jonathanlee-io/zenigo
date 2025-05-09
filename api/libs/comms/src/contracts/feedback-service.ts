@@ -10,8 +10,5 @@ export interface FeedbackServiceContract {
   >;
 
   [feedbackServiceConstants.messagePatterns.embedScripts
-    .getWidgetScript]: Message<
-    {projectId: string},
-    MicroserviceSendResult<string | null>
-  >;
+    .getWidgetScript]: Message<void, MicroserviceSendResult<string | null>>;
 }
