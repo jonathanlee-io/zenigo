@@ -1,5 +1,6 @@
+import {TypedClientProxy} from '@app/comms';
+import {FeedbackServiceContract} from '@app/comms/contracts/feedback-service';
 import {feedbackServiceConstants} from '@app/constants';
-import {MicroserviceSendResult} from '@app/dto';
 import {
   HttpStatus,
   Inject,
@@ -8,27 +9,26 @@ import {
   Logger,
 } from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
-import {firstValueFrom} from 'rxjs';
 
 @Injectable()
 export class EmbedScriptsService {
+  private readonly feedbackClient: TypedClientProxy<
+    keyof FeedbackServiceContract,
+    FeedbackServiceContract
+  >;
+
   constructor(
     private readonly logger: Logger,
     @Inject(feedbackServiceConstants.queueName)
-    private readonly feedbackClient: ClientProxy,
-  ) {}
+    readonly untypedFeedbackClient: ClientProxy,
+  ) {
+    this.feedbackClient = new TypedClientProxy(untypedFeedbackClient);
+  }
 
   async getBootstrapWidgetScript({clientSubdomain}: {clientSubdomain: string}) {
-    const result = await firstValueFrom(
-      this.feedbackClient.send<
-        MicroserviceSendResult<string>,
-        {clientSubdomain: string}
-      >(
-        feedbackServiceConstants.messagePatterns.embedScripts
-          .getBootstrapScript,
-        {clientSubdomain},
-      ),
-    );
+    const result = await this.feedbackClient.sendAsync('GET_BOOTSTRAP_SCRIPT', {
+      clientSubdomain,
+    });
     if (result.status !== HttpStatus.OK) {
       throw new InternalServerErrorException();
     }
@@ -36,9 +36,6 @@ export class EmbedScriptsService {
   }
 
   async getFeedbackWidgetScript() {
-    return this.feedbackClient.send<string, unknown>(
-      feedbackServiceConstants.messagePatterns.embedScripts.getWidgetScript,
-      {},
-    );
+    return this.feedbackClient.sendAsync('GET_WIDGET_SCRIPT', null);
   }
 }
