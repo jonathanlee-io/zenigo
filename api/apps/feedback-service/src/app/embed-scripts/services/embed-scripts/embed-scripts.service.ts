@@ -24,33 +24,28 @@ export class EmbedScriptsService {
   }: {
     clientSubdomain: string;
   }): Promise<MicroserviceSendResult<string>> {
-    try {
-      const getProjectResult = await firstValueFrom(
-        this.identityClient.send<
-          MicroserviceSendResult<ProjectDto>,
-          {clientSubdomain: string}
-        >(
-          identityServiceConstants.messagePatterns.projects
-            .getProjectByClientSubdomain,
-          {
-            clientSubdomain,
-          },
-        ),
-      );
-      if (getProjectResult.status !== HttpStatus.OK) {
-        return null;
-      }
-      return {
-        status: HttpStatus.OK,
-        data: await this.generateWidgetBootstrapScript({
+    const getProjectResult = await firstValueFrom(
+      this.identityClient.send<
+        MicroserviceSendResult<ProjectDto>,
+        {clientSubdomain: string}
+      >(
+        identityServiceConstants.messagePatterns.projects
+          .getProjectByClientSubdomain,
+        {
           clientSubdomain,
-          returnedProject: getProjectResult.data,
-        }),
-      };
-    } catch (err) {
-      this.logger.error(err);
+        },
+      ),
+    );
+    if (getProjectResult.status !== HttpStatus.OK) {
       return null;
     }
+    return {
+      status: HttpStatus.OK,
+      data: await this.generateWidgetBootstrapScript({
+        clientSubdomain,
+        returnedProject: getProjectResult.data,
+      }),
+    };
   }
 
   async getWidgetScript() {
