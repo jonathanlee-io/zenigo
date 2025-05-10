@@ -1,7 +1,11 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-import {IdentityServiceContract, TypedClientProxy} from '@app/comms';
+import {
+  IDENTITY_SERVICE,
+  IdentityServiceContract,
+  TypedClientProxy,
+} from '@app/comms';
 import {identityServiceConstants} from '@app/constants';
 import {MicroserviceSendResult} from '@app/dto';
 import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
@@ -31,12 +35,14 @@ export class EmbedScriptsService {
 
   async getBootstrapWidgetScript({
     clientSubdomain,
+    clientIp,
   }: {
     clientSubdomain: string;
+    clientIp: string;
   }): Promise<MicroserviceSendResult<string>> {
     const getProjectResult = await this.identityClient.sendAsync(
-      'GET_PROJECT_BY_SUBDOMAIN',
-      {clientSubdomain},
+      IDENTITY_SERVICE.GET_PROJECT_BY_CLIENT_SUBDOMAIN,
+      {clientSubdomain, clientIp, data: null as never},
     );
     if (getProjectResult.status !== HttpStatus.OK) {
       return null;

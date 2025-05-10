@@ -12,9 +12,12 @@ export class EmbedScriptsController {
   @MessagePattern(FEEDBACK_SERVICE.GET_BOOTSTRAP_SCRIPT)
   async getBootstrapWidgetScript(
     @Payload()
-    {clientSubdomain}: AnonymousMicroserviceControllerPayload<never>,
+    {clientSubdomain, clientIp}: AnonymousMicroserviceControllerPayload<never>,
   ) {
-    return this.embedScriptsService.getBootstrapWidgetScript({clientSubdomain});
+    return this.embedScriptsService.getBootstrapWidgetScript({
+      clientSubdomain,
+      clientIp,
+    });
   }
 
   @MessagePattern(FEEDBACK_SERVICE.GET_WIDGET_SCRIPT)
