@@ -1,5 +1,6 @@
 import {CurrentUser, CurrentUserDto} from '@app/auth';
-import {identityServiceConstants} from '@app/constants';
+import {IDENTITY_SERVICE} from '@app/comms';
+import {AnonymousMicroserviceControllerPayload} from '@app/dto';
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
 import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {IdParamDto} from '@app/validation';
@@ -94,12 +95,9 @@ export class ProjectsController {
     );
   }
 
-  @MessagePattern(
-    identityServiceConstants.messagePatterns.projects
-      .getProjectByClientSubdomain,
-  )
+  @MessagePattern(IDENTITY_SERVICE.GET_PROJECT_BY_CLIENT_SUBDOMAIN)
   async getProjectFromSubdomain(
-    @Payload() {clientSubdomain}: {clientSubdomain: string},
+    @Payload() {clientSubdomain}: AnonymousMicroserviceControllerPayload<never>,
   ) {
     return this.projectsService.getProjectFromSubdomain(clientSubdomain);
   }

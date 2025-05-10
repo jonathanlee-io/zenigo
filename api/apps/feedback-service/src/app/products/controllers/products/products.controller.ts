@@ -1,22 +1,20 @@
-import {feedbackServiceConstants} from '@app/constants';
+import {FEEDBACK_SERVICE} from '@app/comms';
 import {
   AnonymousMicroserviceControllerPayload,
   AuthenticatedMicroserviceControllerPayload,
 } from '@app/dto';
+import {SubmitProductFeedbackRequestDto} from '@app/dto/feedback/SubmitProductFeedbackRequest.dto';
 import {Controller} from '@nestjs/common';
 import {MessagePattern, Payload} from '@nestjs/microservices';
 import {DateTime} from 'luxon';
 
-import {SubmitProductFeedbackRequestDto} from '../../dto/SubmitProductFeedbackRequest.dto';
 import {ProductsService} from '../../services/products/products.service';
 
 @Controller()
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @MessagePattern(
-    feedbackServiceConstants.messagePatterns.products.submitFeedback,
-  )
+  @MessagePattern(FEEDBACK_SERVICE.SUBMIT_FEEDBACK)
   async receiveFeedback(
     @Payload()
     {
@@ -41,20 +39,21 @@ export class ProductsController {
     });
   }
 
-  @MessagePattern(feedbackServiceConstants.messagePatterns.products.getConfig)
+  @MessagePattern(FEEDBACK_SERVICE.GET_PRODUCT_CONFIG)
   async getProductConfig(
-    @Payload() {clientSubdomain}: AnonymousMicroserviceControllerPayload<never>,
+    @Payload()
+    {clientSubdomain, clientIp}: AnonymousMicroserviceControllerPayload<never>,
   ) {
-    return this.productsService.getProductConfig({clientSubdomain});
+    return this.productsService.getProductConfig({clientSubdomain, clientIp});
   }
 
-  @MessagePattern(
-    feedbackServiceConstants.messagePatterns.products.getFeedbackForProductById,
-  )
+  @MessagePattern(FEEDBACK_SERVICE.GET_FEEDBACK_FOR_PRODUCT_BY_ID)
   async getFeedbackForProductById(
     @Payload()
     {
-      authenticatedUser: {email: requestingUserEmail},
+      clientSubdomain,
+      clientIp,
+      authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
       data: {projectId, limit, offset},
     }: AuthenticatedMicroserviceControllerPayload<{
       projectId: string;
@@ -63,6 +62,9 @@ export class ProductsController {
     }>,
   ) {
     return this.productsService.getProductFeedbackForProjectId({
+      clientSubdomain,
+      clientIp,
+      requestingUserId,
       requestingUserEmail,
       projectId,
       limit,

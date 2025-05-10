@@ -1,4 +1,4 @@
-import {feedbackServiceConstants} from '@app/constants';
+import {FEEDBACK_SERVICE_QUEUE} from '@app/comms';
 import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
@@ -10,7 +10,7 @@ configDotenv();
 bootstrapMicroservice({
   appModule: FeedbackServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  rabbitMqQueueName: feedbackServiceConstants.queueName,
+  rabbitMqQueueName: FEEDBACK_SERVICE_QUEUE,
   requiredConfigKeys: Object.keys(dummyFeedbackEnvironment),
   databaseUrlKey: 'FEEDBACK_DATABASE_URL',
   schemaOverride:

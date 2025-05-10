@@ -1,5 +1,5 @@
 import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
-import {Controller, Get, Header} from '@nestjs/common';
+import {Controller, Get, Header, Ip} from '@nestjs/common';
 
 import {EmbedScriptsService} from '../../services/embed-scripts/embed-scripts.service';
 
@@ -13,14 +13,24 @@ export class EmbedScriptsController {
   @Header('Cache-Control', 'no-cache, no-store, must-revalidate')
   async getBoostrapWidgetScript(
     @CurrentUser() {clientSubdomain}: CurrentUserDto,
+    @Ip() ip: string,
   ) {
-    return this.embedScriptsService.getBootstrapWidgetScript({clientSubdomain});
+    return this.embedScriptsService.getBootstrapWidgetScript({
+      clientSubdomain,
+      ip,
+    });
   }
 
   @IsPublic()
   @Get('feedback-widget.js')
   @Header('Content-Type', 'text/javascript')
-  async getFeedbackWidgetScript() {
-    return this.embedScriptsService.getFeedbackWidgetScript();
+  async getFeedbackWidgetScript(
+    @CurrentUser() {clientSubdomain}: CurrentUserDto,
+    @Ip() ip: string,
+  ) {
+    return this.embedScriptsService.getFeedbackWidgetScript({
+      clientSubdomain,
+      ip,
+    });
   }
 }

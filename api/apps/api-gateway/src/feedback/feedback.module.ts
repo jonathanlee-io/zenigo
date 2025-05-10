@@ -1,4 +1,4 @@
-import {feedbackServiceConstants} from '@app/constants';
+import {FEEDBACK_SERVICE_QUEUE} from '@app/comms';
 import {RabbitmqModule} from '@app/init';
 import {Module} from '@nestjs/common';
 
@@ -10,7 +10,7 @@ import {FeedbackService} from './services/feedback/feedback.service';
 
 @Module({
   imports: [
-    RabbitmqModule.register({serviceName: feedbackServiceConstants.queueName}),
+    RabbitmqModule.register({serviceName: FEEDBACK_SERVICE_QUEUE}),
     EmbedScriptsModule,
     IssuesModule,
     ProductsModule,

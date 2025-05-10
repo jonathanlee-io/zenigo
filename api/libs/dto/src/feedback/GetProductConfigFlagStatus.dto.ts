@@ -1,7 +1,6 @@
+import {WidgetMetadataType} from '@app/dto';
 import {ApiProperty} from '@nestjs/swagger';
 import {IsDefined, IsNotEmpty, IsString, Matches} from 'class-validator';
-
-import {WidgetMetadataType} from './SubmitProductFeedbackRequest.dto';
 
 export class GetProductConfigFlagStatusDto {
   @IsNotEmpty()

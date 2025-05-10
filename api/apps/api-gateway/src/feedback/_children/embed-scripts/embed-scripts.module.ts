@@ -1,4 +1,4 @@
-import {feedbackServiceConstants} from '@app/constants';
+import {FEEDBACK_SERVICE_QUEUE} from '@app/comms';
 import {RabbitmqModule} from '@app/init';
 import {Logger, Module} from '@nestjs/common';
 
@@ -6,9 +6,7 @@ import {EmbedScriptsController} from './controllers/embed-scripts/embed-scripts.
 import {EmbedScriptsService} from './services/embed-scripts/embed-scripts.service';
 
 @Module({
-  imports: [
-    RabbitmqModule.register({serviceName: feedbackServiceConstants.queueName}),
-  ],
+  imports: [RabbitmqModule.register({serviceName: FEEDBACK_SERVICE_QUEUE})],
   controllers: [EmbedScriptsController],
   providers: [
     {

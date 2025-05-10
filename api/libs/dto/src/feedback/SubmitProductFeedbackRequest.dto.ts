@@ -1,10 +1,6 @@
+import {WidgetMetadataType} from '@app/dto';
 import {ApiProperty} from '@nestjs/swagger';
 import {IsDefined, IsNotEmpty, IsString, IsUrl, Matches} from 'class-validator';
-
-export type WidgetMetadataType =
-  | 'bug_report'
-  | 'feature_request'
-  | 'feature_feedback';
 
 export class SubmitProductFeedbackRequestDto {
   @IsNotEmpty()

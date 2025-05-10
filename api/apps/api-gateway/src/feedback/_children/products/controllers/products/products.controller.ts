@@ -1,9 +1,8 @@
 import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
+import {SubmitProductFeedbackRequestDto} from '@app/dto/feedback/SubmitProductFeedbackRequest.dto';
 import {IdParamDto} from '@app/validation';
 import {Body, Controller, Get, Ip, Param, Post, Query} from '@nestjs/common';
-import {DateTime} from 'luxon';
 
-import {SubmitProductFeedbackRequestDto} from '../../../../../../../feedback-service/src/app/products/dto/SubmitProductFeedbackRequest.dto';
 import {ProductsService} from '../../services/products/products.service';
 
 @Controller()
@@ -24,7 +23,7 @@ export class ProductsController {
     @Ip() ip: string,
   ) {
     return this.productsService.submitProductFeedback(
-      {clientSubdomain, ip, submittedAt: DateTime.now().toISO()},
+      {clientSubdomain, ip},
       {
         userFeedback,
         widgetMetadataType,
@@ -36,21 +35,33 @@ export class ProductsController {
 
   @IsPublic()
   @Get('config')
-  async getProductConfig(@CurrentUser() {clientSubdomain}: CurrentUserDto) {
-    return this.productsService.getProductConfig(clientSubdomain);
+  async getProductConfig(
+    @CurrentUser() {clientSubdomain}: CurrentUserDto,
+    @Ip() ip: string,
+  ) {
+    return this.productsService.getProductConfig({clientSubdomain, ip});
   }
 
   @Get('feedback/:id')
   async getFeedbackForProductById(
-    @CurrentUser() {requestingUserId}: CurrentUserDto,
+    @CurrentUser()
+    {clientSubdomain, requestingUserId, requestingUserEmail}: CurrentUserDto,
+    @Ip() ip: string,
     @Param() {id: projectId}: IdParamDto,
     @Query() {limit, offset}: {limit: number; offset: number},
   ) {
     return this.productsService.getProductFeedbackForProjectId(
-      requestingUserId,
-      projectId,
-      limit,
-      offset,
+      {
+        clientSubdomain,
+        ip,
+        requestingUserId,
+        requestingUserEmail,
+      },
+      {
+        projectId,
+        limit,
+        offset,
+      },
     );
   }
 }

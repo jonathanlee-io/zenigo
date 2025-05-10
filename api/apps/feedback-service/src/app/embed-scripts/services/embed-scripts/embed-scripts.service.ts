@@ -50,7 +50,7 @@ export class EmbedScriptsService {
     };
   }
 
-  async getWidgetScript() {
+  async getWidgetScript(): Promise<MicroserviceSendResult<string | null>> {
     const widgetContents = fs.readFileSync(
       path.join(__dirname, '../../..', 'widget/dist/echonexus-widget.js'),
       'utf8',

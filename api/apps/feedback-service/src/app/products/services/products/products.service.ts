@@ -1,19 +1,30 @@
+import {
+  IDENTITY_SERVICE,
+  IdentityServiceContract,
+  TypedClientProxy,
+} from '@app/comms';
 import {identityServiceConstants} from '@app/constants';
-import {MicroserviceSendResult, ProjectDto} from '@app/dto';
+import {MicroserviceSendResult} from '@app/dto';
 import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
-import {firstValueFrom} from 'rxjs';
 
 import {ProductsRepositoryService} from '../../repositories/products-repository/products-repository.service';
 
 @Injectable()
 export class ProductsService {
+  private readonly identityClient: TypedClientProxy<
+    keyof IdentityServiceContract,
+    IdentityServiceContract
+  >;
+
   constructor(
     private readonly logger: Logger,
-    @Inject(identityServiceConstants.queueName)
-    private readonly identityClient: ClientProxy,
     private readonly productsRepository: ProductsRepositoryService,
-  ) {}
+    @Inject(identityServiceConstants.queueName)
+    readonly untypedIdentityClient: ClientProxy,
+  ) {
+    this.identityClient = new TypedClientProxy(this.untypedIdentityClient);
+  }
 
   async submitProductFeedback({
     clientIp,
@@ -33,17 +44,9 @@ export class ProductsService {
     submittedAt: string;
   }): Promise<MicroserviceSendResult<{isSuccessful: boolean}>> {
     try {
-      const getProjectResult = await firstValueFrom(
-        this.identityClient.send<
-          MicroserviceSendResult<ProjectDto>,
-          {clientSubdomain: string}
-        >(
-          identityServiceConstants.messagePatterns.projects
-            .getProjectByClientSubdomain,
-          {
-            clientSubdomain,
-          },
-        ),
+      const getProjectResult = await this.identityClient.sendAsync(
+        IDENTITY_SERVICE.GET_PROJECT_BY_CLIENT_SUBDOMAIN,
+        {clientSubdomain, clientIp, data: null as never},
       );
       if (getProjectResult.status !== HttpStatus.OK) {
         return {status: HttpStatus.NOT_FOUND, data: {isSuccessful: false}};
@@ -72,21 +75,19 @@ export class ProductsService {
 
   async getProductConfig({
     clientSubdomain,
+    clientIp,
   }: {
     clientSubdomain: string;
+    clientIp: string;
   }): Promise<MicroserviceSendResult<unknown>> {
     try {
-      const getProjectResult = await firstValueFrom(
-        this.identityClient.send<
-          MicroserviceSendResult<ProjectDto>,
-          {clientSubdomain: string}
-        >(
-          identityServiceConstants.messagePatterns.projects
-            .getProjectByClientSubdomain,
-          {
-            clientSubdomain,
-          },
-        ),
+      const getProjectResult = await this.identityClient.sendAsync(
+        IDENTITY_SERVICE.GET_PROJECT_BY_CLIENT_SUBDOMAIN,
+        {
+          clientSubdomain,
+          clientIp,
+          data: null as never,
+        },
       );
       if (getProjectResult.status !== HttpStatus.OK) {
         return {status: HttpStatus.NOT_FOUND, data: null};
@@ -106,24 +107,36 @@ export class ProductsService {
   }
 
   async getProductFeedbackForProjectId({
+    clientSubdomain,
+    clientIp,
+    requestingUserId,
     requestingUserEmail,
     projectId,
     offset,
     limit,
   }: {
+    clientSubdomain: string;
+    clientIp: string;
+    requestingUserId: string;
     requestingUserEmail: string;
     projectId: string;
     limit: number;
     offset: number;
   }) {
     try {
-      const getProjectResult = await firstValueFrom(
-        this.identityClient.send<
-          MicroserviceSendResult<ProjectDto>,
-          {projectId: string}
-        >(identityServiceConstants.messagePatterns.projects.getProjectById, {
-          projectId,
-        }),
+      const getProjectResult = await this.identityClient.sendAsync(
+        IDENTITY_SERVICE.GET_PROJECT_BY_ID,
+        {
+          clientSubdomain,
+          clientIp,
+          authenticatedUser: {
+            id: requestingUserId,
+            email: requestingUserEmail,
+          },
+          data: {
+            id: projectId,
+          },
+        },
       );
       if (getProjectResult.status !== HttpStatus.OK) {
         return {status: HttpStatus.NOT_FOUND, data: null};

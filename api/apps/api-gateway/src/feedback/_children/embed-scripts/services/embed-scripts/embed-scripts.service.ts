@@ -1,6 +1,9 @@
-import {TypedClientProxy} from '@app/comms';
+import {
+  FEEDBACK_SERVICE,
+  FEEDBACK_SERVICE_QUEUE,
+  TypedClientProxy,
+} from '@app/comms';
 import {FeedbackServiceContract} from '@app/comms/contracts/feedback-service';
-import {feedbackServiceConstants} from '@app/constants';
 import {HttpHelpersUtil} from '@app/util';
 import {Inject, Injectable, Logger} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
@@ -14,23 +17,40 @@ export class EmbedScriptsService {
 
   constructor(
     private readonly logger: Logger,
-    @Inject(feedbackServiceConstants.queueName)
+    @Inject(FEEDBACK_SERVICE_QUEUE)
     readonly untypedFeedbackClient: ClientProxy,
   ) {
     this.feedbackClient = new TypedClientProxy(untypedFeedbackClient);
   }
 
-  async getBootstrapWidgetScript({clientSubdomain}: {clientSubdomain: string}) {
-    const result = await this.feedbackClient.sendAsync('GET_BOOTSTRAP_SCRIPT', {
-      clientSubdomain,
-    });
+  async getBootstrapWidgetScript({
+    clientSubdomain,
+    ip,
+  }: {
+    clientSubdomain: string;
+    ip: string;
+  }) {
+    const result = await this.feedbackClient.sendAsync(
+      FEEDBACK_SERVICE.GET_BOOTSTRAP_SCRIPT,
+      {
+        clientSubdomain,
+        clientIp: ip,
+        data: null as never,
+      },
+    );
     return HttpHelpersUtil.returnDataOrThrowError(result);
   }
 
-  async getFeedbackWidgetScript() {
+  async getFeedbackWidgetScript({
+    clientSubdomain,
+    ip,
+  }: {
+    clientSubdomain: string;
+    ip: string;
+  }) {
     const result = await this.feedbackClient.sendAsync(
-      'GET_WIDGET_SCRIPT',
-      {} as never,
+      FEEDBACK_SERVICE.GET_WIDGET_SCRIPT,
+      {clientSubdomain, clientIp: ip, data: null as never},
     );
     return HttpHelpersUtil.returnDataOrThrowError(result);
   }
