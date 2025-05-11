@@ -4,6 +4,8 @@ import {ConfigService} from '@nestjs/config';
 import {NestFactory} from '@nestjs/core';
 import {FastifyAdapter, NestFastifyApplication} from '@nestjs/platform-fastify';
 
+import {ApiGatewayEnvironment} from '../../../apps/api-gateway/src/config/environment';
+
 export async function bootstrapFastifyApi(
   appModule: unknown,
   port: number,
@@ -15,15 +17,21 @@ export async function bootstrapFastifyApi(
     new FastifyAdapter(),
   );
 
-  const configService = app.get<ConfigService>(ConfigService);
+  const configService =
+    app.get<ConfigService<ApiGatewayEnvironment>>(ConfigService);
 
-  requiredConfigKeys.forEach((key) => configService.getOrThrow(key));
+  Logger.log(configService.get('RABBIT_MQ_URLS'));
+
+  requiredConfigKeys.forEach((key) =>
+    configService.getOrThrow(key as keyof ApiGatewayEnvironment),
+  );
 
   initApp(app);
 
   Logger.log(
     `Attempting to listen on :: port ${port} in NODE_ENV: ${configService.getOrThrow('NODE_ENV')}...`,
   );
+
   await app.listen({host: '::', port}, () => {
     Logger.log(
       `Listening on :: port ${port} in NODE_ENV: ${configService.getOrThrow('NODE_ENV')}...`,

@@ -79,9 +79,12 @@ import {FeedbackModule} from './feedback/feedback.module';
           options: {
             urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
             queue: configService.getOrThrow<string>('RABBIT_MQ_PAYMENTS_QUEUE'),
+            noAck: true,
             queueOptions: {
               durable: true,
             },
+            host: configService.getOrThrow<string>('RABBIT_MQ_HOST'),
+            port: configService.getOrThrow<number>('RABBIT_MQ_PORT'),
           },
         }),
       },

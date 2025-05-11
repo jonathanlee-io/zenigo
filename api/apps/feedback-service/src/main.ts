@@ -5,7 +5,7 @@ import {configDotenv} from 'dotenv';
 import {FeedbackServiceModule} from './app/feedback-service.module';
 import {dummyFeedbackEnvironment} from './config/environment';
 
-configDotenv();
+configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: FeedbackServiceModule,

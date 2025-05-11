@@ -5,7 +5,7 @@ import {configDotenv} from 'dotenv';
 import {FeatureFlagsServiceModule} from './app/feature-flags-service.module';
 import {dummyFeatureFlagsEnvironment} from './config/environment';
 
-configDotenv();
+configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: FeatureFlagsServiceModule,

@@ -5,7 +5,7 @@ import {configDotenv} from 'dotenv';
 import {IdentityServiceModule} from './app/identity-service.module';
 import {dummyIdentityEnvironment} from './config/environment';
 
-configDotenv();
+configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: IdentityServiceModule,

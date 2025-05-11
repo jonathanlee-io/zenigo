@@ -5,7 +5,7 @@ import {configDotenv} from 'dotenv';
 import {PaymentsServiceModule} from './app/payments-service.module';
 import {dummyPaymentsEnvironment} from './config/environment';
 
-configDotenv();
+configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: PaymentsServiceModule,
