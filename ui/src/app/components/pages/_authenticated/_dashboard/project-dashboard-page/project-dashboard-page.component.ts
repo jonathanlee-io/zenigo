@@ -35,7 +35,7 @@ import {
   styleUrl: './project-dashboard-page.component.scss',
 })
 export class ProjectDashboardPageComponent implements OnInit, OnDestroy {
-  activeTab: 'featureFlags' | 'feedback' = 'featureFlags';
+  activeTab: 'featureFlags' | 'feedback' | 'userSegments' = 'featureFlags';
   productFeedbackSubmissions: Signal<ProductFeedbackSubmissionDto[]> = signal([
     {
       id: 'fb-123456',
