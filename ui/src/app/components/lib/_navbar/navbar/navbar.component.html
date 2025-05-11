@@ -1,47 +1,74 @@
-<header class="relative isolate z-10 shadow-lg bg-light-navbar-color dark:bg-dark-navbar-color">
-  <nav aria-label="Global" class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-    <div class="flex lg:flex-1">
+<header class="sticky top-0 z-30 bg-white dark:bg-slate-800 shadow-sm border-b border-slate-200 dark:border-slate-700">
+  <nav aria-label="Global" class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+    <div class="flex items-center gap-4">
       <a [routerLink]="rebaseRoutePath(RoutePath.LANDING_PAGE)"
-         class="-m-1.5 p-1.5 hover:scale-105 transition-transform duration-200">
-        <span class="sr-only">Your Company</span>
-        <img alt="Zenigo logo" class="h-10 w-auto" src="/logo.svg">
+         class="flex items-center hover:opacity-90 transition-opacity duration-200">
+        <span class="sr-only">Zenigo</span>
+        <img alt="Zenigo logo" class="h-8 w-auto" src="/logo.svg">
       </a>
-      <a *ngIf="userAuthenticationStore.isLoggedIn()" [routerLink]="rebaseRoutePath(RoutePath.DASHBOARD)" class="text-sm font-bold leading-6 text-gray-900 bg-green-300 rounded-md px-5 py-2 mx-3 shadow-md hover:bg-green-400 hover:scale-105 transition-transform duration-300 bg-light-white dark:bg-dark-white"
+      <a *ngIf="userAuthenticationStore.isLoggedIn()"
+         [routerLink]="rebaseRoutePath(RoutePath.DASHBOARD)"
+         class="inline-flex items-center justify-center text-sm font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 rounded-md px-3.5 py-2 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors duration-200"
          pButton>
-        Main Dashboard
+        <span>Main Dashboard</span>
       </a>
     </div>
-    <div class="lg:flex lg:flex-1 lg:justify-end">
-      <div class="card flex justify-center ml-4">
-        <p-button (click)="userActionOverlayPanel.toggle($event)"
-                class="text-light-text-primary dark:text-dark-text-primary">
-          <ChevronDownIcon pButtonIcon />
+
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <p-button (click)="userActionOverlayPanel.toggle($event)" (keydown.enter)="userActionOverlayPanel.toggle($event)"
+                  class="shadow-none p-button-text p-button-rounded flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50">
+          <span class="pr-1 text-sm font-medium">Menu</span>
+          <ChevronDownIcon class="h-4 w-4" pButtonIcon />
         </p-button>
-        <p-popover #userActionOverlayPanel>
-          <div class="flex flex-col gap-2 w-[8rem]">
-            <div class="justify-center items-center text-center">
-              <ng-container *ngIf="!userAuthenticationStore.isLoggedIn() && !userAuthenticationStore.isLoading()">
-                <div class="flex justify-center items-center text-center py-2">
-                  <a [routerLink]="rebaseRoutePath(RoutePath.REGISTER)" pButton>Register</a>
-                </div>
-                <div class="flex justify-center items-center text-center py-2">
-                  <a [routerLink]="rebaseRoutePath(RoutePath.LOGIN)" pButton>Login</a>
-                </div>
-              </ng-container>
-              <ng-container *ngIf="userAuthenticationStore.isLoggedIn() && !userAuthenticationStore.isLoading()">
-                <div class="flex justify-center items-center text-center py-2">
-                  <button (click)="userAuthenticationStore.logout()" icon="pi pi-sign-out" label="Log Out" pButton></button>
-                </div>
-              </ng-container>
-              <div class="py-2 flex flex-col gap-2 justify-center items-center text-center">
-                <p-toggleswitch (onChange)="userPreferencesStore.toggleDarkMode()" [(ngModel)]="isDarkMode"
-                                class="mt-2"/>
-                <i [ngClass]="userPreferencesStore.isDarkMode() ? 'pi-moon' : 'pi-sun'"
-                   class="pi text-light-white dark:text-light-white mb-0.5 px-2"></i>
-                <span class="font-medium text-light-white dark:text-light-white block mb-2">{{ getOppositeOfCurrentDarkModeStatus() }} Mode</span>
-                <span
-                  class="text-light-white dark:text-light-white">{{ getColorModePrompt() }}</span>
+
+        <p-popover #userActionOverlayPanel [style]="{
+                     'border-radius': '0.5rem',
+                     'overflow': 'hidden',
+                     'box-shadow': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                   }"
+                   appendTo="body">
+          <div class="flex flex-col w-[16rem] bg-white dark:bg-slate-800 rounded-lg overflow-hidden">
+            <!-- Not logged in state -->
+            <ng-container *ngIf="!userAuthenticationStore.isLoggedIn() && !userAuthenticationStore.isLoading()">
+              <div class="p-3 border-b border-slate-200 dark:border-slate-700">
+                <a [routerLink]="rebaseRoutePath(RoutePath.REGISTER)"
+                   class="w-full mb-2 flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
+                  Register
+                </a>
+                <a [routerLink]="rebaseRoutePath(RoutePath.LOGIN)"
+                   class="w-full flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors">
+                  Login
+                </a>
               </div>
+            </ng-container>
+
+            <!-- Logged in state -->
+            <ng-container *ngIf="userAuthenticationStore.isLoggedIn() && !userAuthenticationStore.isLoading()">
+              <div class="p-3 border-b border-slate-200 dark:border-slate-700">
+                <button (click)="userAuthenticationStore.logout()"
+                        class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20 hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-colors">
+                  <i class="pi pi-sign-out text-xs"></i>
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </ng-container>
+
+            <!-- Theme toggle section -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-700/30">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  {{ getOppositeOfCurrentDarkModeStatus() }} Mode
+                </span>
+                <div class="flex items-center gap-2">
+                  <i [ngClass]="userPreferencesStore.isDarkMode() ? 'pi-moon' : 'pi-sun'"
+                     class="pi text-slate-600 dark:text-slate-400"></i>
+                  <p-toggleswitch (onChange)="userPreferencesStore.toggleDarkMode()"
+                                  [(ngModel)]="isDarkMode"
+                                  class="scale-75" />
+                </div>
+              </div>
+              <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">{{ getColorModePrompt() }}</p>
             </div>
           </div>
         </p-popover>

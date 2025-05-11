@@ -1,5 +1,5 @@
-import {NgIf} from '@angular/common';
-import {Component, inject, OnInit} from '@angular/core';
+import {NgClass, NgIf} from '@angular/common';
+import {Component, computed, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
@@ -25,12 +25,14 @@ import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/rout
     RouterLink,
     NgIf,
     ProgressSpinnerModule,
+    NgClass,
   ],
   templateUrl: './main-dashboard.component.html',
   styleUrl: './main-dashboard.component.scss',
 })
 export class MainDashboardComponent implements OnInit {
   protected readonly projectStore = inject(ProjectStore);
+  getActiveFeatureCount = computed(() => this.projectStore.projectsWhereInvolved().length);
   protected readonly rebaseRoutePath = rebaseRoutePath;
   protected readonly rebaseRoutePathAsString = rebaseRoutePathAsString;
   protected readonly RoutePath = RoutePath;

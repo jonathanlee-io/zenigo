@@ -1,10 +1,30 @@
-<div class="min-h-screen py-8 bg-light-primary dark:bg-dark-primary">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 border-4 rounded-xl">
-    <div class="mx-auto max-w-3xl text-center flex flex-col items-center justify-center mt-8">
-      <h1 class="text-3xl font-bold text-light-text-primary dark:text-dark-text-primary font-display">
-        Your Login was Successful!
-      </h1>
-      <app-success-checkmark class="mt-4 py-8 animate-bounce" />
+<div class="min-h-screen flex flex-col pt-16 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900">
+  <div class="w-full max-w-md mx-auto">
+    <div class="bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden transform transition-all">
+      <!-- Success card header with gradient -->
+      <div class="h-2 bg-gradient-to-r from-indigo-500 to-indigo-600 dark:from-indigo-600 dark:to-indigo-400"></div>
+
+      <div class="px-6 py-8 text-center">
+        <!-- Success icon -->
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 mb-6">
+          <app-success-checkmark />
+        </div>
+
+        <!-- Success message -->
+        <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+          Login Successful!
+        </h1>
+        <p class="text-slate-600 dark:text-slate-300 mb-8">
+          You've been successfully logged into your account.
+        </p>
+      </div>
+
+      <!-- Optional footer -->
+      <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/30 border-t border-slate-200 dark:border-slate-700 text-center">
+        <p class="text-sm text-slate-500 dark:text-slate-400">
+          You will be redirected to your dashboard in a few seconds...
+        </p>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <app-beta-message />
-<div class="bg-light-primary dark:bg-dark-primary isolate">
+<div class="bg-slate-50 dark:bg-slate-900 isolate">
   <!-- Hero section -->
   <div class="relative pt-4">
     <div class="py-12 sm:py-32 lg:pb-40">
@@ -11,21 +11,20 @@
             </div>
             <img alt="Your Company" class="h-16 w-auto relative z-10" height="16" ngSrc="/logo.svg" width="16">
           </div>
-          <h1
-            class="text-light-text-primary dark:text-dark-text-primary text-6xl font-bold hover:shadow-xl hover:scale-105">
+          <h1 class="text-slate-800 dark:text-white text-6xl font-bold transition-transform duration-300 hover:shadow-xl hover:scale-105">
             Zenigo.io
           </h1>
-          <p class="mt-8 text-pretty text-lg font-medium hover:text-blue-500 cursor-pointer sm:text-xl/8 dark:text-dark-text-primary text-light-text-primary animate__animated animate__bounce animate__slow hover-animation" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+          <p class="mt-8 text-pretty text-lg font-medium hover:text-indigo-500 cursor-pointer sm:text-xl/8 text-slate-600 dark:text-slate-300 animate__animated animate__bounce animate__slow hover-animation" style="text-shadow: 0px 2px 4px rgba(0,0,0,0.1);">
             An all-in-one feature flag and release management solution with user-segmentation and feedback capabilities.
           </p>
           <div class="mt-10 flex items-center justify-center gap-x-6">
             <a
               [routerLink]="rebaseRoutePath(RoutePath.REGISTER)"
-              class="bg-light-blue dark:bg-dark-blue text-light-text-primary dark:text-dark-text-primary px-3.5 py-2.5 text-sm font-semibold rounded-full
-         border-4 border-light-blue hover:border-indigo-500 dark:border-dark-blue shadow-lg hover:shadow-xl
-         transform transition-transform hover:scale-110 hover:rotate-3
-         focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
-         animate__animated animate__fadeIn animate__slower">
+              class="bg-indigo-600 dark:bg-indigo-500 text-white px-5 py-3 text-sm font-semibold rounded-lg
+              shadow-lg hover:shadow-indigo-500/20
+              transform transition-all duration-300 hover:scale-105
+              focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+              animate__animated animate__fadeIn animate__slower">
               Get started
             </a>
           </div>
@@ -37,16 +36,16 @@
   <div class="pb-12 mt-2 flex justify-center animate__animated animate__slideInUp">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary">Gather Feedback</h2>
-        <p class="mt-2 text-3xl font-bold tracking-tight text-light-text-primary dark:text-dark-text-primary sm:text-4xl">Actionable insights, right at your fingertips, with a single line of code</p>
+        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Gather Feedback</h2>
+        <p class="mt-2 text-3xl font-bold tracking-tight text-slate-800 dark:text-white sm:text-4xl">Actionable insights, right at your fingertips, with a single line of code</p>
       </div>
 
       <div class="hidden sm:block md:block lg:block xl:block 2xl:block mt-8 mx-auto max-w-2xl text-center">
-        <h3 class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary">Example Implementation</h3>
-        <div class="mt-4 bg-gray-800 text-white p-4 rounded-md overflow-x-auto whitespace-nowrap animate__animated animate__fadeIn animate__slower">
-          <code class="inline-bloc text-light-text-primary dark:text-dark-text-primary">&lt;script async defer src="https://your-subdomain.api.zenigo.io/v1/scripts/feedback-widget.js"&gt;&lt;/script&gt;</code>
+        <h3 class="text-base font-semibold leading-7 text-slate-600 dark:text-slate-300">Example Implementation</h3>
+        <div class="mt-4 bg-slate-800 dark:bg-slate-800/70 text-white p-4 rounded-lg shadow-md overflow-x-auto whitespace-nowrap animate__animated animate__fadeIn animate__slower">
+          <code class="inline-bloc text-slate-200 dark:text-slate-200">&lt;script async defer src="https://your-subdomain.api.zenigo.io/v1/scripts/feedback-widget.js"&gt;&lt;/script&gt;</code>
         </div>
-        <p class="mt-4 text-sm text-light-text-primary dark:text-dark-text-primary">Simply add this script tag to your HTML to embed the feedback widget on your site.</p>
+        <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">Simply add this script tag to your HTML to embed the feedback widget on your site.</p>
       </div>
     </div>
   </div>
@@ -54,10 +53,10 @@
   <!-- Feature section -->
   <div class="mx-auto mt-5 max-w-7xl px-6 animate__animated animate__slideInUp">
     <div class="mx-auto max-w-2xl lg:text-center">
-      <h2 class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary">Drastically improve customer relations</h2>
-      <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-light-text-primary dark:text-dark-text-primary sm:text-5xl lg:text-balance">
+      <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Drastically improve customer relations</h2>
+      <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl lg:text-balance">
         Everything you need to gather feedback from your customers</p>
-      <p class="mt-6 text-pretty text-lg/8 text-light-text-primary dark:text-dark-text-primary">With the ability to embed a feedback widget directly in your
+      <p class="mt-6 text-pretty text-lg/8 text-slate-600 dark:text-slate-300">With the ability to embed a feedback widget directly in your
         web application.</p>
     </div>
     <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -77,12 +76,12 @@
   <div class="pb-24 sm:pt-24">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary">Pricing</h2>
-        <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-light-text-primary dark:text-dark-text-primary sm:text-5xl lg:text-balance">
+        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Pricing</h2>
+        <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl lg:text-balance">
           Pricing that grows with you</p>
       </div>
       <div *ngIf="pricingPlans().length > 0 else loadingSpinner"
-        class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+           class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         @for(pricingPlan of pricingPlans(); track $index;) {
           <app-pricing-display
             [name]="pricingPlan.name"
@@ -95,24 +94,24 @@
       </div>
       <ng-template #loadingSpinner>
         <div class="flex justify-center items-center text-center mt-10">
-          <p-progress-spinner styleClass="w-10rem h-10rem" />
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
         </div>
       </ng-template>
     </div>
   </div>
 
   <!-- FAQs -->
-  <div class="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
-    <h2 class="text-4xl font-semibold tracking-tight text-light-text-primary dark:text-dark-text-primary sm:text-5xl">
+  <div class="mx-auto max-w-2xl divide-y divide-slate-200 dark:divide-slate-700 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
+    <h2 class="text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl">
       Frequently asked questions
     </h2>
-    <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
+    <dl class="mt-10 space-y-8 divide-y divide-slate-200 dark:divide-slate-700">
       <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-        <dt class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary lg:col-span-5">
+        <dt class="text-base font-semibold leading-7 text-slate-800 dark:text-white lg:col-span-5">
           What is Zenigo.io?
         </dt>
         <dd class="mt-4 lg:col-span-7 lg:mt-0">
-          <p class="text-base leading-7 text-light-text-primary dark:text-dark-text-primary">
+          <p class="text-base leading-7 text-slate-600 dark:text-slate-300">
             Zenigo.io is a user feedback platform that allows you to embed a lightweight feedback widget
             directly into your website with a single HTML script tag. It helps you gather actionable insights
             from your visitors to improve your product.
@@ -120,25 +119,25 @@
         </dd>
       </div>
       <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-        <dt class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary lg:col-span-5">
+        <dt class="text-base font-semibold leading-7 text-slate-800 dark:text-white lg:col-span-5">
           How do I add the feedback widget to my website?
         </dt>
         <dd class="mt-4 lg:col-span-7 lg:mt-0">
-          <p class="text-base leading-7 text-light-text-primary dark:text-dark-text-primary">
+          <p class="text-base leading-7 text-slate-600 dark:text-slate-300">
             Adding the feedback widget is as simple as copying and pasting a one-line HTML script tag into your
-            website’s code. The widget integrates seamlessly and requires no additional setup.
+            website's code. The widget integrates seamlessly and requires no additional setup.
           </p>
         </dd>
       </div>
       <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-        <dt class="text-base font-semibold leading-7 text-light-text-primary dark:text-dark-text-primary lg:col-span-5">
+        <dt class="text-base font-semibold leading-7 text-slate-800 dark:text-white lg:col-span-5">
           What kind of insights can I gather with Zenigo.io?
         </dt>
         <dd class="mt-4 lg:col-span-7 lg:mt-0">
-          <p class="text-base leading-7 text-light-text-primary dark:text-dark-text-primary">
+          <p class="text-base leading-7 text-slate-600 dark:text-slate-300">
             Zenigo.io helps you collect detailed feedback from users, including ratings, comments, and feature
             suggestions. It also provides real-time insights and analytics to help you understand your
-            customers’ needs better.
+            customers' needs better.
           </p>
         </dd>
       </div>

@@ -1,9 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-import flagsmith from 'flagsmith';
 import {filter, tap} from 'rxjs';
 
-import {environment} from '../environments/environment';
 import {UserAuthenticationStore} from './+state/auth/user-auth.store';
 import {FeatureFlagsStore} from './+state/feature-flags/feature-flags.store';
 import {FeatureFlagEnum} from './enums/FeatureFlag.enum';
@@ -75,20 +73,25 @@ export class AppService {
   }
 
   initFeatureFlags() {
-    this.featureFlagsStore.onFeatureFlagsInit();
-    flagsmith
-        .init({
-          environmentID: environment.FLAGSMITH_CLIENT_SDK_KEY,
-          api: environment.FLAGSMITH_API_URL,
-          onChange: () => {
-            this.featureFlagsStore.onFeatureFlagsLoaded([
-              ...Object.values(FeatureFlagEnum).map((flag) => ({
-                featureName: flag,
-                isActive: flagsmith.hasFeature(flag),
-              })),
-            ]);
-          },
-        })
-        .catch((reason) => console.error(reason));
+    this.featureFlagsStore.onFeatureFlagsLoaded([...Object.values(FeatureFlagEnum).map((flag) => ({
+      featureName: flag,
+      isActive: true,
+    })),
+    ]);
+    // this.featureFlagsStore.onFeatureFlagsInit();
+    // flagsmith
+    //     .init({
+    //       environmentID: environment.FLAGSMITH_CLIENT_SDK_KEY,
+    //       api: environment.FLAGSMITH_API_URL,
+    //       onChange: () => {
+    //         this.featureFlagsStore.onFeatureFlagsLoaded([
+    //           ...Object.values(FeatureFlagEnum).map((flag) => ({
+    //             featureName: flag,
+    //             isActive: flagsmith.hasFeature(flag),
+    //           })),
+    //         ]);
+    //       },
+    //     })
+    //     .catch((reason) => console.error(reason));
   }
 }
