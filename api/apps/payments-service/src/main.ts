@@ -9,7 +9,6 @@ configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: PaymentsServiceModule,
-  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: paymentsServiceConstants.queueName,
   requiredConfigKeys: Object.keys(dummyPaymentsEnvironment),
   databaseUrlKey: 'PAYMENTS_DATABASE_URL',

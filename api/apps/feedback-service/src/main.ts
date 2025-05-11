@@ -9,7 +9,6 @@ configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: FeedbackServiceModule,
-  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: FEEDBACK_SERVICE_QUEUE,
   requiredConfigKeys: Object.keys(dummyFeedbackEnvironment),
   databaseUrlKey: 'FEEDBACK_DATABASE_URL',

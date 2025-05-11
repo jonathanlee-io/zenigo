@@ -9,7 +9,6 @@ configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: FeatureFlagsServiceModule,
-  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: featureFlagServiceConstants.queueName,
   requiredConfigKeys: Object.keys(dummyFeatureFlagsEnvironment),
   databaseUrlKey: 'FEATURE_FLAGS_DATABASE_URL',

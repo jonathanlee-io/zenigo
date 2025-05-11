@@ -20,23 +20,16 @@ export class RabbitmqModule {
         provide: serviceName,
         useFactory: (configService: ConfigService) => {
           return ClientProxyFactory.create({
-            // @ts-expect-error this is the correct transport parameter
             transport: Transport.RMQ,
             options: {
-              urls: [
-                [
-                  ...(configService
-                    .getOrThrow<string>('RABBIT_MQ_URLS')
-                    ?.split(',') ?? []),
-                ],
-              ],
+              urls: [configService.getOrThrow<string>('RABBIT_MQ_URLS')],
               queue: configService.getOrThrow<string>(
                 `RABBIT_MQ_${serviceName}_QUEUE`,
               ),
+              noAck: true,
               queueOptions: {
                 durable: true,
               },
-              noAck: true,
             },
           });
         },

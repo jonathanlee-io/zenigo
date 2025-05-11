@@ -4,24 +4,25 @@ import {ConfigService} from '@nestjs/config';
 
 export async function bootstrapMicroservice({
   appModule,
-  rabbitMqUrls,
   rabbitMqQueueName,
   requiredConfigKeys,
   databaseUrlKey,
   schemaOverride,
 }: {
   appModule: unknown;
-  rabbitMqUrls: string[];
   rabbitMqQueueName: string;
   requiredConfigKeys: string[];
   databaseUrlKey: string;
   schemaOverride: string;
 }) {
-  const app = await createRabbitMQMicroservice(
-    appModule,
-    rabbitMqUrls,
-    rabbitMqQueueName,
-  );
+  const app = await createRabbitMQMicroservice({
+    module: appModule,
+    rabbitMqHost: '127.0.0.1',
+    rabbitMqPort: 5673,
+    rabbitMqUser: 'guest',
+    rabbitMqPassword: 'guest',
+    queueName: rabbitMqQueueName,
+  });
 
   const configService = app.get<ConfigService>(ConfigService);
 

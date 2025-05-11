@@ -9,7 +9,6 @@ configDotenv({path: '../.env'});
 
 bootstrapMicroservice({
   appModule: IdentityServiceModule,
-  rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
   rabbitMqQueueName: IDENTITY_SERVICE_QUEUE,
   requiredConfigKeys: Object.keys(dummyIdentityEnvironment),
   databaseUrlKey: 'IDENTITY_DATABASE_URL',
