@@ -17,11 +17,8 @@ export async function bootstrapMicroservice({
 }) {
   const app = await createRabbitMQMicroservice({
     module: appModule,
-    rabbitMqHost: '127.0.0.1',
-    rabbitMqPort: 5673,
-    rabbitMqUser: 'guest',
-    rabbitMqPassword: 'guest',
     queueName: rabbitMqQueueName,
+    rabbitMqUrls: process.env.RABBIT_MQ_URLS,
   });
 
   const configService = app.get<ConfigService>(ConfigService);
