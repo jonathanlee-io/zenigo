@@ -1,4 +1,4 @@
-import {NgClass, NgIf} from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {Component, computed, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
@@ -26,6 +26,7 @@ import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/rout
     NgIf,
     ProgressSpinnerModule,
     NgClass,
+    NgForOf,
   ],
   templateUrl: './main-dashboard.component.html',
   styleUrl: './main-dashboard.component.scss',
@@ -39,6 +40,7 @@ export class MainDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.projectStore.loadProjectsWhereInvolved()
+        .then(() => console.log(this.projectStore.projectsWhereInvolved()))
         .catch((error) => {
           console.error(error);
         });

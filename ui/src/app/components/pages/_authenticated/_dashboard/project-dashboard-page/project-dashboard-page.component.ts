@@ -1,10 +1,9 @@
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
-import {ProgressSpinner} from 'primeng/progressspinner';
 import {filter, Subscription, tap} from 'rxjs';
 
 import {ProjectStore} from '../../../../../+state/project/project.store';
@@ -30,12 +29,14 @@ import {
     ProjectActionsPanelComponent,
     ProductFeedbackDashboardPanelComponent,
     NgIf,
-    ProgressSpinner,
+    NgClass,
+
   ],
   templateUrl: './project-dashboard-page.component.html',
   styleUrl: './project-dashboard-page.component.scss',
 })
 export class ProjectDashboardPageComponent implements OnInit, OnDestroy {
+  activeTab: 'featureFlags' | 'feedback' = 'featureFlags';
   protected readonly bugReportsEnabledFormControl = new FormControl<boolean>(true, {
     nonNullable: true,
     validators: [Validators.required],

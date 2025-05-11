@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
@@ -23,6 +23,8 @@ import {rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
     TableModule,
     TagModule,
     RouterLink,
+    NgClass,
+    NgForOf,
 
   ],
   templateUrl: './client-dashboard.component.html',
@@ -71,32 +73,32 @@ export class ClientDashboardComponent implements OnInit, OnDestroy {
         .includes(email);
   }
 
-  promptToggleAdmin(member: {email: string, id: string}) {
+  promptToggleAdmin(adminEmail: string) {
     this.confirmationService.confirm({
-      message: `Are you sure you want to ${this.isUserAdmin(member.email) ? 'revoke' : 'grant'} ${member.email} admin privileges?`,
+      message: `Are you sure you want to ${this.isUserAdmin(adminEmail) ? 'revoke' : 'grant'} ${adminEmail} admin privileges?`,
       acceptButtonStyleClass: 'p-button-danger',
       acceptIcon: 'pi pi-exclamation-triangle',
       rejectIcon: 'pi pi-times',
       closable: false,
       accept: () => this.messageService.add({
         summary: 'Admin privileges updated',
-        detail: `${this.isUserAdmin(member.email) ? 'Revoking' : 'Granting'} admin privileges to ${member.email}`,
+        detail: `${this.isUserAdmin(adminEmail) ? 'Revoking' : 'Granting'} admin privileges to ${adminEmail}`,
         severity: 'success',
         life: 3000,
       }),
     });
   }
 
-  promptRemoveMember(member: {email: string, id: string}) {
+  promptRemoveMember(memberEmail: string) {
     this.confirmationService.confirm({
-      message: `Are you sure you want to revoke ${member.email} member privileges?`,
+      message: `Are you sure you want to revoke ${memberEmail} member privileges?`,
       acceptButtonStyleClass: 'p-button-danger',
       acceptIcon: 'pi pi-trash',
       rejectIcon: 'pi pi-times',
       closable: false,
       accept: () => this.messageService.add({
         summary: 'Member removed',
-        detail: `Removing ${member.email} from organization: ${this.clientStore.clientById()?.displayName}`,
+        detail: `Removing ${memberEmail} from organization: ${this.clientStore.clientById()?.displayName}`,
         severity: 'success',
         life: 3000,
       }),
