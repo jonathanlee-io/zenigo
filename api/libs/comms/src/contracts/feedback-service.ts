@@ -6,8 +6,6 @@ import {
 } from '@app/dto';
 import {IdParamDto} from '@app/validation';
 
-import {ProductFeedbackSubmission} from '../../../../apps/feedback-service/generated/client';
-
 export const FEEDBACK_SERVICE_QUEUE = 'FEEDBACK';
 
 export const FEEDBACK_SERVICE = {
@@ -45,6 +43,6 @@ export interface FeedbackServiceContract {
     AuthenticatedMicroserviceControllerPayload<
       {limit: number; offset: number} & IdParamDto
     >,
-    ProductFeedbackSubmission
+    unknown
   >;
 }
