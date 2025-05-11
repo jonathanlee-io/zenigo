@@ -55,6 +55,6 @@ COPY --chown=node:node --from=build /usr/src/app/apps/payments-service/prisma ./
 ARG TARGET_SERVICE=api-gateway
 ENV SERVICE_PATH="./dist/apps/${TARGET_SERVICE}/main.js"
 
-EXPOSE 3000
+EXPOSE 8000
 
 CMD node $SERVICE_PATH
