@@ -32,6 +32,7 @@ import {FeedbackModule} from './feedback/feedback.module';
           options: {
             urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
             queue: configService.getOrThrow<string>('RABBIT_MQ_FEEDBACK_QUEUE'),
+            noAck: true,
             queueOptions: {
               durable: true,
             },
@@ -47,6 +48,7 @@ import {FeedbackModule} from './feedback/feedback.module';
           options: {
             urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
             queue: configService.getOrThrow<string>('RABBIT_MQ_IDENTITY_QUEUE'),
+            noAck: true,
             queueOptions: {
               durable: true,
             },
@@ -64,6 +66,7 @@ import {FeedbackModule} from './feedback/feedback.module';
             queue: configService.getOrThrow<string>(
               'RABBIT_MQ_FEATURE_FLAGS_QUEUE',
             ),
+            noAck: true,
             queueOptions: {
               durable: true,
             },
@@ -83,8 +86,6 @@ import {FeedbackModule} from './feedback/feedback.module';
             queueOptions: {
               durable: true,
             },
-            host: configService.getOrThrow<string>('RABBIT_MQ_HOST'),
-            port: configService.getOrThrow<number>('RABBIT_MQ_PORT'),
           },
         }),
       },
