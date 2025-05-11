@@ -1,9 +1,9 @@
 import {
   IDENTITY_SERVICE,
+  IDENTITY_SERVICE_QUEUE,
   IdentityServiceContract,
   TypedClientProxy,
 } from '@app/comms';
-import {identityServiceConstants} from '@app/constants';
 import {MicroserviceSendResult} from '@app/dto';
 import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
@@ -20,7 +20,7 @@ export class ProductsService {
   constructor(
     private readonly logger: Logger,
     private readonly productsRepository: ProductsRepositoryService,
-    @Inject(identityServiceConstants.queueName)
+    @Inject(IDENTITY_SERVICE_QUEUE)
     readonly untypedIdentityClient: ClientProxy,
   ) {
     this.identityClient = new TypedClientProxy(this.untypedIdentityClient);

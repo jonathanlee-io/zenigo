@@ -1,4 +1,4 @@
-import {identityServiceConstants} from '@app/constants';
+import {IDENTITY_SERVICE_QUEUE} from '@app/comms';
 import {bootstrapMicroservice} from '@app/init';
 import {configDotenv} from 'dotenv';
 
@@ -10,7 +10,7 @@ configDotenv();
 bootstrapMicroservice({
   appModule: IdentityServiceModule,
   rabbitMqUrls: [...(process.env.RABBIT_MQ_URLS?.split(',') ?? [])],
-  rabbitMqQueueName: identityServiceConstants.queueName,
+  rabbitMqQueueName: IDENTITY_SERVICE_QUEUE,
   requiredConfigKeys: Object.keys(dummyIdentityEnvironment),
   databaseUrlKey: 'IDENTITY_DATABASE_URL',
   schemaOverride:

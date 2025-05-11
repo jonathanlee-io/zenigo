@@ -3,10 +3,10 @@ import * as path from 'node:path';
 
 import {
   IDENTITY_SERVICE,
+  IDENTITY_SERVICE_QUEUE,
   IdentityServiceContract,
   TypedClientProxy,
 } from '@app/comms';
-import {identityServiceConstants} from '@app/constants';
 import {MicroserviceSendResult} from '@app/dto';
 import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
@@ -24,7 +24,7 @@ export class EmbedScriptsService {
   constructor(
     private readonly logger: Logger,
     private readonly configService: ConfigService<FeedbackEnvironment>,
-    @Inject(identityServiceConstants.queueName)
+    @Inject(IDENTITY_SERVICE_QUEUE)
     readonly untypedIdentityClientProxy: ClientProxy,
   ) {
     this.identityClient = new TypedClientProxy<

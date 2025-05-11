@@ -48,10 +48,10 @@ $ pnpm run start:prod
 ## Run tests
 
 ```bash
-# unit tests
+# unit main.js
 $ pnpm run test
 
-# e2e tests
+# e2e main.js
 $ pnpm run test:e2e
 
 # test coverage

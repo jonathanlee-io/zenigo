@@ -1,10 +1,17 @@
 import {JwtAuthGuard} from '@app/auth';
+import {FEEDBACK_SERVICE_QUEUE, IDENTITY_SERVICE_QUEUE} from '@app/comms';
+import {
+  featureFlagServiceConstants,
+  paymentsServiceConstants,
+} from '@app/constants';
 import {Module} from '@nestjs/common';
-import {ConfigModule} from '@nestjs/config';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 import {APP_GUARD, RouterModule} from '@nestjs/core';
+import {ClientsModule, Transport} from '@nestjs/microservices';
 import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
 
 import {appRoutes} from './app.routes';
+import {ApiGatewayEnvironment} from './config/environment';
 import {FeedbackModule} from './feedback/feedback.module';
 
 @Module({
@@ -15,6 +22,70 @@ import {FeedbackModule} from './feedback/feedback.module';
       envFilePath: './apps/api-gateway/.env',
     }),
     ThrottlerModule.forRoot(),
+    ClientsModule.registerAsync([
+      {
+        name: FEEDBACK_SERVICE_QUEUE,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
+            queue: configService.getOrThrow<string>('RABBIT_MQ_FEEDBACK_QUEUE'),
+            queueOptions: {
+              durable: true,
+            },
+          },
+        }),
+      },
+      {
+        name: IDENTITY_SERVICE_QUEUE,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
+            queue: configService.getOrThrow<string>('RABBIT_MQ_IDENTITY_QUEUE'),
+            queueOptions: {
+              durable: true,
+            },
+          },
+        }),
+      },
+      {
+        name: featureFlagServiceConstants.queueName,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
+            queue: configService.getOrThrow<string>(
+              'RABBIT_MQ_FEATURE_FLAGS_QUEUE',
+            ),
+            queueOptions: {
+              durable: true,
+            },
+          },
+        }),
+      },
+      {
+        name: paymentsServiceConstants.queueName,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
+            queue: configService.getOrThrow<string>('RABBIT_MQ_PAYMENTS_QUEUE'),
+            queueOptions: {
+              durable: true,
+            },
+          },
+        }),
+      },
+    ]),
     FeedbackModule,
   ],
   controllers: [],
