@@ -8,6 +8,7 @@ import {
   TypedClientProxy,
 } from '@app/comms';
 import {MicroserviceSendResult} from '@app/dto';
+import {Cache, CACHE_MANAGER} from '@nestjs/cache-manager';
 import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {ClientProxy} from '@nestjs/microservices';
@@ -16,6 +17,7 @@ import {FeedbackEnvironment} from '../../../../config/environment';
 
 @Injectable()
 export class EmbedScriptsService {
+  private static readonly SCRIPT_CACHE_KEY = 'widget-script';
   private readonly identityClient: TypedClientProxy<
     keyof IdentityServiceContract,
     IdentityServiceContract
@@ -24,6 +26,7 @@ export class EmbedScriptsService {
   constructor(
     private readonly logger: Logger,
     private readonly configService: ConfigService<FeedbackEnvironment>,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @Inject(IDENTITY_SERVICE_QUEUE)
     readonly untypedIdentityClientProxy: ClientProxy,
   ) {
@@ -57,13 +60,25 @@ export class EmbedScriptsService {
   }
 
   async getWidgetScript(): Promise<MicroserviceSendResult<string | null>> {
-    const widgetContents = fs.readFileSync(
+    let widgetContents: string | null = await this.cacheManager.get<string>(
+      EmbedScriptsService.SCRIPT_CACHE_KEY,
+    );
+    if (widgetContents) {
+      return {
+        status: HttpStatus.OK,
+        data: widgetContents,
+      };
+    }
+    widgetContents = fs.readFileSync(
       path.join(__dirname, '../../..', 'widget/dist/echonexus-widget.js'),
       'utf8',
     );
-
+    await this.cacheManager.set(
+      EmbedScriptsService.SCRIPT_CACHE_KEY,
+      widgetContents,
+    );
     return {
-      status: widgetContents ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR,
+      status: HttpStatus.OK,
       data: widgetContents,
     };
   }
