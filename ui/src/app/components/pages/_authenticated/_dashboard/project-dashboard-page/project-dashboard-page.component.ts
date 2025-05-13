@@ -1,5 +1,5 @@
 import {DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
-import {Component, inject, OnDestroy, OnInit, Signal, signal} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, Signal, signal, ViewContainerRef} from '@angular/core';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
@@ -11,6 +11,9 @@ import {RoutePath} from '../../../../../app.routes';
 import {ProductFeedbackSubmissionDto} from '../../../../../dtos/projects/ProductFeedbackSubmissionDto';
 import {ProjectDto} from '../../../../../dtos/projects/Project.dto';
 import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
+import {
+  FeatureFlagEditDialogComponent,
+} from '../../../../lib/_dashboard/feature-flag-edit-dialog/feature-flag-edit-dialog.component';
 import {
   ProjectActionsPanelComponent,
 } from '../../../../lib/_project/project-actions-panel/project-actions-panel.component';
@@ -132,6 +135,7 @@ export class ProjectDashboardPageComponent implements OnInit, OnDestroy {
   protected readonly RoutePath = RoutePath;
   protected readonly rebaseRoutePathAsString = rebaseRoutePathAsString;
   private readonly route = inject(ActivatedRoute);
+  private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly bugReportsSubscription: Subscription;
   private readonly featureRequestsSubscription: Subscription;
   private readonly featureFeedbackSubscription: Subscription;
@@ -177,6 +181,11 @@ export class ProjectDashboardPageComponent implements OnInit, OnDestroy {
     this.userIssuesSubscription = this.userIssuesEnabledFormControl.valueChanges.pipe(
         tap((newValue) => this.updateProjectFormControlValue({isUserIssuesEnabled: newValue})),
     ).subscribe();
+  }
+
+  openFeatureFlagEditDialog(featureFlagId: string) {
+    const componentRef = this.viewContainerRef.createComponent(FeatureFlagEditDialogComponent);
+    componentRef.instance.open(featureFlagId);
   }
 
   ngOnInit() {

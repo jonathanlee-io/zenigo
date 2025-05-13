@@ -1,0 +1,98 @@
+<p-dialog
+  [(visible)]="visible"
+  [draggable]="false"
+  [modal]="true"
+  [resizable]="false"
+  [style]="{width: '60rem'}"
+  header="Feature Flag Details"
+  styleClass="shadow-lg rounded-lg">
+
+  <div class="p-4">
+    <!-- Feature flag header and description -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">{{ featureFlag.name }}</h2>
+      <p class="text-slate-600 dark:text-slate-400 mt-1">{{ featureFlag.description }}</p>
+    </div>
+
+    <!-- Key information -->
+    <div class="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg mb-6">
+      <div class="flex items-center">
+        <span class="text-sm text-slate-500 dark:text-slate-400">Feature Key:</span>
+        <code class="ml-2 px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-sm font-mono text-slate-800 dark:text-slate-300">{{ featureFlag.key }}</code>
+        <button (click)="copyToClipboard(featureFlag.key)" class="p-button-text p-button-rounded p-button-sm ml-2" icon="pi pi-copy"
+                pButton pTooltip="Copy to clipboard"></button>
+      </div>
+    </div>
+
+    <!-- Main toggle switch -->
+    <div class="flex justify-between items-center p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg mb-6">
+      <div>
+        <h3 class="font-medium text-slate-900 dark:text-white">Kill Switch</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Globally enable or disable this feature</p>
+      </div>
+      <p-toggleswitch [(ngModel)]="featureFlag.enabled" />
+    </div>
+
+    <!-- Default value -->
+    <div class="mb-6">
+      <h3 class="text-slate-900 dark:text-white font-medium mb-3">Default Value</h3>
+      <div class="flex items-center">
+        <p-dropdown
+          [(ngModel)]="featureFlag.defaultValue"
+          [options]="valueOptions"
+          optionLabel="label"
+          optionValue="value"
+          styleClass="w-full md:w-64">
+        </p-dropdown>
+        <span class="ml-3 text-sm text-slate-500 dark:text-slate-400">Applied when no segment rules match</span>
+      </div>
+    </div>
+
+    <!-- User segments section -->
+    <div>
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-slate-900 dark:text-white font-medium">User Segment Overrides</h3>
+        <button class="p-button-sm" icon="pi pi-plus" label="Add Segment" pButton></button>
+      </div>
+
+      <div *ngIf="featureFlag.segments.length === 0" class="text-center py-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+        <p class="text-slate-600 dark:text-slate-400">No segment overrides configured</p>
+        <button class="p-button-text p-button-sm mt-2" icon="pi pi-plus" label="Add your first segment"
+                pButton></button>
+      </div>
+
+      <div *ngFor="let segment of featureFlag.segments" class="mb-3 p-4 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <h4 class="font-medium text-slate-900 dark:text-white">{{ segment.name }}</h4>
+            <p class="text-sm text-slate-600 dark:text-slate-400">{{ segment.description }}</p>
+          </div>
+          <div class="flex">
+            <button class="p-button-text p-button-rounded mr-2" icon="pi pi-pencil" pButton></button>
+            <button class="p-button-text p-button-rounded p-button-danger" icon="pi pi-trash" pButton></button>
+          </div>
+        </div>
+
+        <div class="flex items-center mt-3">
+          <p class="text-sm text-slate-700 dark:text-slate-300 mr-3">Override Value:</p>
+          <p-dropdown
+            [(ngModel)]="segment.value"
+            [options]="valueOptions"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-40">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-between">
+      <button (click)="close()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton></button>
+      <div>
+        <button (click)="saveChanges()" class="p-button-primary" icon="pi pi-check" label="Save Changes" pButton></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
