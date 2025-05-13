@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserSegmentsTabComponent } from './user-segments-tab.component';
+import {UserSegmentsTabComponent} from './user-segments-tab.component';
 
 describe('UserSegmentsTabComponent', () => {
   let component: UserSegmentsTabComponent;
@@ -8,9 +8,9 @@ describe('UserSegmentsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserSegmentsTabComponent]
+      imports: [UserSegmentsTabComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(UserSegmentsTabComponent);
     component = fixture.componentInstance;

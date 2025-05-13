@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserSegmentsTableComponent } from './user-segments-table.component';
+import {UserSegmentsTableComponent} from './user-segments-table.component';
 
 describe('UserSegmentsTableComponent', () => {
   let component: UserSegmentsTableComponent;
@@ -8,9 +8,9 @@ describe('UserSegmentsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserSegmentsTableComponent]
+      imports: [UserSegmentsTableComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(UserSegmentsTableComponent);
     component = fixture.componentInstance;
