@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FeedbackExportDialogComponent } from './feedback-export-dialog.component';
+import {FeedbackExportDialogComponent} from './feedback-export-dialog.component';
 
 describe('FeedbackExportDialogComponent', () => {
   let component: FeedbackExportDialogComponent;
@@ -8,9 +8,9 @@ describe('FeedbackExportDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeedbackExportDialogComponent]
+      imports: [FeedbackExportDialogComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(FeedbackExportDialogComponent);
     component = fixture.componentInstance;
