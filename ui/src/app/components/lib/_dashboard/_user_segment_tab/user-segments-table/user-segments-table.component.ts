@@ -1,6 +1,6 @@
-import {DatePipe} from '@angular/common';
 import {Component, inject, input, ViewContainerRef} from '@angular/core';
 
+import {TimeAgoDatePipe} from '../../../../../pipes/time-ago-date.pipe';
 import {UserSegmentEditDialogComponent} from '../user-segment-edit-dialog/user-segment-edit-dialog.component';
 
 export interface UserSegment {
@@ -14,7 +14,7 @@ export interface UserSegment {
 @Component({
   selector: 'app-user-segments-table',
   imports: [
-    DatePipe,
+    TimeAgoDatePipe,
   ],
   templateUrl: './user-segments-table.component.html',
   styleUrl: './user-segments-table.component.scss',

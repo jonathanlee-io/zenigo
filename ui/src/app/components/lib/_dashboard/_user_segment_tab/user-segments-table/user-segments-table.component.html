@@ -38,7 +38,7 @@
             {{ userSegment.userCount }}
           </td>
           <td class="px-6 py-4 truncate text-sm text-slate-800 dark:text-slate-300 w-1/6">
-            {{ userSegment.creationDate | date: 'medium' }}
+            {{ userSegment.creationDate | timeAgoDate }}
           </td>
           <td class="px-6 py-4 text-sm w-1/8">
             <button
