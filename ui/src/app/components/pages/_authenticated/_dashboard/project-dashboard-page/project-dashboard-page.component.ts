@@ -13,10 +13,10 @@ import {ProjectDto} from '../../../../../dtos/projects/Project.dto';
 import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
 import {
   FeatureFlagEditDialogComponent,
-} from '../../../../lib/_dashboard/feature-flag-edit-dialog/feature-flag-edit-dialog.component';
+} from '../../../../lib/_dashboard/_feature_flag_tab/feature-flag-edit-dialog/feature-flag-edit-dialog.component';
 import {
-  UserSegmentEditDialogComponent,
-} from '../../../../lib/_dashboard/user-segment-edit-dialog/user-segment-edit-dialog.component';
+  UserSegmentsTabComponent,
+} from '../../../../lib/_dashboard/_user_segment_tab/user-segments-tab/user-segments-tab.component';
 import {
   ProjectActionsPanelComponent,
 } from '../../../../lib/_project/project-actions-panel/project-actions-panel.component';
@@ -35,6 +35,7 @@ import {
     NgClass,
     DatePipe,
     NgForOf,
+    UserSegmentsTabComponent,
 
   ],
   templateUrl: './project-dashboard-page.component.html',
@@ -209,11 +210,6 @@ export class ProjectDashboardPageComponent implements OnInit, OnDestroy {
     this.ownerUpdatesSubscription?.unsubscribe();
     this.ownerIssuesSubscription?.unsubscribe();
     this.userIssuesSubscription?.unsubscribe();
-  }
-
-  openUserSegmentEditDialog(userSegmentId: string) {
-    const componentRef = this.viewContainerRef.createComponent(UserSegmentEditDialogComponent);
-    componentRef.instance.open(userSegmentId);
   }
 
   private updateProjectFormControlValue(updateProjectValue: Partial<ProjectDto>) {

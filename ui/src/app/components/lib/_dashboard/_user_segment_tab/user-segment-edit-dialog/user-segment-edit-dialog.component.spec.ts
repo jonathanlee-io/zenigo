@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserSegmentEditDialogComponent } from './user-segment-edit-dialog.component';
+import {UserSegmentEditDialogComponent} from './user-segment-edit-dialog.component';
 
 describe('UserSegmentEditDialogComponent', () => {
   let component: UserSegmentEditDialogComponent;
@@ -8,9 +8,9 @@ describe('UserSegmentEditDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserSegmentEditDialogComponent]
+      imports: [UserSegmentEditDialogComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(UserSegmentEditDialogComponent);
     component = fixture.componentInstance;
