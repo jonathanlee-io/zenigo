@@ -11,6 +11,6 @@ export class TimeAgoDatePipe implements PipeTransform {
       return '';
     }
 
-    return `${Math.round(Math.abs(DateTime.fromJSDate(new Date(value)).diff(DateTime.now(), 'days').days))} days ago`;
+    return `${Math.round(DateTime.now().diff(DateTime.fromJSDate(new Date(value)), 'days').days)} days ago`;
   }
 }
