@@ -1,0 +1,98 @@
+<p-dialog
+  [(visible)]="visible"
+  [draggable]="false"
+  [modal]="true"
+  [resizable]="false"
+  [style]="{width: '60rem'}"
+  header="Export Feedback Data"
+  styleClass="shadow-lg rounded-lg">
+
+  <div class="p-4">
+    <!-- Export header -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Export Feedback</h2>
+      <p class="text-slate-600 dark:text-slate-400 mt-1">
+        Select date range and format to export feedback data
+      </p>
+    </div>
+
+    <!-- Date Range Selection -->
+    <div class="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg mb-6">
+      <h3 class="font-medium text-slate-900 dark:text-white mb-3">Date Range</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">Start Date:</p>
+          <p-date-picker
+            [(ngModel)]="dateRange.startDate"
+            [showIcon]="true"
+            dateFormat="mm/dd/yy"
+            styleClass="w-full"></p-date-picker>
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">End Date:</p>
+          <p-date-picker
+            [(ngModel)]="dateRange.endDate"
+            [minDate]="toDate(dateRange.startDate)"
+            [showIcon]="true"
+            dateFormat="mm/dd/yy"
+            styleClass="w-full"></p-date-picker>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Format Selection -->
+    <div class="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg mb-6">
+      <h3 class="font-medium text-slate-900 dark:text-white mb-3">Export Format</h3>
+
+      <div class="flex flex-col gap-3">
+        <div class="field-radiobutton">
+          <p-radioButton
+            [(ngModel)]="selectedFormat"
+            inputId="format_excel"
+            name="fileFormat"
+            value="excel"></p-radioButton>
+          <label class="ml-2 text-slate-800 dark:text-slate-200" for="format_excel">Excel (.xlsx)</label>
+        </div>
+
+        <div class="field-radiobutton">
+          <p-radioButton
+            [(ngModel)]="selectedFormat"
+            inputId="format_csv"
+            name="fileFormat"
+            value="csv"></p-radioButton>
+          <label class="ml-2 text-slate-800 dark:text-slate-200" for="format_csv">CSV (.csv)</label>
+        </div>
+
+        <div class="field-radiobutton">
+          <p-radioButton
+            [(ngModel)]="selectedFormat"
+            inputId="format_pdf"
+            name="fileFormat"
+            value="pdf"></p-radioButton>
+          <label class="ml-2 text-slate-800 dark:text-slate-200" for="format_pdf">PDF (.pdf)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Summary -->
+    <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
+      <h3 class="text-slate-900 dark:text-white font-medium mb-3">Export Summary</h3>
+
+      <div class="text-slate-700 dark:text-slate-300">
+        <p>You are about to export feedback submissions in <span class="font-medium">{{ getFormatDisplayName(selectedFormat) }}</span> format.</p>
+        <p class="mt-2">Date Range: <span class="font-medium">{{ dateRange.startDate | date:'mediumDate' }}</span> to <span class="font-medium">{{ dateRange.endDate | date:'mediumDate' }}</span></p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-between">
+      <button (click)="close()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton></button>
+      <div>
+        <button (click)="exportData()" [disabled]="!isFormValid()" class="p-button-primary" icon="pi pi-download" label="Export" pButton></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
