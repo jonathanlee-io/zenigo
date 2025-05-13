@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FeatureFlagsTabComponent } from './feature-flags-tab.component';
+import {FeatureFlagsTabComponent} from './feature-flags-tab.component';
 
 describe('FeatureFlagsTabComponent', () => {
   let component: FeatureFlagsTabComponent;
@@ -8,9 +8,9 @@ describe('FeatureFlagsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeatureFlagsTabComponent]
+      imports: [FeatureFlagsTabComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(FeatureFlagsTabComponent);
     component = fixture.componentInstance;
