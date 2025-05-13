@@ -12,8 +12,8 @@ import {ProductFeedbackSubmissionDto} from '../../../../../dtos/projects/Product
 import {ProjectDto} from '../../../../../dtos/projects/Project.dto';
 import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
 import {
-  FeatureFlagEditDialogComponent,
-} from '../../../../lib/_dashboard/_feature_flag_tab/feature-flag-edit-dialog/feature-flag-edit-dialog.component';
+  FeatureFlagsTabComponent,
+} from '../../../../lib/_dashboard/_feature_flag_tab/feature-flags-tab/feature-flags-tab.component';
 import {
   UserSegmentsTabComponent,
 } from '../../../../lib/_dashboard/_user_segment_tab/user-segments-tab/user-segments-tab.component';
@@ -36,6 +36,7 @@ import {
     DatePipe,
     NgForOf,
     UserSegmentsTabComponent,
+    FeatureFlagsTabComponent,
 
   ],
   templateUrl: './project-dashboard-page.component.html',
@@ -185,11 +186,6 @@ export class ProjectDashboardPageComponent implements OnInit, OnDestroy {
     this.userIssuesSubscription = this.userIssuesEnabledFormControl.valueChanges.pipe(
         tap((newValue) => this.updateProjectFormControlValue({isUserIssuesEnabled: newValue})),
     ).subscribe();
-  }
-
-  openFeatureFlagEditDialog(featureFlagId: string) {
-    const componentRef = this.viewContainerRef.createComponent(FeatureFlagEditDialogComponent);
-    componentRef.instance.open(featureFlagId);
   }
 
   ngOnInit() {
