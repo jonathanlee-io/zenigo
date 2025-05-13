@@ -1,0 +1,118 @@
+<p-dialog
+  [(visible)]="visible"
+  [draggable]="false"
+  [modal]="true"
+  [resizable]="false"
+  [style]="{width: '60rem'}"
+  header="Product Feedback Details"
+  styleClass="shadow-lg rounded-lg">
+
+  <div class="p-4">
+    <!-- Feedback submission header -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Feedback Submission</h2>
+      <p class="text-slate-600 dark:text-slate-400 mt-1">
+        Submitted on {{ feedbackSubmission().submittedAt | date:'medium' }}
+      </p>
+    </div>
+
+    <!-- ID information -->
+    <div class="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg mb-6">
+      <div class="flex items-center">
+        <span class="text-sm text-slate-500 dark:text-slate-400">Submission ID:</span>
+        <code class="ml-2 px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-sm font-mono text-slate-800 dark:text-slate-300">{{ feedbackSubmission().id }}</code>
+        <button (click)="copyToClipboard(feedbackSubmission().id)" class="p-button-text p-button-rounded p-button-sm ml-2" icon="pi pi-copy"
+                pButton pTooltip="Copy to clipboard"></button>
+      </div>
+    </div>
+
+    <!-- Widget metadata -->
+    <div class="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg mb-6">
+      <h3 class="font-medium text-slate-900 dark:text-white mb-3">Widget Metadata</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Type:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().widgetMetadataType }}</p>
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Timezone:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().widgetMetadataTimezone }}</p>
+        </div>
+
+        <div class="col-span-1 md:col-span-2">
+          <p class="text-sm text-slate-500 dark:text-slate-400">URL:</p>
+          <div class="flex items-center">
+            <a [href]="feedbackSubmission().widgetMetadataUrl" class="text-blue-600 dark:text-blue-400 hover:underline break-all" target="_blank">
+              {{ feedbackSubmission().widgetMetadataUrl }}
+            </a>
+            <button (click)="copyToClipboard(feedbackSubmission().widgetMetadataUrl)" class="p-button-text p-button-rounded p-button-sm ml-2" icon="pi pi-copy"
+                    pButton pTooltip="Copy to clipboard"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Client information -->
+    <div class="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg mb-6">
+      <h3 class="font-medium text-slate-900 dark:text-white mb-3">Client Information</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Product ID:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().productId }}</p>
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Client IP:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().clientIp }}</p>
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Client Subdomain:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().clientSubdomain }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- User feedback -->
+    <div class="mb-6">
+      <h3 class="text-slate-900 dark:text-white font-medium mb-3">User Feedback</h3>
+      <div class="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+        <p class="whitespace-pre-wrap text-slate-800 dark:text-slate-200">{{ feedbackSubmission().userFeedback }}</p>
+      </div>
+    </div>
+
+    <!-- Timestamps -->
+    <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
+      <h3 class="text-slate-900 dark:text-white font-medium mb-3">Submission Timeline</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Created:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().createdAt | date:'medium' }}</p>
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Updated:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().updatedAt | date:'medium' }}</p>
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Submitted:</p>
+          <p class="font-medium text-slate-900 dark:text-white">{{ feedbackSubmission().submittedAt | date:'medium' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-between">
+      <button (click)="close()" class="p-button-text" icon="pi pi-times" label="Close" pButton></button>
+      <div>
+        <button (click)="handleAction()" class="p-button-primary" icon="pi pi-check" label="Process Feedback" pButton></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
