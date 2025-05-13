@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FeedbackTableComponent } from './feedback-table.component';
+import {FeedbackTableComponent} from './feedback-table.component';
 
 describe('FeedbackTableComponent', () => {
   let component: FeedbackTableComponent;
@@ -8,9 +8,9 @@ describe('FeedbackTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeedbackTableComponent]
+      imports: [FeedbackTableComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(FeedbackTableComponent);
     component = fixture.componentInstance;
