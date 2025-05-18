@@ -1,5 +1,6 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthenticatedUsersController } from './authenticated-users.controller';
+import {Test, TestingModule} from '@nestjs/testing';
+
+import {AuthenticatedUsersController} from './authenticated-users.controller';
 
 describe('AuthenticatedUsersController', () => {
   let controller: AuthenticatedUsersController;
@@ -9,7 +10,9 @@ describe('AuthenticatedUsersController', () => {
       controllers: [AuthenticatedUsersController],
     }).compile();
 
-    controller = module.get<AuthenticatedUsersController>(AuthenticatedUsersController);
+    controller = module.get<AuthenticatedUsersController>(
+      AuthenticatedUsersController,
+    );
   });
 
   it('should be defined', () => {
