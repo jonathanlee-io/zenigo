@@ -1,12 +1,12 @@
 import {NgIf} from '@angular/common';
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {ButtonModule} from 'primeng/button';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
-import {filter, tap} from 'rxjs';
+import {filter, Subscription, tap} from 'rxjs';
 
 import {UserAuthenticationStore} from './+state/auth/user-auth.store';
 import {AppService} from './app.service';
@@ -32,10 +32,11 @@ import {FooterComponent} from './components/lib/footer/footer.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Zenigo';
   isSidebarVisible = signal<boolean>(false);
   private readonly userAuthenticationStore = inject(UserAuthenticationStore);
+  private readonly routerEventsSubscription: Subscription;
 
   constructor(
     private readonly router: Router,
@@ -43,7 +44,7 @@ export class AppComponent implements OnInit {
   ) {
     this.userAuthenticationStore.checkLoginOnRefresh();
     this.appService.initSupabase();
-    this.router.events
+    this.routerEventsSubscription = this.router.events
         .pipe(
             filter(
                 (routerEvent): routerEvent is NavigationEnd =>
@@ -62,5 +63,9 @@ export class AppComponent implements OnInit {
     this.appService.pipeAuthRouterEvents(this.router);
     this.appService.pipeNextParamAuthEvents(this.router);
     this.appService.initFeatureFlags();
+  }
+
+  ngOnDestroy() {
+    this.routerEventsSubscription?.unsubscribe();
   }
 }
