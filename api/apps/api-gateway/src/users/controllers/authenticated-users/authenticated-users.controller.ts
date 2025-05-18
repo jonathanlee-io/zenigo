@@ -18,7 +18,7 @@ export class AuthenticatedUsersController {
     {requestingUserId, requestingUserEmail, clientSubdomain}: CurrentUserDto,
     @Ip() ip: string,
   ) {
-    return this.authenticatedUsersService.checkIn(
+    await this.authenticatedUsersService.checkIn(
       {requestingUserId, requestingUserEmail, clientSubdomain},
       ip,
     );
