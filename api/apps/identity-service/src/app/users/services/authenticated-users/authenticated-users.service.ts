@@ -1,5 +1,5 @@
-import {POSTSuccessDto} from '@app/dto';
-import {Injectable, Logger} from '@nestjs/common';
+import {MicroserviceSendResult, POSTSuccessDto} from '@app/dto';
+import {HttpStatus, Injectable, Logger} from '@nestjs/common';
 
 import {UsersRepositoryService} from '../../repositories/users-repository/users-repository.service';
 
@@ -13,7 +13,7 @@ export class AuthenticatedUsersService {
   async checkIn(
     requestingUserId: string,
     requestingUserEmail: string,
-  ): Promise<POSTSuccessDto & {isCreatedNew: boolean}> {
+  ): Promise<MicroserviceSendResult<POSTSuccessDto & {isCreatedNew: boolean}>> {
     const existingUser = await this.usersRepository.findBySupabaseIdOrEmail(
       requestingUserId,
       requestingUserEmail,
@@ -28,7 +28,10 @@ export class AuthenticatedUsersService {
           requestingUserEmail,
         );
       }
-      return {isSuccessful: true, isCreatedNew: false};
+      return {
+        status: HttpStatus.OK,
+        data: {isSuccessful: true, isCreatedNew: false},
+      };
     }
     this.logger.log(
       `Creating new user for (${requestingUserId}) <${requestingUserEmail}>`,
@@ -37,6 +40,9 @@ export class AuthenticatedUsersService {
       requestingUserId,
       requestingUserEmail,
     );
-    return {isSuccessful: true, isCreatedNew: true};
+    return {
+      status: HttpStatus.OK,
+      data: {isSuccessful: true, isCreatedNew: true},
+    };
   }
 }

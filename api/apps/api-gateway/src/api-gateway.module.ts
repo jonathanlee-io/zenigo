@@ -1,4 +1,4 @@
-import {JwtAuthGuard} from '@app/auth';
+import {AuthModule, JwtAuthGuard} from '@app/auth';
 import {FEEDBACK_SERVICE_QUEUE, IDENTITY_SERVICE_QUEUE} from '@app/comms';
 import {
   featureFlagServiceConstants,
@@ -13,6 +13,7 @@ import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
 import {appRoutes} from './app.routes';
 import {ApiGatewayEnvironment} from './config/environment';
 import {FeedbackModule} from './feedback/feedback.module';
+import {UsersModule} from './users/users.module';
 
 @Module({
   imports: [
@@ -90,9 +91,10 @@ import {FeedbackModule} from './feedback/feedback.module';
         }),
       },
     ]),
+    AuthModule,
     FeedbackModule,
+    UsersModule,
   ],
-  controllers: [],
   providers: [
     {
       provide: APP_GUARD,
