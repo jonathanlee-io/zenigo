@@ -142,12 +142,19 @@ export class ProjectsService {
   async getProjectFromSubdomain(
     clientSubdomain: string,
   ): Promise<MicroserviceSendResult<unknown>> {
+    const [project] = await this.projectsRepository.findBySubdomain(
+      clientSubdomain,
+      {isIncludeCreatedBy: true, isIncludeClient: true},
+    );
+    if (!project) {
+      return {
+        status: HttpStatus.NOT_FOUND,
+        data: null,
+      };
+    }
     return {
       status: HttpStatus.OK,
-      data: await this.projectsRepository.findBySubdomain(clientSubdomain, {
-        isIncludeClient: true,
-        isIncludeCreatedBy: true,
-      }),
+      data: project,
     };
   }
 

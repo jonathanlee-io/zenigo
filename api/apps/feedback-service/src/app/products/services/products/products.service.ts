@@ -51,6 +51,7 @@ export class ProductsService {
       if (getProjectResult.status !== HttpStatus.OK) {
         return {status: HttpStatus.NOT_FOUND, data: {isSuccessful: false}};
       }
+      this.logger.log(`Project ID to be saved: ${getProjectResult.data.id}`);
       await this.productsRepository.createProductFeedback(
         {projectId: getProjectResult.data.id},
         {
