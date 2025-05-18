@@ -7,7 +7,12 @@ export const options = {
 };
 
 export default function() {
-    let res = http.get(`${__ENV.BASE_URL}/v1/feedback/embed-scripts/bootstrap-widget.js`);
+    let res = http.post(`${__ENV.BASE_URL}/v1/users/authenticated/check-in`, JSON.stringify({}), {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${__ENV.TOKEN}`
+        },
+    });
     check(res, { "status is 200": (res) => res.status === 200 });
     sleep(1);
 }
