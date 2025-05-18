@@ -24,4 +24,14 @@ export class TypedClientProxy<
       ),
     );
   }
+
+  emit<K extends keyof TContract>(
+    pattern: K,
+    payload: TContract[K]['payload'],
+  ): void {
+    this.clientProxy.emit<TContract[K]['response'], TContract[K]['payload']>(
+      pattern,
+      payload,
+    );
+  }
 }

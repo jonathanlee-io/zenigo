@@ -5,13 +5,7 @@ import {
   IdentityServiceContract,
   TypedClientProxy,
 } from '@app/comms';
-import {
-  HttpStatus,
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-} from '@nestjs/common';
+import {Inject, Injectable, Logger} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
 
 @Injectable()
@@ -32,21 +26,14 @@ export class AuthenticatedUsersService {
     {requestingUserId, requestingUserEmail, clientSubdomain}: CurrentUserDto,
     ip: string,
   ) {
-    const result = await this.identityClient.sendAsync(
-      IDENTITY_SERVICE.USER_CHECK_IN,
-      {
-        authenticatedUser: {
-          id: requestingUserId,
-          email: requestingUserEmail,
-        },
-        clientSubdomain,
-        clientIp: ip,
-        data: null as never,
+    this.identityClient.emit(IDENTITY_SERVICE.USER_CHECK_IN, {
+      authenticatedUser: {
+        id: requestingUserId,
+        email: requestingUserEmail,
       },
-    );
-    if (result.status !== HttpStatus.OK) {
-      throw new InternalServerErrorException();
-    }
-    return result.data;
+      clientSubdomain,
+      clientIp: ip,
+      data: null as never,
+    });
   }
 }
