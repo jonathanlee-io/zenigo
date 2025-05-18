@@ -1,21 +1,22 @@
-import {CurrentUser, CurrentUserDto} from '@app/auth';
-import {Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
-import {ApiTags} from '@nestjs/swagger';
+import {IDENTITY_SERVICE} from '@app/comms';
+import {AuthenticatedMicroserviceControllerPayload} from '@app/dto';
+import {Controller} from '@nestjs/common';
+import {MessagePattern, Payload} from '@nestjs/microservices';
 
 import {AuthenticatedUsersService} from '../../services/authenticated-users/authenticated-users.service';
 
-@ApiTags('Users')
-@Controller('authenticated')
+@Controller()
 export class AuthenticatedUsersController {
   constructor(
     private readonly authenticatedUsersService: AuthenticatedUsersService,
   ) {}
 
-  @Post('check-in')
-  @HttpCode(HttpStatus.OK)
-  checkIn(
-    @CurrentUser()
-    {requestingUserId, requestingUserEmail}: CurrentUserDto,
+  @MessagePattern(IDENTITY_SERVICE.USER_CHECK_IN)
+  async checkIn(
+    @Payload()
+    {
+      authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
+    }: AuthenticatedMicroserviceControllerPayload<never>,
   ) {
     return this.authenticatedUsersService.checkIn(
       requestingUserId,
