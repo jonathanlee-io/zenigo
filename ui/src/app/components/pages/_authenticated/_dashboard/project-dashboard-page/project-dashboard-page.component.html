@@ -73,6 +73,20 @@
             </svg>
             User Segments
           </button>
+          <!-- New Analytics Tab -->
+          <button (click)="activeTab = 'analytics'" [ngClass]="activeTab === 'analytics' ?
+          'border-indigo-500 text-indigo-700 dark:text-indigo-400 dark:border-indigo-400' :
+          'border-transparent text-slate-600 hover:text-slate-800 hover:border-slate-300 dark:text-slate-400 dark:hover:text-slate-300 dark:hover:border-slate-600'"
+                  class="px-6 py-4 flex items-center font-medium text-sm border-b-2 focus:outline-none">
+            <svg
+              [ngClass]="activeTab === 'analytics' ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-500 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-400'"
+              class="mr-2 h-5 w-5"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+            Analytics
+          </button>
         </nav>
       </div>
 
@@ -89,6 +103,11 @@
       <!-- User Segments Tab Content -->
       <div *ngIf="activeTab === 'userSegments'">
         <app-user-segments-tab/>
+      </div>
+
+      <!-- Analytics Tab Content -->
+      <div *ngIf="activeTab === 'analytics'">
+        <app-analytics-tab />
       </div>
 
       <!-- Feature Configuration Panel -->

@@ -10,6 +10,7 @@ import {ProjectStore} from '../../../../../+state/project/project.store';
 import {RoutePath} from '../../../../../app.routes';
 import {ProjectDto} from '../../../../../dtos/projects/Project.dto';
 import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
+import {AnalyticsTabComponent} from '../../../../lib/_dashboard/_analytics_tab/analytics-tab/analytics-tab.component';
 import {
   FeatureFlagsTabComponent,
 } from '../../../../lib/_dashboard/_feature_flag_tab/feature-flags-tab/feature-flags-tab.component';
@@ -36,13 +37,14 @@ import {
     UserSegmentsTabComponent,
     FeatureFlagsTabComponent,
     FeedbackTabComponent,
+    AnalyticsTabComponent,
 
   ],
   templateUrl: './project-dashboard-page.component.html',
   styleUrl: './project-dashboard-page.component.scss',
 })
 export class ProjectDashboardPageComponent implements OnInit, OnDestroy {
-  activeTab: 'featureFlags' | 'feedback' | 'userSegments' = 'featureFlags';
+  activeTab: 'featureFlags' | 'feedback' | 'userSegments' | 'analytics' = 'featureFlags';
   protected readonly bugReportsEnabledFormControl = new FormControl<boolean>(true, {
     nonNullable: true,
     validators: [Validators.required],
