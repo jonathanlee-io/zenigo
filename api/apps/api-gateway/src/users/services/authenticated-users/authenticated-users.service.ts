@@ -1,5 +1,6 @@
 import {CurrentUserDto} from '@app/auth';
 import {
+  IDENTITY_SERVICE,
   IDENTITY_SERVICE_QUEUE,
   IdentityServiceContract,
   TypedClientProxy,
@@ -31,15 +32,18 @@ export class AuthenticatedUsersService {
     {requestingUserId, requestingUserEmail, clientSubdomain}: CurrentUserDto,
     ip: string,
   ) {
-    const result = await this.identityClient.sendAsync('USER_CHECK_IN', {
-      authenticatedUser: {
-        id: requestingUserId,
-        email: requestingUserEmail,
+    const result = await this.identityClient.sendAsync(
+      IDENTITY_SERVICE.USER_CHECK_IN,
+      {
+        authenticatedUser: {
+          id: requestingUserId,
+          email: requestingUserEmail,
+        },
+        clientSubdomain,
+        clientIp: ip,
+        data: null as never,
       },
-      clientSubdomain,
-      clientIp: ip,
-      data: null as never,
-    });
+    );
     if (result.status !== HttpStatus.OK) {
       throw new InternalServerErrorException();
     }
