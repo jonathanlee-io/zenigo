@@ -9,8 +9,8 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const supabaseService = inject(SupabaseService);
   if (
     /(https):\/\/(.*).api.zenigo.io/.test(req.url) ||
-    /(https):\/\/(.*).api.echonexus-staging.com/.test(req.url) ||
-    /(https):\/\/(.*).api.echonexus-local.io:8000/.test(req.url) ||
+    /(https):\/\/(.*).api.zenigo-staging.com/.test(req.url) ||
+    /(https):\/\/(.*).api.zenigo-local.io:8000/.test(req.url) ||
     /(http):\/\/localhost:8000\/(.*)/.test(req.url) ||
     new RegExp('/(https)://(.*).' + tenantStore.customHostname() + '/').test(
         req.url,
