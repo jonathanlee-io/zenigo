@@ -20,4 +20,5 @@ export interface AuthenticatedMicroserviceControllerPayload<TData>
 export interface MicroserviceSendResult<TData> {
   status: HttpStatus;
   data: TData;
+  errorMessage?: string;
 }
