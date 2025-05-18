@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AnalyticsTabComponent } from './analytics-tab.component';
+import {AnalyticsTabComponent} from './analytics-tab.component';
 
 describe('AnalyticsTabComponent', () => {
   let component: AnalyticsTabComponent;
@@ -8,9 +8,9 @@ describe('AnalyticsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AnalyticsTabComponent]
+      imports: [AnalyticsTabComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(AnalyticsTabComponent);
     component = fixture.componentInstance;
