@@ -107,6 +107,7 @@ export const UserAuthenticationStore = signalStore(
     }),
     withMethods((store) => {
       const supabaseService = inject(SupabaseService);
+      const router = inject(Router);
       return {
         attemptSupabaseLoginWithGoogle: async () => {
           patchState(store, {loggedInState: 'LOADING'});
@@ -128,6 +129,11 @@ export const UserAuthenticationStore = signalStore(
           );
           if (supabaseService.session !== null) {
             patchState(store, {loggedInState: 'LOGGED_IN'});
+            setTimeout(() => {
+              if (router.url === '/') {
+                router.navigate([rebaseRoutePath(RoutePath.DASHBOARD)]).catch((reason) => console.error(reason));
+              }
+            }, 1000);
           }
         },
       };
