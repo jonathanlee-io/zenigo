@@ -1,6 +1,8 @@
+import {createHash} from 'crypto';
 import {execSync} from 'node:child_process';
 
 import {defaultIntegrationTestContainerStopDelay} from '@app/constants/testing/integration-testing.constants';
+import {v4} from 'uuid';
 
 export class HelpersUtil {
   static async delayedAction(callback: () => Promise<void>, timeout?: number) {
@@ -27,5 +29,17 @@ export class HelpersUtil {
         stdio: 'inherit',
       },
     );
+  }
+
+  static generateApiKey(prefix: string) {
+    const rawApiKey = `${prefix}_${v4().replace(/-/g, '')}`;
+    const hashedApiKey = createHash('sha256')
+      .update(rawApiKey)
+      .digest('hex')
+      .toString();
+    return {
+      raw: rawApiKey,
+      hashed: hashedApiKey,
+    };
   }
 }

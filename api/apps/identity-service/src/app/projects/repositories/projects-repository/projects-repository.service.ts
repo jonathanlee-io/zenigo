@@ -1,9 +1,7 @@
-import {createHash} from 'crypto';
-
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
 import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
+import {HelpersUtil} from '@app/util';
 import {Inject, Injectable, InternalServerErrorException} from '@nestjs/common';
-import {v4} from 'uuid';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
 import {IDENTITY_PRISMA} from '../../../../config/db.config';
@@ -39,10 +37,7 @@ export class ProjectsRepositoryService {
         const createdProject = await prisma.project.create({
           data: {
             name,
-            hashedFeatureFlagApiKey: createHash('sha256')
-              .update(`ff_${v4().replace(/-/g, '')}`)
-              .digest('hex')
-              .toString(),
+            hashedFeatureFlagApiKey: HelpersUtil.generateApiKey('ff').hashed,
             isBugReportsEnabled,
             isFeatureRequestsEnabled,
             isFeatureFeedbackEnabled,

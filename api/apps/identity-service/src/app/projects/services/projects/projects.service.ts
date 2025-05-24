@@ -1,10 +1,10 @@
-import {createHash} from 'crypto';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 import {MicroserviceSendResult} from '@app/dto';
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
 import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
+import {HelpersUtil} from '@app/util';
 import {
   BadRequestException,
   ForbiddenException,
@@ -13,7 +13,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
-import {v4} from 'uuid';
 
 import {IdentityEnvironment} from '../../../../config/environment';
 import {ClientsService} from '../../../clients/services/clients/clients.service';
@@ -192,19 +191,16 @@ export class ProjectsService {
         data: null,
       };
     }
-    const rawKey = `${prefixCharacters}_${v4().replace(/-/g, '')}`;
-    const hashedKey = createHash('sha256')
-      .update(rawKey)
-      .digest('hex')
-      .toString();
+    const {hashed: hashedApiKey, raw: rawApiKey} =
+      HelpersUtil.generateApiKey(prefixCharacters);
     await this.projectsRepository.updateProjectFeatureFlagsApiKeyById({
       projectId: project.id,
-      hashedKey,
+      hashedKey: hashedApiKey,
     });
     return {
       status: HttpStatus.OK,
       data: {
-        apiKey: rawKey,
+        apiKey: rawApiKey,
       },
     };
   }
