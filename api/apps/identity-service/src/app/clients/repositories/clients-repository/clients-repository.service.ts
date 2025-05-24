@@ -1,4 +1,7 @@
+import {createHash} from 'crypto';
+
 import {Inject, Injectable, InternalServerErrorException} from '@nestjs/common';
+import {v4} from 'uuid';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
 import {IDENTITY_PRISMA} from '../../../../config/db.config';
@@ -63,6 +66,13 @@ export class ClientsRepositoryService {
             isBugReportsEnabled,
             isFeatureRequestsEnabled,
             isFeatureFeedbackEnabled,
+            hashedFeatureFlagApiKey: createHash('sha256')
+              .update(`ff_${v4().replace(/-/g, '')}`)
+              .digest('hex')
+              .toString(),
+            isOwnerIssuesEnabled: true,
+            isOwnerUpdatesEnabled: true,
+            isUserIssuesEnabled: false,
             client: {
               connect: {
                 id: createdClient.id,
