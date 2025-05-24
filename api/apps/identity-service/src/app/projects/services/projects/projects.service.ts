@@ -1,3 +1,4 @@
+import {createHash} from 'crypto';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
@@ -12,6 +13,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
+import {v4} from 'uuid';
 
 import {IdentityEnvironment} from '../../../../config/environment';
 import {ClientsService} from '../../../clients/services/clients/clients.service';
@@ -94,10 +96,10 @@ export class ProjectsService {
     if (
       !clientSubdomain ||
       clientSubdomain === 'www' ||
-      clientSubdomain === 'echonexus'
+      clientSubdomain === 'zenigo'
     ) {
       return this.generateWidgetInitScript(clientSubdomain, {
-        name: 'echonexus',
+        name: 'zenigo',
         subdomain: clientSubdomain,
         isBugReportsEnabled: true,
         isFeatureRequestsEnabled: true,
@@ -113,7 +115,7 @@ export class ProjectsService {
 
   async getWidgetScript() {
     return fs.readFileSync(
-      path.join(__dirname, '../../../../..', 'widget/dist/echonexus-widget.js'),
+      path.join(__dirname, '../../../../..', 'widget/dist/feedback-widget.js'),
       'utf8',
     );
   }
@@ -158,17 +160,66 @@ export class ProjectsService {
     };
   }
 
+  async generateAndStoreApiKey({
+    requestingUserId,
+    requestingUserEmail,
+    clientSubdomain,
+    prefixCharacters,
+  }: {
+    requestingUserId: string;
+    requestingUserEmail: string;
+    clientSubdomain: string;
+    prefixCharacters: string;
+  }): Promise<MicroserviceSendResult<{apiKey: string}>> {
+    const [project] =
+      await this.projectsRepository.findBySubdomain(clientSubdomain);
+    if (!project) {
+      return {
+        status: HttpStatus.NOT_FOUND,
+        data: null,
+        errorMessage: `Could not find project with subdomain: ${clientSubdomain}`,
+      };
+    }
+    const client = await this.clientsService.getClientById(
+      requestingUserId,
+      project.clientId,
+    );
+    if (
+      !client.admins.map((admin) => admin.email).includes(requestingUserEmail)
+    ) {
+      return {
+        status: HttpStatus.FORBIDDEN,
+        data: null,
+      };
+    }
+    const rawKey = `${prefixCharacters}_${v4().replace(/-/g, '')}`;
+    const hashedKey = createHash('sha256')
+      .update(rawKey)
+      .digest('hex')
+      .toString();
+    await this.projectsRepository.updateProjectFeatureFlagsApiKeyById({
+      projectId: project.id,
+      hashedKey,
+    });
+    return {
+      status: HttpStatus.OK,
+      data: {
+        apiKey: rawKey,
+      },
+    };
+  }
+
   private async generateWidgetInitScript(
     clientSubdomain: string,
     returnedProject: unknown,
   ) {
     let widgetSrc: string;
     if (this.configService.getOrThrow('NODE_ENV') === 'production') {
-      widgetSrc = `https://${clientSubdomain}.api.echonexus.io/v1/scripts/echonexus-widget.js`;
+      widgetSrc = `https://${clientSubdomain}.api.zenigo.io/v1/scripts/feedback-widget.js`;
     } else if (this.configService.getOrThrow('NODE_ENV') === 'staging') {
-      widgetSrc = `https://${clientSubdomain}.api.echonexus-staging.com/v1/scripts/echonexus-widget.js`;
+      widgetSrc = `https://${clientSubdomain}.api.zenigo-staging.com/v1/scripts/feedback-widget.js`;
     } else {
-      widgetSrc = `http://${clientSubdomain}.api.echonexus-local.io:8000/v1/scripts/echonexus-widget.js`;
+      widgetSrc = `http://${clientSubdomain}.api.zenigo-local.io:8000/v1/scripts/feedback-widget.js`;
     }
 
     let paramProject = {};

@@ -135,6 +135,23 @@ export class ProjectsRepositoryService {
     });
   }
 
+  async updateProjectFeatureFlagsApiKeyById({
+    projectId,
+    hashedKey,
+  }: {
+    projectId: string;
+    hashedKey: string;
+  }) {
+    return this.prismaService.project.update({
+      where: {
+        id: projectId,
+      },
+      data: {
+        featureFlagsApiKey: hashedKey,
+      },
+    });
+  }
+
   async updateProjectById(
     projectId: string,
     updateProjectDto: UpdateProjectDto,

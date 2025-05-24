@@ -15,6 +15,7 @@ export const IDENTITY_SERVICE = {
   // Projects
   GET_PROJECT_BY_ID: 'GET_PROJECT_BY_ID',
   GET_PROJECT_BY_CLIENT_SUBDOMAIN: 'GET_PROJECT_BY_CLIENT_SUBDOMAIN',
+  GENERATE_AND_STORE_API_KEY: 'GENERATE_AND_STORE_API_KEY',
 } as const;
 
 export interface IdentityServiceContract {
@@ -31,5 +32,10 @@ export interface IdentityServiceContract {
   [IDENTITY_SERVICE.GET_PROJECT_BY_CLIENT_SUBDOMAIN]: Message<
     AnonymousMicroserviceControllerPayload<never>,
     ProjectDto | null
+  >;
+
+  [IDENTITY_SERVICE.GENERATE_AND_STORE_API_KEY]: Message<
+    AuthenticatedMicroserviceControllerPayload<{projectId: string}>,
+    {rawApiKey: string}
   >;
 }

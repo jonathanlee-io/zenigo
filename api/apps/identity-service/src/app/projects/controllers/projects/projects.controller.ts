@@ -1,6 +1,9 @@
 import {CurrentUser, CurrentUserDto} from '@app/auth';
 import {IDENTITY_SERVICE} from '@app/comms';
-import {AnonymousMicroserviceControllerPayload} from '@app/dto';
+import {
+  AnonymousMicroserviceControllerPayload,
+  AuthenticatedMicroserviceControllerPayload,
+} from '@app/dto';
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
 import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {IdParamDto} from '@app/validation';
@@ -100,5 +103,24 @@ export class ProjectsController {
     @Payload() {clientSubdomain}: AnonymousMicroserviceControllerPayload<never>,
   ) {
     return this.projectsService.getProjectFromSubdomain(clientSubdomain);
+  }
+
+  @MessagePattern(IDENTITY_SERVICE.GENERATE_AND_STORE_API_KEY)
+  async generateAndStoreApiKey(
+    @Payload()
+    {
+      clientSubdomain,
+      authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
+      data: {prefixCharacters},
+    }: AuthenticatedMicroserviceControllerPayload<{
+      prefixCharacters: string;
+    }>,
+  ) {
+    return this.projectsService.generateAndStoreApiKey({
+      requestingUserId,
+      requestingUserEmail,
+      clientSubdomain,
+      prefixCharacters,
+    });
   }
 }
