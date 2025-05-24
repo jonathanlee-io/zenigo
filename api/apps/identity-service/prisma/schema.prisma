@@ -41,12 +41,13 @@ model Project {
   createdAt                DateTime    @default(now())
   updatedAt                DateTime    @default(now())
   createdBy                User        @relation(fields: [userId], references: [id])
-  isBugReportsEnabled      Boolean     @default(true)
-  isFeatureRequestsEnabled Boolean     @default(true)
-  isFeatureFeedbackEnabled Boolean     @default(true)
-  isOwnerUpdatesEnabled    Boolean     @default(true)
-  isOwnerIssuesEnabled     Boolean     @default(false)
-  isUserIssuesEnabled      Boolean     @default(false)
+  hashedFeatureFlagApiKey  String
+  isBugReportsEnabled      Boolean
+  isFeatureRequestsEnabled Boolean
+  isFeatureFeedbackEnabled Boolean
+  isOwnerUpdatesEnabled    Boolean
+  isOwnerIssuesEnabled     Boolean
+  isUserIssuesEnabled      Boolean
   hostnames                Hostname[]
   subdomains               Subdomain[]
   client                   Client?     @relation(fields: [clientId], references: [id], onDelete: Cascade)

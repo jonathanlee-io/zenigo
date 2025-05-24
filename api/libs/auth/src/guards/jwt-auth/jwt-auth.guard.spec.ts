@@ -1,7 +1,6 @@
+import {JwtAuthGuard} from '@app/auth';
 import {Reflector} from '@nestjs/core';
 import {Mocked, TestBed} from '@suites/unit';
-
-import {JwtAuthGuard} from './jwt-auth.guard';
 
 describe('JwtAuthGuard', () => {
   let guard: JwtAuthGuard;
