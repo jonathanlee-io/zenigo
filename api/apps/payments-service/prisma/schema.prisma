@@ -9,7 +9,7 @@ datasource db {
 }
 
 model PaymentPlan {
-  id                                 String   @id @default(uuid())
+  id                                 String   @id @default(nanoid())
   name                               String
   description                        String
   monthlyPrice                       String

@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id                 String    @id @default(uuid())
+  id                 String    @id @default(nanoid())
   email              String    @unique
   supabaseUserId     String    @unique
   displayName        String
@@ -23,7 +23,7 @@ model User {
 }
 
 model Client {
-  id            String    @id @default(uuid())
+  id            String    @id @default(nanoid())
   displayName   String
   createdBy     User      @relation(fields: [userId], references: [id], name: "createdByUser")
   members       User[]    @relation(name: "membersOfClient")
@@ -36,7 +36,7 @@ model Client {
 }
 
 model Project {
-  id                       String      @id @default(uuid())
+  id                       String      @id @default(nanoid())
   name                     String
   createdAt                DateTime    @default(now())
   updatedAt                DateTime    @default(now())
@@ -56,7 +56,7 @@ model Project {
 }
 
 model Subdomain {
-  id        String   @id @default(uuid())
+  id        String   @id @default(nanoid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   subdomain String   @unique
@@ -65,7 +65,7 @@ model Subdomain {
 }
 
 model Hostname {
-  id        String   @id @default(uuid())
+  id        String   @id @default(nanoid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   hostname  String   @unique
