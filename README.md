@@ -32,3 +32,6 @@ This project is a NestJS / Angular project.
 A monorepo of monorepos.
 API is NestJS microservices with an API Gateway, all sharing code using NestJS monorepo functionality.
 UI is Angular Nx Monorepo, all UI applications share code using Nx monorepo functionality.
+
+## Architecture
+![image](https://github.com/user-attachments/assets/87433a88-871e-46c2-978f-48c25e06f09d)
