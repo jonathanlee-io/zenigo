@@ -6,7 +6,7 @@ import {v4} from 'uuid';
 
 export class HelpersUtil {
   static async delayedAction(callback: () => Promise<void>, timeout?: number) {
-    new Promise<void>((resolve) =>
+    return new Promise<void>((resolve) =>
       setTimeout(async () => {
         await callback();
         resolve();

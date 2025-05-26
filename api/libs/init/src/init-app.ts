@@ -13,7 +13,8 @@ export const initApp = (app: INestApplication) => {
   app.use(helmet.crossOriginResourcePolicy({policy: 'cross-origin'}));
 
   app.enableCors({
-    origin: /http:\/\/(.*).zenigo-local.io:4200|https:\/\/(.*).zenigo.io/,
+    origin:
+      /http:\/\/localhost:4200|http:\/\/(.*).zenigo-local.io:4200|https:\/\/(.*).zenigo.io/,
     allowedHeaders: [
       'Accept',
       'Content-Type',
