@@ -1,13 +1,15 @@
 import {DatePipe} from '@angular/common';
 import {Component, signal} from '@angular/core';
 import {faker} from '@faker-js/faker/locale/en';
-import {PrimeTemplate} from 'primeng/nest';
+import {PrimeTemplate} from 'primeng/api';
 import {ButtonDirective} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {Tooltip} from 'primeng/tooltip';
 
-import {ProductFeedbackSubmissionDto} from '../../../../../dtos/projects/ProductFeedbackSubmissionDto';
+import {
+  ProductFeedbackSubmissionDto,
+} from '../../../../../dtos/projects/ProductFeedbackSubmissionDto';
 
 @Component({
   selector: 'app-feedback-view-dialog',

@@ -1,9 +1,11 @@
 import {computed, inject} from '@angular/core';
 import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
-import {MessageService} from 'primeng/nest';
+import {MessageService} from 'primeng/api';
 import {take, tap} from 'rxjs';
 
-import {TrialAndSubscriptionsForUserDto} from '../../dtos/payments/TrialAndSubscriptionsForUser.dto';
+import {
+  TrialAndSubscriptionsForUserDto,
+} from '../../dtos/payments/TrialAndSubscriptionsForUser.dto';
 import {PaymentsService} from '../../services/payments/payments.service';
 import {StripeService} from '../../services/stripe/stripe.service';
 

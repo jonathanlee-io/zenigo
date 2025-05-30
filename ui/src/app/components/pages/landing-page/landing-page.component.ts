@@ -1,7 +1,7 @@
 import {NgIf, NgOptimizedImage} from '@angular/common';
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {SharedModule} from 'primeng/nest';
+import {SharedModule} from 'primeng/api';
 import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
@@ -11,9 +11,13 @@ import {RoutePath} from '../../../app.routes';
 import {PaymentPlanDto} from '../../../dtos/payments/PaymentPlan.dto';
 import {PaymentsService} from '../../../services/payments/payments.service';
 import {rebaseRoutePath} from '../../../util/router/Router.utils';
-import {FeatureDisplayComponent} from '../../lib/_landing-page/feature-display/feature-display.component';
+import {
+  FeatureDisplayComponent,
+} from '../../lib/_landing-page/feature-display/feature-display.component';
 import {MeteorsComponent} from '../../lib/_landing-page/meteors/meteors.component';
-import {PricingDisplayComponent} from '../../lib/_landing-page/pricing-display/pricing-display.component';
+import {
+  PricingDisplayComponent,
+} from '../../lib/_landing-page/pricing-display/pricing-display.component';
 import {BetaMessageComponent} from '../../lib/_message/beta-message/beta-message.component';
 
 

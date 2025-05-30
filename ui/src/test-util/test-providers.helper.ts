@@ -1,6 +1,6 @@
 import {provideHttpClient} from '@angular/common/http';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
-import {ConfirmationService, MessageService} from 'primeng/nest';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 export const testProviders = [
   provideHttpClient(),

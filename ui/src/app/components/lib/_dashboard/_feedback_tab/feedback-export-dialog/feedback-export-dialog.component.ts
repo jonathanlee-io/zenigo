@@ -2,14 +2,16 @@ import {DatePipe} from '@angular/common';
 import {Component, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {faker} from '@faker-js/faker/locale/en';
-import {PrimeTemplate} from 'primeng/nest';
+import {PrimeTemplate} from 'primeng/api';
 import {ButtonDirective} from 'primeng/button';
 import {DatePicker} from 'primeng/datepicker';
 import {Dialog} from 'primeng/dialog';
 import {RadioButton} from 'primeng/radiobutton';
 
 import {DateRangeDto} from '../../../../../dtos/date/DateRange.dto';
-import {ProductFeedbackSubmissionDto} from '../../../../../dtos/projects/ProductFeedbackSubmissionDto';
+import {
+  ProductFeedbackSubmissionDto,
+} from '../../../../../dtos/projects/ProductFeedbackSubmissionDto';
 
 type ExportFormat = 'excel' | 'csv' | 'pdf';
 

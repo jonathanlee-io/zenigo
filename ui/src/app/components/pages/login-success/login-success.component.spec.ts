@@ -2,7 +2,7 @@ import {provideHttpClient} from '@angular/common/http';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {provideRouter, RouterModule} from '@angular/router';
-import {ConfirmationService, MessageService} from 'primeng/nest';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 import {LoginSuccessComponent} from './login-success.component';
 import {RoutePath} from '../../../app.routes';
