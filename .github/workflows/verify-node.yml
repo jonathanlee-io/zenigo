@@ -12,6 +12,7 @@ jobs:
   lint:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         node-version: [22.x]
         target-project: [nest, ui]
@@ -34,6 +35,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         node-version: [22.x]
         target-project: [nest, ui]
