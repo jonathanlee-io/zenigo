@@ -1,7 +1,7 @@
 import {NgIf} from '@angular/common';
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
-import {MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/nest';
 import {ButtonModule} from 'primeng/button';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';

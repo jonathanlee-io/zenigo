@@ -1,7 +1,7 @@
 import {NgIf, NgOptimizedImage} from '@angular/common';
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {SharedModule} from 'primeng/api';
+import {SharedModule} from 'primeng/nest';
 import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';

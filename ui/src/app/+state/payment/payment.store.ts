@@ -1,6 +1,6 @@
 import {computed, inject} from '@angular/core';
 import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
-import {MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/nest';
 import {take, tap} from 'rxjs';
 
 import {TrialAndSubscriptionsForUserDto} from '../../dtos/payments/TrialAndSubscriptionsForUser.dto';

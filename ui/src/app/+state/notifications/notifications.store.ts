@@ -1,12 +1,6 @@
 import {computed, inject} from '@angular/core';
-import {
-  patchState,
-  signalStore,
-  withComputed,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
-import {ConfirmationService} from 'primeng/api';
+import {patchState, signalStore, withComputed, withMethods, withState,} from '@ngrx/signals';
+import {ConfirmationService} from 'primeng/nest';
 import {take, tap} from 'rxjs';
 
 import {NotificationDto} from '../../dtos/notifications/Notification.dto';

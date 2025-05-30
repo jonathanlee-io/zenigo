@@ -20,7 +20,7 @@ import {UsersModule} from './users/users.module';
     RouterModule.register(appRoutes),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: './apps/api-gateway/.env',
+      envFilePath: './apps/nest-gateway/.env',
     }),
     ThrottlerModule.forRoot(),
     ClientsModule.registerAsync([

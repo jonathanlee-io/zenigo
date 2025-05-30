@@ -2,7 +2,7 @@ import {DatePipe} from '@angular/common';
 import {Component, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {faker} from '@faker-js/faker/locale/en';
-import {PrimeTemplate} from 'primeng/api';
+import {PrimeTemplate} from 'primeng/nest';
 import {ButtonDirective} from 'primeng/button';
 import {DatePicker} from 'primeng/datepicker';
 import {Dialog} from 'primeng/dialog';

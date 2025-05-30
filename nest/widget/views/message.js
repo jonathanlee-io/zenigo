@@ -5,7 +5,7 @@ const elements = [];
 let body;
 
 export function show(params) {
-  localStorage.setItem("api-subdomain", params.project.subdomain);
+  localStorage.setItem("nest-subdomain", params.project.subdomain);
 
   // convert plain HTML string into DOM elements
   const temporary = document.createElement("div");

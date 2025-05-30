@@ -6,7 +6,7 @@ export const reservedSubdomains: string[] = [
   'staging',
   'production',
   'prod',
-  'api',
+  'nest',
   'auth',
   'admin',
   'mail',

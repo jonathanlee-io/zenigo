@@ -82,7 +82,7 @@ export class AppService {
     // flagsmith
     //     .init({
     //       environmentID: environment.FLAGSMITH_CLIENT_SDK_KEY,
-    //       api: environment.FLAGSMITH_API_URL,
+    //       nest: environment.FLAGSMITH_API_URL,
     //       onChange: () => {
     //         this.featureFlagsStore.onFeatureFlagsLoaded([
     //           ...Object.values(FeatureFlagEnum).map((flag) => ({
