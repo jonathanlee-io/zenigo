@@ -208,7 +208,7 @@ jobs:
 
   rerun-failed-jobs:
     runs-on: ubuntu-22.04
-    needs: [ lint, build, spring-ci ]
+    needs: [ deploy-railway-ui, deploy-railway-api, deploy-railway-spring ]
     if: failure() && fromJSON(github.run_attempt) < 3
     steps:
       - name: Rerun failed jobs in the current workflow
