@@ -69,7 +69,7 @@ jobs:
       - name: Use JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.node-version }}
+          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
           architecture: x64
       - name: Setup Gradle
