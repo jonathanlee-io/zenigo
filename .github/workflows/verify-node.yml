@@ -142,7 +142,7 @@ jobs:
           echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
       - name: Deploy ${{ matrix.target-service }}
         run: railway up --service ${{ matrix.target-service }}
-        working-directory: ./nest
+#        working-directory: ./nest
 
   deploy-railway-spring:
     name: Deploy Spring to Railway
@@ -172,7 +172,7 @@ jobs:
          echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
      - name: Deploy ${{ matrix.target-service }}
        run: railway up --service ${{ matrix.target-service }}
-       working-directory: ./spring
+#       working-directory: ./spring
 
 
   deploy-railway-ui:
