@@ -20,8 +20,6 @@ export async function bootstrapFastifyApi(
   const configService =
     app.get<ConfigService<ApiGatewayEnvironment>>(ConfigService);
 
-  Logger.log(configService.get('RABBIT_MQ_URLS'));
-
   requiredConfigKeys.forEach((key) =>
     configService.getOrThrow(key as keyof ApiGatewayEnvironment),
   );

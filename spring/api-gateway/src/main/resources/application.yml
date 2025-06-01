@@ -1,10 +1,13 @@
+logging:
+  level:
+    org.springframework.security: TRACE
 zenigo:
   cors:
     url: ${FRONT_END_URL}
   auth:
     jwt:
       secret: ${JWT_SECRET}
-      algorithm: HS512
+      algorithm: HS256
 spring:
   application:
     name: api-gateway

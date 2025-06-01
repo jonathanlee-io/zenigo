@@ -32,8 +32,7 @@ public class SecurityConfig {
         .csrf(CsrfSpec::disable)
         .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource()))
         .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->
-            httpSecurityOAuth2ResourceServerConfigurer.jwt(
-                Customizer.withDefaults())
+            httpSecurityOAuth2ResourceServerConfigurer.jwt(Customizer.withDefaults())
         )
         .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.anyExchange().authenticated())
         .build();
@@ -59,7 +58,7 @@ public class SecurityConfig {
   public ReactiveJwtDecoder reactiveJwtDecoder() {
     return NimbusReactiveJwtDecoder
         .withSecretKey(this.authProperties.getSecret())
-        .macAlgorithm(MacAlgorithm.HS512)
+        .macAlgorithm(MacAlgorithm.valueOf(this.authProperties.getAlgorithm().getName()))
         .build();
   }
 }
