@@ -113,17 +113,16 @@ jobs:
 #          RABBIT_MQ_PAYMENTS_QUEUE: PAYMENTS
 
   deploy-railway-api:
-    name: Deploy API to Railway
+    name: Deploy Node.js API to Railway
     needs:
       - lint
       - build
-      - spring-ci
 #      - test
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        target-service: [api-gateway, nest-gateway, feature-flags-service, feedback-service, identity-service, payments-service]
+        target-service: [nest-gateway, feedback-service, identity-service, payments-service]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -131,9 +130,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
-      - name: Install packages
-        run: yarn install --frozen-lockfile
-        working-directory: ./nest
       - name: Install Railway
         run: npm i -g @railway/cli
       - if: ${{ github.ref == 'refs/heads/main' }}
@@ -147,6 +143,37 @@ jobs:
       - name: Deploy ${{ matrix.target-service }}
         run: railway up --service ${{ matrix.target-service }}
         working-directory: ./nest
+
+  deploy-railway-spring:
+    name: Deploy Spring to Railway
+    needs:
+      - spring-ci
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        target-service: [spring-gateway, feature-flags-service]
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v4
+     - name: Use Node 22
+       uses: actions/setup-node@v4
+       with:
+         node-version: 22.x
+     - name: Install Railway
+       run: npm i -g @railway/cli
+     - if: ${{ github.ref == 'refs/heads/main' }}
+       name: Set Production Environment Variables
+       run: |
+         echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_PRODUCTION_TOKEN }}" >> $GITHUB_ENV
+     - if: ${{ github.ref == 'refs/heads/staging' }}
+       name: Set Staging Environment Variables
+       run: |
+         echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
+     - name: Deploy ${{ matrix.target-service }}
+       run: railway up --service ${{ matrix.target-service }}
+       working-directory: ./spring
+
 
   deploy-railway-ui:
     name: Deploy UI to Railway
