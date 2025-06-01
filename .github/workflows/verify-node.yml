@@ -117,6 +117,7 @@ jobs:
     needs:
       - lint
       - build
+      - spring-ci
 #      - test
     runs-on: ubuntu-22.04
     strategy:
@@ -168,6 +169,8 @@ jobs:
   deploy-railway-spring:
     name: Deploy Spring to Railway
     needs:
+      - lint
+      - build
       - spring-ci
     runs-on: ubuntu-22.04
     strategy:
@@ -221,6 +224,7 @@ jobs:
     needs:
       - lint
       - build
+      - spring-ci
     #      - test
     runs-on: ubuntu-22.04
     strategy:
