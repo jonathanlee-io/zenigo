@@ -1,3 +1,10 @@
+zenigo:
+  cors:
+    url: ${FRONT_END_URL}
+  auth:
+    jwt:
+      secret: ${JWT_SECRET}
+      algorithm: HS512
 spring:
   application:
     name: api-gateway

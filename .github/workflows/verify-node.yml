@@ -16,7 +16,7 @@ jobs:
       matrix:
         node-version: [22.x]
         target-project: [nest, ui]
-    name: Lint ${{ matrix.target-project }} (v${{ matrix.node-version }})
+    name: Lint ${{ matrix.target-project }} (Node.js v${{ matrix.node-version }})
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
       matrix:
         node-version: [22.x]
         target-project: [nest, ui]
-    name: Build ${{ matrix.target-project }} (v${{ matrix.node-version }})
+    name: Build ${{ matrix.target-project }} (Node.js v${{ matrix.node-version }})
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,6 +55,28 @@ jobs:
         working-directory: ./${{ matrix.target-project }}
         run: yarn run build
 
+  spring-ci:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        java-version: [ 21 ]
+        target-project: [ spring ]
+    name: Build ${{ matrix.target-project }} (Java v${{ matrix.java-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.node-version }}
+          distribution: 'temurin'
+          architecture: x64
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Gradle Build
+        working-directory: ./${{ matrix.target-project }}
+        run: ./gradlew build
 #  test:
 #    runs-on: ubuntu-22.04
 #    strategy:
@@ -95,12 +117,13 @@ jobs:
     needs:
       - lint
       - build
+      - spring-ci
 #      - test
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        target-service: [nest-gateway, feature-flags-service, feedback-service, identity-service, payments-service]
+        target-service: [api-gateway, nest-gateway, feature-flags-service, feedback-service, identity-service, payments-service]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

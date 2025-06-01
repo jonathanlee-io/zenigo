@@ -3,3 +3,14 @@ server:
 spring:
   application:
     name: feature-flags-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+  data:
+    redis:
+      url: ${REDIS_URL}
+  rabbitmq:
+    addresses: ${RABBIT_MQ_URLS}
+
