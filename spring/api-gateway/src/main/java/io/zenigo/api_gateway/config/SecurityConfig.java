@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
@@ -30,6 +30,7 @@ public class SecurityConfig {
   public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) throws Exception {
     return http
         .csrf(CsrfSpec::disable)
+        .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource()))
         .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->
             httpSecurityOAuth2ResourceServerConfigurer.jwt(
                 Customizer.withDefaults())
@@ -39,7 +40,7 @@ public class SecurityConfig {
   }
 
   @Bean
-  public CorsWebFilter corsWebFilter() {
+  public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration corsConfig = new CorsConfiguration();
     corsConfig.addAllowedOrigin(frontEndUrl);
     corsConfig.addAllowedMethod("*");
@@ -51,7 +52,7 @@ public class SecurityConfig {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", corsConfig);
 
-    return new CorsWebFilter(source);
+    return source;
   }
 
   @Bean
