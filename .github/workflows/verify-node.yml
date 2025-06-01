@@ -141,7 +141,29 @@ jobs:
         run: |
           echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
       - name: Deploy ${{ matrix.target-service }}
-        run: railway up --service ${{ matrix.target-service }}
+        run: |
+          max_attempts=10
+          attempt=1
+          retry_delay=5
+          
+          until railway up --service ${{ matrix.target-service }}; do
+            exit_code=$?
+          
+            if [ $attempt -ge $max_attempts ]; then
+              echo "Deployment failed after $max_attempts attempts. Exiting with error code $exit_code."
+              exit $exit_code
+            fi
+          
+            attempt=$((attempt + 1))
+            echo "Attempt $attempt/$max_attempts failed. Retrying in ${retry_delay}s..."
+            sleep $retry_delay
+          
+            # Exponential backoff with a cap
+            retry_delay=$((retry_delay * 2))
+            if [ $retry_delay -gt 60 ]; then
+              retry_delay=60
+            fi
+          done
 
   deploy-railway-spring:
     name: Deploy Spring to Railway
@@ -170,7 +192,29 @@ jobs:
        run: |
          echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
      - name: Deploy ${{ matrix.target-service }}
-       run: railway up --service ${{ matrix.target-service }}
+       run: |
+         max_attempts=10
+         attempt=1
+         retry_delay=5
+         
+         until railway up --service ${{ matrix.target-service }}; do
+           exit_code=$?
+         
+           if [ $attempt -ge $max_attempts ]; then
+             echo "Deployment failed after $max_attempts attempts. Exiting with error code $exit_code."
+             exit $exit_code
+           fi
+         
+           attempt=$((attempt + 1))
+           echo "Attempt $attempt/$max_attempts failed. Retrying in ${retry_delay}s..."
+           sleep $retry_delay
+         
+           # Exponential backoff with a cap
+           retry_delay=$((retry_delay * 2))
+           if [ $retry_delay -gt 60 ]; then
+             retry_delay=60
+           fi
+         done
 
   deploy-railway-ui:
     name: Deploy UI to Railway
@@ -204,7 +248,29 @@ jobs:
         run: |
           echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
       - name: Deploy ${{ matrix.target-service }}
-        run: railway up --service ${{ matrix.target-service }}
+        run: |
+          max_attempts=10
+          attempt=1
+          retry_delay=5
+          
+          until railway up --service ${{ matrix.target-service }}; do
+            exit_code=$?
+          
+            if [ $attempt -ge $max_attempts ]; then
+              echo "Deployment failed after $max_attempts attempts. Exiting with error code $exit_code."
+              exit $exit_code
+            fi
+          
+            attempt=$((attempt + 1))
+            echo "Attempt $attempt/$max_attempts failed. Retrying in ${retry_delay}s..."
+            sleep $retry_delay
+          
+            # Exponential backoff with a cap
+            retry_delay=$((retry_delay * 2))
+            if [ $retry_delay -gt 60 ]; then
+              retry_delay=60
+            fi
+          done
 
   rerun-failed-jobs:
     runs-on: ubuntu-22.04
