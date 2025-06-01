@@ -182,3 +182,13 @@ jobs:
       - name: Deploy ${{ matrix.target-service }}
         run: railway up --service ${{ matrix.target-service }}
         working-directory: ./ui
+
+  rerun-failed-jobs:
+    runs-on: ubuntu-22.04
+    needs: [ lint, build, spring-ci ]
+    if: failure() && fromJSON(github.run_attempt) < 3
+    steps:
+      - name: Rerun failed jobs in the current workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run retry-workflow.yml -F run_id=${{ github.run_id }}
