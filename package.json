@@ -4,16 +4,16 @@
   "scripts": {
     "lint": "concurrently -c \"green.bold,blue.bold\" yarn:lint:*",
     "lint:ui": "cd ui && yarn run lint",
-    "lint:api": "cd nest && yarn run lint",
+    "lint:nest": "cd nest && yarn run lint",
     "build": "concurrently -c \"green.bold,blue.bold\" yarn:build:*",
     "build:ui": "cd ui && yarn run build",
-    "build:api": "cd nest && yarn run build",
+    "build:nest": "cd nest && yarn run build",
     "start": "concurrently -c \"green.bold,blue.bold\" yarn:start:*",
     "start:ui": "cd ui && yarn run start",
-    "start:api": "cd nest && yarn run start",
+    "start:nest": "cd nest && yarn run start",
     "test": "concurrently -c \"green.bold,blue.bold\" yarn:test:*",
     "test:ui": "cd ui && yarn run test",
-    "test:api": "cd nest && yarn run test",
+    "test:nest": "cd nest && yarn run test",
     "prepare": "husky || true"
   },
   "keywords": [
