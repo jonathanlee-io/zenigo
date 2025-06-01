@@ -142,7 +142,6 @@ jobs:
           echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
       - name: Deploy ${{ matrix.target-service }}
         run: railway up --service ${{ matrix.target-service }}
-#        working-directory: ./nest
 
   deploy-railway-spring:
     name: Deploy Spring to Railway
@@ -172,8 +171,6 @@ jobs:
          echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
      - name: Deploy ${{ matrix.target-service }}
        run: railway up --service ${{ matrix.target-service }}
-#       working-directory: ./spring
-
 
   deploy-railway-ui:
     name: Deploy UI to Railway
@@ -208,7 +205,6 @@ jobs:
           echo "RAILWAY_TOKEN=${{ secrets.RAILWAY_STAGING_TOKEN }}" >> $GITHUB_ENV
       - name: Deploy ${{ matrix.target-service }}
         run: railway up --service ${{ matrix.target-service }}
-        working-directory: ./ui
 
   rerun-failed-jobs:
     runs-on: ubuntu-22.04
