@@ -8,3 +8,12 @@ zenigo:
 spring:
   application:
     name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: nest-gateway-v1
+              uri: ${NEST_GATEWAY_V1_URI}
+              predicates:
+               - Path=/v1/**
