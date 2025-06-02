@@ -1,13 +1,33 @@
 import {LoggingInterceptor} from '@app/util/interceptors/logging/logging.interceptor';
 import {
+  HttpStatus,
   INestApplication,
   Logger,
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
+import helmet from 'helmet';
 
 export const initApp = (app: INestApplication) => {
+  app.use(helmet.crossOriginResourcePolicy({policy: 'cross-origin'}));
+
+  app.enableCors({
+    origin:
+      /http:\/\/localhost:4200|http:\/\/(.*).zenigo-local.io:4200|https:\/\/(.*).zenigo.io/,
+    allowedHeaders: [
+      'Accept',
+      'Content-Type',
+      'Referer',
+      'User-Agent',
+      'Authorization',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    preflightContinue: true,
+    credentials: true,
+    optionsSuccessStatus: HttpStatus.OK,
+  });
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
