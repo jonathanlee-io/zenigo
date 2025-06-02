@@ -1,17 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/feature-flags-service/src",
+  "sourceRoot": "apps/api-gateway/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "assets": [
       "js-widget/**/*"
     ],
     "webpack": true,
-    "tsConfigPath": "apps/feature-flags-service/tsconfig.app.json"
+    "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/feature-flags-service",
+  "root": "apps/api-gateway",
   "projects": {
     "api-gateway": {
       "type": "application",
