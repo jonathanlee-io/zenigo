@@ -26,6 +26,7 @@ RUN yarn run orchestrate:build
 
 RUN yarn run widget:build:prod
 
+COPY --chown=node:node ./apps/feature-flags-service/prisma ./dist/apps/feature-flags-service/prisma
 COPY --chown=node:node ./apps/feedback-service/prisma ./dist/apps/feedback-service/prisma
 COPY --chown=node:node ./apps/identity-service/prisma ./dist/apps/identity-service/prisma
 COPY --chown=node:node ./apps/payments-service/prisma ./dist/apps/payments-service/prisma
@@ -41,10 +42,12 @@ COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 COPY --chown=node:node --from=build /usr/src/app/widget/dist ./widget/dist
 
+COPY --chown=node:node --from=build /usr/src/app/apps/feature-flags-service/generated /usr/src/app/apps/feature-flags-service/generated
 COPY --chown=node:node --from=build /usr/src/app/apps/feedback-service/generated /usr/src/app/apps/feedback-service/generated
 COPY --chown=node:node --from=build /usr/src/app/apps/identity-service/generated /usr/src/app/apps/identity-service/generated
 COPY --chown=node:node --from=build /usr/src/app/apps/payments-service/generated /usr/src/app/apps/payments-service/generated
 
+COPY --chown=node:node --from=build /usr/src/app/apps/feature-flags-service/prisma ./dist/apps/feedback-service/apps/feature-flags-service/prisma
 COPY --chown=node:node --from=build /usr/src/app/apps/feedback-service/prisma ./dist/apps/feedback-service/apps/feedback-service/prisma
 COPY --chown=node:node --from=build /usr/src/app/apps/identity-service/prisma ./dist/apps/identity-service/apps/identity-service/prisma
 COPY --chown=node:node --from=build /usr/src/app/apps/payments-service/prisma ./dist/apps/payments-service/apps/payments-service/prisma
