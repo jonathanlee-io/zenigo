@@ -4,4 +4,6 @@
 <main class="flex flex-col min-h-screen">
   <router-outlet />
 </main>
-<app-footer *ngIf="!isSidebarVisible()" class="sticky bottom-0 top-[100vh]" />
+@if (!isSidebarVisible()) {
+  <app-footer class="sticky bottom-0 top-[100vh]" />
+}

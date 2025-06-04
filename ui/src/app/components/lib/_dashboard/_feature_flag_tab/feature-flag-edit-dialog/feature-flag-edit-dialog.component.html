@@ -20,7 +20,7 @@
         <span class="text-sm text-slate-500 dark:text-slate-400">Feature Key:</span>
         <code class="ml-2 px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-sm font-mono text-slate-800 dark:text-slate-300">{{ featureFlag.key }}</code>
         <button (click)="copyToClipboard(featureFlag.key)" class="p-button-text p-button-rounded p-button-sm ml-2" icon="pi pi-copy"
-                pButton pTooltip="Copy to clipboard"></button>
+        pButton pTooltip="Copy to clipboard"></button>
       </div>
     </div>
 
@@ -55,35 +55,38 @@
         <button class="p-button-sm" icon="pi pi-plus" label="Add Segment" pButton></button>
       </div>
 
-      <div *ngIf="featureFlag.segments.length === 0" class="text-center py-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-        <p class="text-slate-600 dark:text-slate-400">No segment overrides configured</p>
-        <button class="p-button-text p-button-sm mt-2" icon="pi pi-plus" label="Add your first segment"
-                pButton></button>
-      </div>
+      @if (featureFlag.segments.length === 0) {
+        <div class="text-center py-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+          <p class="text-slate-600 dark:text-slate-400">No segment overrides configured</p>
+          <button class="p-button-text p-button-sm mt-2" icon="pi pi-plus" label="Add your first segment"
+          pButton></button>
+        </div>
+      }
 
-      <div *ngFor="let segment of featureFlag.segments" class="mb-3 p-4 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
-        <div class="flex justify-between items-start mb-3">
-          <div>
-            <h4 class="font-medium text-slate-900 dark:text-white">{{ segment.name }}</h4>
-            <p class="text-sm text-slate-600 dark:text-slate-400">{{ segment.description }}</p>
+      @for (segment of featureFlag.segments; track segment) {
+        <div class="mb-3 p-4 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h4 class="font-medium text-slate-900 dark:text-white">{{ segment.name }}</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">{{ segment.description }}</p>
+            </div>
+            <div class="flex">
+              <button class="p-button-text p-button-rounded mr-2" icon="pi pi-pencil" pButton></button>
+              <button class="p-button-text p-button-rounded p-button-danger" icon="pi pi-trash" pButton></button>
+            </div>
           </div>
-          <div class="flex">
-            <button class="p-button-text p-button-rounded mr-2" icon="pi pi-pencil" pButton></button>
-            <button class="p-button-text p-button-rounded p-button-danger" icon="pi pi-trash" pButton></button>
+          <div class="flex items-center mt-3">
+            <p class="text-sm text-slate-700 dark:text-slate-300 mr-3">Override Value:</p>
+            <p-dropdown
+              [(ngModel)]="segment.value"
+              [options]="valueOptions"
+              optionLabel="label"
+              optionValue="value"
+              styleClass="w-40">
+            </p-dropdown>
           </div>
         </div>
-
-        <div class="flex items-center mt-3">
-          <p class="text-sm text-slate-700 dark:text-slate-300 mr-3">Override Value:</p>
-          <p-dropdown
-            [(ngModel)]="segment.value"
-            [options]="valueOptions"
-            optionLabel="label"
-            optionValue="value"
-            styleClass="w-40">
-          </p-dropdown>
-        </div>
-      </div>
+      }
     </div>
   </div>
 

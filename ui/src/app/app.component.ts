@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {MessageService} from 'primeng/api';
@@ -23,11 +23,10 @@ import {FooterComponent} from './components/lib/footer/footer.component';
     DialogModule,
     NavbarComponent,
     FooterComponent,
-    NgIf,
     ToastModule,
     ConfirmDialog,
-    ToastComponent,
-  ],
+    ToastComponent
+],
   providers: [MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

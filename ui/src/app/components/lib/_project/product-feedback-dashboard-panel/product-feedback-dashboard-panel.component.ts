@@ -1,4 +1,4 @@
-import {NgForOf, NgIf} from '@angular/common';
+
 import {Component, effect, inject, input, OnInit, signal} from '@angular/core';
 
 import {ProductFeedbackSubmissionsOffsetKey, ProjectStore} from '../../../../+state/project/project.store';
@@ -9,10 +9,8 @@ import {PaginatorComponent} from '../../paginator/paginator.component';
 @Component({
   selector: 'app-product-feedback-dashboard-panel',
   imports: [
-    NgIf,
-    NgForOf,
-    PaginatorComponent,
-  ],
+    PaginatorComponent
+],
   templateUrl: './product-feedback-dashboard-panel.component.html',
   styleUrl: './product-feedback-dashboard-panel.component.scss',
 })

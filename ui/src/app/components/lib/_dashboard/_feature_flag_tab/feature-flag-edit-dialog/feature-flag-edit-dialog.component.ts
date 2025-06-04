@@ -1,4 +1,4 @@
-import {CommonModule} from '@angular/common';
+
 import {Component, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
@@ -29,15 +29,14 @@ interface FeatureFlag {
   selector: 'app-feature-flag-edit-dialog',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     Dialog,
     ButtonModule,
     InputSwitchModule,
     DropdownModule,
     TooltipModule,
-    ToggleSwitch,
-  ],
+    ToggleSwitch
+],
   templateUrl: './feature-flag-edit-dialog.component.html',
   styleUrl: './feature-flag-edit-dialog.component.scss',
 })

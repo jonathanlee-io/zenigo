@@ -6,68 +6,69 @@
   </div>
 
   <div class="space-y-10">
-    <fieldset *ngIf="!projectStore.isLoading() else loadingSpinner">
-      <legend class="text-3xl font-bold text-light-text-primary dark:text-dark-text-primary">Preview / Create Post / Delete
-      </legend>
-      <div class="mt-6 space-y-6">
-        <div class="flex gap-3">
-          <div class="flex items-center">
-            <div class="grid grid-cols-1">
-              <a [routerLink]="getProductPath()" pButton>
-                <span pButtonLabel>Go to Product Page</span>
-                <span class="pi pi-arrow-right" pButtonIcon></span>
-                <span class="sr-only">Go to Product Page</span>
-              </a>
+    @if (!projectStore.isLoading()) {
+      <fieldset>
+        <legend class="text-3xl font-bold text-light-text-primary dark:text-dark-text-primary">Preview / Create Post / Delete
+        </legend>
+        <div class="mt-6 space-y-6">
+          <div class="flex gap-3">
+            <div class="flex items-center">
+              <div class="grid grid-cols-1">
+                <a [routerLink]="getProductPath()" pButton>
+                  <span pButtonLabel>Go to Product Page</span>
+                  <span class="pi pi-arrow-right" pButtonIcon></span>
+                  <span class="sr-only">Go to Product Page</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="flex items-center">
+              <div class="grid grid-cols-1">
+                <button (click)="isCreatePostDialogVisible = true;" [disabled]="!isOwnerPostsEnabled()" pButton>
+                  <span pButtonLabel>Create Post</span>
+                  <span class="pi pi-plus" pButtonIcon></span>
+                  <span class="sr-only">Go to Product Page</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p-dialog [(visible)]="isCreatePostDialogVisible" [header]="'Owner Posts'" [modal]="true" [style]="{ width: '25rem' }">
+            <span class="p-text-secondary block mb-8">Create a Post</span>
+            <div class="flex items-center gap-4 mb-4">
+              <label class="font-semibold w-24" for="type">Post Type</label>
+              <p-select [(ngModel)]="postType" [options]="filteredPostTypes()" class="w-full md:w-56" id="type" optionLabel="name" placeholder="Select a Post Type" />
+            </div>
+            <div class="flex items-center gap-4 mb-4">
+              <label class="font-semibold w-24" for="title">Title</label>
+              <input autocomplete="off" class="flex-auto" id="title" pInputText />
+            </div>
+            <div class="flex items-center gap-4 mb-8">
+              <label class="font-semibold w-24" for="description">Description</label>
+              <textarea autocomplete="off" class="flex-auto" id="description" pInputText></textarea>
+            </div>
+            <div class="flex justify-end gap-2">
+              <p-button (click)="isCreatePostDialogVisible = false" label="Cancel" severity="secondary" />
+              <p-button (click)="isCreatePostDialogVisible = false" label="Post" />
+            </div>
+          </p-dialog>
+          <div class="flex gap-3">
+            <div class="flex items-center">
+              <div class="grid grid-cols-1">
+                <button (click)="promptDeleteProject()" pButton severity="danger">
+                  <span pButtonLabel>Delete Project</span>
+                  <span class="pi pi-trash" pButtonIcon></span>
+                  <span class="sr-only">Delete Project</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="flex gap-3">
-          <div class="flex items-center">
-            <div class="grid grid-cols-1">
-              <button (click)="isCreatePostDialogVisible = true;" [disabled]="!isOwnerPostsEnabled()" pButton>
-                <span pButtonLabel>Create Post</span>
-                <span class="pi pi-plus" pButtonIcon></span>
-                <span class="sr-only">Go to Product Page</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <p-dialog [(visible)]="isCreatePostDialogVisible" [header]="'Owner Posts'" [modal]="true" [style]="{ width: '25rem' }">
-          <span class="p-text-secondary block mb-8">Create a Post</span>
-          <div class="flex items-center gap-4 mb-4">
-            <label class="font-semibold w-24" for="type">Post Type</label>
-            <p-select [(ngModel)]="postType" [options]="filteredPostTypes()" class="w-full md:w-56" id="type" optionLabel="name" placeholder="Select a Post Type" />
-          </div>
-          <div class="flex items-center gap-4 mb-4">
-            <label class="font-semibold w-24" for="title">Title</label>
-            <input autocomplete="off" class="flex-auto" id="title" pInputText />
-          </div>
-          <div class="flex items-center gap-4 mb-8">
-            <label class="font-semibold w-24" for="description">Description</label>
-            <textarea autocomplete="off" class="flex-auto" id="description" pInputText></textarea>
-          </div>
-          <div class="flex justify-end gap-2">
-            <p-button (click)="isCreatePostDialogVisible = false" label="Cancel" severity="secondary" />
-            <p-button (click)="isCreatePostDialogVisible = false" label="Post" />
-          </div>
-        </p-dialog>
-        <div class="flex gap-3">
-          <div class="flex items-center">
-            <div class="grid grid-cols-1">
-              <button (click)="promptDeleteProject()" pButton severity="danger">
-                <span pButtonLabel>Delete Project</span>
-                <span class="pi pi-trash" pButtonIcon></span>
-                <span class="sr-only">Delete Project</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    <ng-template #loadingSpinner>
+      </fieldset>
+    } @else {
       <div class="flex justify-center items-center">
         <p-progressSpinner styleClass="mt-8" />
       </div>
-    </ng-template>
+    }
   </div>
 </div>

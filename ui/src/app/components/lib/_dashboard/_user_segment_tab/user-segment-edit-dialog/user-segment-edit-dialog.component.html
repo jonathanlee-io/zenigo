@@ -20,7 +20,7 @@
         <span class="text-sm text-slate-500 dark:text-slate-400">Segment Key:</span>
         <code class="ml-2 px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-sm font-mono text-slate-800 dark:text-slate-300">{{ userSegment.key }}</code>
         <button (click)="copyToClipboard(userSegment.key)" class="p-button-text p-button-rounded p-button-sm ml-2" icon="pi pi-copy"
-                pButton pTooltip="Copy to clipboard"></button>
+        pButton pTooltip="Copy to clipboard"></button>
       </div>
     </div>
 
@@ -67,25 +67,28 @@
       </div>
 
       <!-- Search results if any -->
-      <div *ngIf="searchResults.length > 0" class="mb-4 border border-slate-200 dark:border-slate-700 rounded-lg divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
-        <div
-          (click)="selectUser(user)"
-          *ngFor="let user of searchResults"
-          class="flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer">
-          <div class="flex items-center">
-            <div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-700 dark:text-indigo-400 text-sm font-medium">{{ user.initials }}</div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-slate-900 dark:text-white">{{ user.name }}</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400">{{ user.email }}</p>
+      @if (searchResults.length > 0) {
+        <div class="mb-4 border border-slate-200 dark:border-slate-700 rounded-lg divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
+          @for (user of searchResults; track user) {
+            <div
+              (click)="selectUser(user)"
+              class="flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer">
+              <div class="flex items-center">
+                <div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-700 dark:text-indigo-400 text-sm font-medium">{{ user.initials }}</div>
+                <div class="ml-3">
+                  <p class="text-sm font-medium text-slate-900 dark:text-white">{{ user.name }}</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">{{ user.email }}</p>
+                </div>
+              </div>
+              <button
+                class="p-button-text p-button-rounded p-button-sm"
+                icon="pi pi-plus"
+                pButton>
+              </button>
             </div>
-          </div>
-          <button
-            class="p-button-text p-button-rounded p-button-sm"
-            icon="pi pi-plus"
-            pButton>
-          </button>
+          }
         </div>
-      </div>
+      }
 
       <!-- Users list -->
       <div class="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
@@ -99,47 +102,53 @@
             <span class="text-sm font-medium text-slate-700 dark:text-slate-300">User</span>
           </div>
           <div class="flex items-center gap-2">
-            <button
-              (click)="removeSelectedUsers()"
-              *ngIf="selectedUsers.length > 0"
-              class="p-button-sm p-button-danger"
-              icon="pi pi-trash"
-              label="Remove Selected"
-              pButton>
-            </button>
+            @if (selectedUsers.length > 0) {
+              <button
+                (click)="removeSelectedUsers()"
+                class="p-button-sm p-button-danger"
+                icon="pi pi-trash"
+                label="Remove Selected"
+                pButton>
+              </button>
+            }
             <div class="text-sm text-slate-500 dark:text-slate-400">
               {{ selectedUsers.length === 0 ? '' : selectedUsers.length + ' selected' }}
             </div>
           </div>
         </div>
 
-        <div *ngIf="userSegment.users.length === 0" class="text-center py-8 bg-white dark:bg-slate-800">
-          <p class="text-slate-600 dark:text-slate-400">No users in this segment</p>
-          <p class="text-sm text-slate-500 dark:text-slate-500 mt-1">Search and add users above</p>
-        </div>
-
-        <div *ngIf="userSegment.users.length > 0" class="divide-y divide-slate-200 dark:divide-slate-700 max-h-80 overflow-y-auto">
-          <div
-            *ngFor="let user of userSegment.users"
-            class="flex items-center p-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50">
-            <input
-              (change)="updateSelectedStatus()"
-              [(ngModel)]="user.selected"
-              class="mr-3 rounded border-slate-300 dark:border-slate-600 text-indigo-600 dark:text-indigo-500 focus:ring-indigo-500 dark:focus:ring-indigo-400"
-              type="checkbox">
-            <div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-700 dark:text-indigo-400 text-sm font-medium">{{ user.initials }}</div>
-            <div class="ml-3 flex-1">
-              <p class="text-sm font-medium text-slate-900 dark:text-white">{{ user.name }}</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400">{{ user.email }}</p>
-            </div>
-            <button
-              (click)="removeUser(user)"
-              class="p-button-text p-button-rounded p-button-sm p-button-danger"
-              icon="pi pi-times"
-              pButton>
-            </button>
+        @if (userSegment.users.length === 0) {
+          <div class="text-center py-8 bg-white dark:bg-slate-800">
+            <p class="text-slate-600 dark:text-slate-400">No users in this segment</p>
+            <p class="text-sm text-slate-500 dark:text-slate-500 mt-1">Search and add users above</p>
           </div>
-        </div>
+        }
+
+        @if (userSegment.users.length > 0) {
+          <div class="divide-y divide-slate-200 dark:divide-slate-700 max-h-80 overflow-y-auto">
+            @for (user of userSegment.users; track user) {
+              <div
+                class="flex items-center p-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                <input
+                  (change)="updateSelectedStatus()"
+                  [(ngModel)]="user.selected"
+                  class="mr-3 rounded border-slate-300 dark:border-slate-600 text-indigo-600 dark:text-indigo-500 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+                  type="checkbox">
+                <div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-700 dark:text-indigo-400 text-sm font-medium">{{ user.initials }}</div>
+                <div class="ml-3 flex-1">
+                  <p class="text-sm font-medium text-slate-900 dark:text-white">{{ user.name }}</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">{{ user.email }}</p>
+                </div>
+                <button
+                  (click)="removeUser(user)"
+                  class="p-button-text p-button-rounded p-button-sm p-button-danger"
+                  icon="pi pi-times"
+                  pButton>
+                </button>
+              </div>
+            }
+          </div>
+        }
       </div>
     </div>
 
@@ -155,28 +164,32 @@
         </button>
       </div>
 
-      <div *ngIf="userSegment.rules.length === 0" class="text-center py-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-        <p class="text-slate-600 dark:text-slate-400">No targeting rules configured</p>
-        <p class="text-sm text-slate-500 dark:text-slate-500 mt-1">Rules automatically add users who meet specified criteria</p>
-        <button class="p-button-text p-button-sm mt-2" icon="pi pi-plus" label="Add your first rule" pButton></button>
-      </div>
+      @if (userSegment.rules.length === 0) {
+        <div class="text-center py-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+          <p class="text-slate-600 dark:text-slate-400">No targeting rules configured</p>
+          <p class="text-sm text-slate-500 dark:text-slate-500 mt-1">Rules automatically add users who meet specified criteria</p>
+          <button class="p-button-text p-button-sm mt-2" icon="pi pi-plus" label="Add your first rule" pButton></button>
+        </div>
+      }
 
-      <div *ngFor="let rule of userSegment.rules" class="mb-3 p-4 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
-        <div class="flex justify-between items-start">
-          <div>
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-slate-900 dark:text-white">{{ rule.type }}</span>
-              <span class="mx-2 text-slate-500 dark:text-slate-400">{{ rule.operator }}</span>
-              <span class="text-sm text-slate-800 dark:text-slate-300">{{ rule.value }}</span>
+      @for (rule of userSegment.rules; track rule) {
+        <div class="mb-3 p-4 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="flex items-center">
+                <span class="text-sm font-medium text-slate-900 dark:text-white">{{ rule.type }}</span>
+                <span class="mx-2 text-slate-500 dark:text-slate-400">{{ rule.operator }}</span>
+                <span class="text-sm text-slate-800 dark:text-slate-300">{{ rule.value }}</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ rule.description }}</p>
             </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ rule.description }}</p>
-          </div>
-          <div class="flex">
-            <button class="p-button-text p-button-rounded mr-2" icon="pi pi-pencil" pButton></button>
-            <button class="p-button-text p-button-rounded p-button-danger" icon="pi pi-trash" pButton></button>
+            <div class="flex">
+              <button class="p-button-text p-button-rounded mr-2" icon="pi pi-pencil" pButton></button>
+              <button class="p-button-text p-button-rounded p-button-danger" icon="pi pi-trash" pButton></button>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
 

@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {Component, inject, input} from '@angular/core';
 import {DragDropModule} from 'primeng/dragdrop';
 
@@ -9,7 +9,7 @@ import {IssueCardComponent} from '../issue-card/issue-card.component';
 @Component({
   selector: 'app-issue-section',
   standalone: true,
-  imports: [IssueCardComponent, DragDropModule, NgIf],
+  imports: [IssueCardComponent, DragDropModule],
   templateUrl: './issue-section.component.html',
   styleUrl: './issue-section.component.scss',
 })

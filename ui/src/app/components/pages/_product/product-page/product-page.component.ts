@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {Component, computed, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -17,9 +17,8 @@ export type TabValue = 'updates' | 'issues';
   imports: [
     ProductPostComponent,
     Divider,
-    RouterLink,
-    NgIf,
-  ],
+    RouterLink
+],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss',
 })

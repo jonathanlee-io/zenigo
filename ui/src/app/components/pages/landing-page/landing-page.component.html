@@ -55,9 +55,9 @@
     <div class="mx-auto max-w-2xl lg:text-center">
       <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Drastically improve customer relations</h2>
       <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl lg:text-balance">
-        Everything you need to gather feedback from your customers</p>
+      Everything you need to gather feedback from your customers</p>
       <p class="mt-6 text-pretty text-lg/8 text-slate-600 dark:text-slate-300">With the ability to embed a feedback widget directly in your
-        web application.</p>
+      web application.</p>
     </div>
     <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
       <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
@@ -66,7 +66,7 @@
             [description]="featureDisplay.description"
             [primeIconClass]="featureDisplay.primeIconClass"
             [title]="featureDisplay.title"
-          />
+            />
         }
       </dl>
     </div>
@@ -78,25 +78,26 @@
       <div class="mx-auto max-w-2xl lg:text-center">
         <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Pricing</h2>
         <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl lg:text-balance">
-          Pricing that grows with you</p>
+        Pricing that grows with you</p>
       </div>
-      <div *ngIf="pricingPlans().length > 0 else loadingSpinner"
-           class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-        @for(pricingPlan of pricingPlans(); track $index;) {
-          <app-pricing-display
-            [name]="pricingPlan.name"
-            [description]="pricingPlan.description"
-            [monthlyPrice]="pricingPlan.monthlyPrice"
-            [paymentPlanDetails]="pricingPlan"
-            [tag]="pricingPlan.tag"
-          />
-        }
-      </div>
-      <ng-template #loadingSpinner>
+      @if (pricingPlans().length > 0) {
+        <div
+          class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          @for(pricingPlan of pricingPlans(); track $index;) {
+            <app-pricing-display
+              [name]="pricingPlan.name"
+              [description]="pricingPlan.description"
+              [monthlyPrice]="pricingPlan.monthlyPrice"
+              [paymentPlanDetails]="pricingPlan"
+              [tag]="pricingPlan.tag"
+              />
+          }
+        </div>
+      } @else {
         <div class="flex justify-center items-center text-center mt-10">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
         </div>
-      </ng-template>
+      }
     </div>
   </div>
 

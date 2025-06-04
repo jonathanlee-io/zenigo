@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {Component, inject, input} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Divider} from 'primeng/divider';
@@ -12,10 +12,9 @@ import {ProjectStore} from '../../../../+state/project/project.store';
   imports: [
     ToggleSwitchModule,
     ReactiveFormsModule,
-    NgIf,
     ProgressSpinnerModule,
-    Divider,
-  ],
+    Divider
+],
   templateUrl: './project-features-switches.component.html',
   styleUrl: './project-features-switches.component.scss',
 })

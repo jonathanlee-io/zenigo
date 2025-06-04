@@ -1,6 +1,6 @@
-import {DOCUMENT} from '@angular/common';
+
 import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
-import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, provideZoneChangeDetection, DOCUMENT} from '@angular/core';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideRouter} from '@angular/router';
 import Aura from '@primeng/themes/aura';

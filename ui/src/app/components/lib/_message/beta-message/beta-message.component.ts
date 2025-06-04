@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {Message} from 'primeng/message';
 
@@ -7,9 +7,8 @@ import {FeatureFlagsStore} from '../../../../+state/feature-flags/feature-flags.
 @Component({
   selector: 'app-beta-message',
   imports: [
-    Message,
-    NgIf,
-  ],
+    Message
+],
   templateUrl: './beta-message.component.html',
   styleUrl: './beta-message.component.scss',
 })

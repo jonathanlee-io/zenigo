@@ -1,4 +1,4 @@
-import {CommonModule} from '@angular/common';
+
 import {Component, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
@@ -37,14 +37,13 @@ interface UserSegment {
   selector: 'app-user-segment-edit-dialog',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     Dialog,
     ButtonModule,
     DropdownModule,
     ToggleSwitch,
-    TooltipModule,
-  ],
+    TooltipModule
+],
   templateUrl: './user-segment-edit-dialog.component.html',
   styleUrl: './user-segment-edit-dialog.component.scss',
 })

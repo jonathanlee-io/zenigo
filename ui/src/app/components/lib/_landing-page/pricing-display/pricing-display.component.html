@@ -6,13 +6,15 @@
   <div>
     <div class="flex items-center justify-between gap-x-4">
       <h3 class="text-lg font-semibold leading-8 text-light-text-primary dark:text-dark-text-primary"
-          id="tier-freelancer">
+        id="tier-freelancer">
         {{ name() }}
       </h3>
-      <p *ngIf="tag() !== undefined"
-         class="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-light-text-primary dark:text-dark-text-primary">
-        {{ tag() }}
-      </p>
+      @if (tag() !== undefined) {
+        <p
+          class="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-light-text-primary dark:text-dark-text-primary">
+          {{ tag() }}
+        </p>
+      }
     </div>
     <p class="mt-4 text-sm leading-6 text-light-text-primary dark:text-dark-text-primary">
       {{ description() }}
@@ -28,10 +30,10 @@
     <ul class="mt-8 space-y-3 text-sm leading-6 text-light-text-primary dark:text-dark-text-primary" role="list">
       <li class="flex gap-x-3">
         <svg aria-hidden="true" class="h-6 w-5 flex-none text-indigo-600" data-slot="icon"
-             fill="currentColor" viewBox="0 0 20 20">
+          fill="currentColor" viewBox="0 0 20 20">
           <path clip-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                fill-rule="evenodd"/>
+            d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+            fill-rule="evenodd"/>
         </svg>
         @if (paymentPlanDetails().maxProjectCount === -1) {
           Unlimited projects
@@ -41,10 +43,10 @@
       </li>
       <li class="flex gap-x-3">
         <svg aria-hidden="true" class="h-6 w-5 flex-none text-indigo-600" data-slot="icon"
-             fill="currentColor" viewBox="0 0 20 20">
+          fill="currentColor" viewBox="0 0 20 20">
           <path clip-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                fill-rule="evenodd"/>
+            d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+            fill-rule="evenodd"/>
         </svg>
         @if (paymentPlanDetails().maxTeamMemberCount === -1) {
           Unlimited team members
@@ -55,17 +57,17 @@
       <li class="flex gap-x-3">
         @if (paymentPlanDetails().isEmbeddableFeedbackWidgetIncluded) {
           <svg aria-hidden="true" class="h-6 w-5 flex-none text-indigo-600" data-slot="icon"
-               fill="currentColor" viewBox="0 0 20 20">
+            fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd"
-                  d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                  fill-rule="evenodd"/>
+              d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+              fill-rule="evenodd"/>
           </svg>
         } @else {
           <svg aria-hidden="true" class="h-6 w-5 flex-none text-red-600" data-slot="icon"
-               fill="currentColor" viewBox="0 0 20 20">
+            fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  fill-rule="evenodd"/>
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              fill-rule="evenodd"/>
           </svg>
         }
         Embeddable Feedback Widget
@@ -73,17 +75,17 @@
       <li class="flex gap-x-3">
         @if (paymentPlanDetails().isCustomSubdomainIncluded) {
           <svg aria-hidden="true" class="h-6 w-5 flex-none text-indigo-600" data-slot="icon"
-               fill="currentColor" viewBox="0 0 20 20">
+            fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd"
-                  d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                  fill-rule="evenodd"/>
+              d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+              fill-rule="evenodd"/>
           </svg>
         } @else {
           <svg aria-hidden="true" class="h-6 w-5 flex-none text-red-600" data-slot="icon"
-               fill="currentColor" viewBox="0 0 20 20">
+            fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  fill-rule="evenodd"/>
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              fill-rule="evenodd"/>
           </svg>
         }
         Custom Subdomain
@@ -91,17 +93,17 @@
       <li class="flex gap-x-3">
         @if (paymentPlanDetails().isCustomHostnameIncluded) {
           <svg aria-hidden="true" class="h-6 w-5 flex-none text-indigo-600" data-slot="icon"
-               fill="currentColor" viewBox="0 0 20 20">
+            fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd"
-                  d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                  fill-rule="evenodd"/>
+              d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+              fill-rule="evenodd"/>
           </svg>
         } @else {
           <svg aria-hidden="true" class="h-6 w-5 flex-none text-red-600" data-slot="icon"
-               fill="currentColor" viewBox="0 0 20 20">
+            fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  fill-rule="evenodd"/>
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              fill-rule="evenodd"/>
           </svg>
         }
         Custom Hostname

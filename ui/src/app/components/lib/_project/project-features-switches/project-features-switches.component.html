@@ -3,101 +3,104 @@
     <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white tracking-wide">
       Project Features
     </h2>
-    <p *ngIf="isHintEnabled()" class="mt-1 text-xl text-gray-700 dark:text-gray-200">You can disable or enable any of
-      these features at any time using our
+    @if (isHintEnabled()) {
+      <p class="mt-1 text-xl text-gray-700 dark:text-gray-200">You can disable or enable any of
+        these features at any time using our
       dashboard.</p>
+    }
   </div>
 
   <div class="max-w-2xl space-y-10 md:col-span-2">
-    <fieldset *ngIf="!projectStore.isLoading() else loadingSpinner">
-      <legend class="text-3xl font-bold text-gray-900 dark:text-white">Enable / Disable
-      </legend>
-      <p-divider />
-      <p class="text-xl text-gray-700 dark:text-gray-200">These features are related to the embeddable feedback widget that sits in your web application. Turning these off will hide them in the widget completely and disallow feedback data of that type to be ingested into the system.</p>
-      <div class="mt-6 space-y-6">
-        <div class="flex gap-3">
-          <div class="flex h-6 shrink-0 items-center">
-            <div class="group grid size-4 grid-cols-1">
-              <p-toggleswitch [formControl]="bugReportsEnabledFormControl()"/>
-            </div>
-          </div>
-          <div class="ml-6">
-            <label class="text-2xl font-bold text-gray-900 dark:text-white">Bug
-              Reports</label>
-            <p class="text-xl text-gray-700 dark:text-gray-200" id="comments-description">Allow
-              users to report issues with your
-              software so you can fix it quickly.</p>
-          </div>
-        </div>
-        <div class="flex gap-3">
-          <div class="flex h-6 shrink-0 items-center">
-            <div class="group grid size-4 grid-cols-1">
-              <p-toggleswitch [formControl]="featureRequestsEnabledFormControl()"/>
-            </div>
-          </div>
-          <div class="ml-6">
-            <label class="text-2xl font-bold text-gray-900 dark:text-white">Feature
-              Requests</label>
-            <p class="text-xl text-gray-700 dark:text-gray-200" id="candidates-description">
-              Sometimes customers have the best ideas,
-              this way they can submit them directly to you.</p>
-          </div>
-        </div>
-        <div class="flex gap-3">
-          <div class="flex h-6 shrink-0 items-center">
-            <div class="group grid size-4 grid-cols-1">
-              <p-toggleswitch [formControl]="featureFeedbackEnabledFormControl()"/>
-            </div>
-          </div>
-          <div class="ml-6">
-            <label class="text-2xl font-bold text-gray-900 dark:text-white">Feature
-              Feedback</label>
-            <p class="text-xl text-gray-700 dark:text-gray-200">You can
-              see exactly how customers are
-              responding to your newly launched features.</p>
-          </div>
-        </div>
+    @if (!projectStore.isLoading()) {
+      <fieldset>
+        <legend class="text-3xl font-bold text-gray-900 dark:text-white">Enable / Disable
+        </legend>
         <p-divider />
-        <p class="text-xl text-gray-700 dark:text-gray-200">These features are related to the product page and roadmap, these are only visible on the Zenigo platform. (Intended for your most engaged community members).</p>
-        <div class="flex gap-3">
-          <div class="flex h-6 shrink-0 items-center">
-            <div class="group grid size-4 grid-cols-1">
-              <p-toggleswitch [formControl]="ownerUpdatesEnabledFormControl()"/>
+        <p class="text-xl text-gray-700 dark:text-gray-200">These features are related to the embeddable feedback widget that sits in your web application. Turning these off will hide them in the widget completely and disallow feedback data of that type to be ingested into the system.</p>
+        <div class="mt-6 space-y-6">
+          <div class="flex gap-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <p-toggleswitch [formControl]="bugReportsEnabledFormControl()"/>
+              </div>
+            </div>
+            <div class="ml-6">
+              <label class="text-2xl font-bold text-gray-900 dark:text-white">Bug
+              Reports</label>
+              <p class="text-xl text-gray-700 dark:text-gray-200" id="comments-description">Allow
+                users to report issues with your
+              software so you can fix it quickly.</p>
             </div>
           </div>
-          <div class="ml-6">
-            <label class="text-2xl font-bold text-gray-900 dark:text-white">Owner Update Posts</label>
-            <p class="text-xl text-gray-700 dark:text-gray-200">You can make posts updating your most engaged users on the progress you&apos;re making with your product.</p>
-          </div>
-        </div>
-        <div class="flex gap-3">
-          <div class="flex h-6 shrink-0 items-center">
-            <div class="group grid size-4 grid-cols-1">
-              <p-toggleswitch [formControl]="ownerIssuesEnabledFormControl()"/>
+          <div class="flex gap-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <p-toggleswitch [formControl]="featureRequestsEnabledFormControl()"/>
+              </div>
+            </div>
+            <div class="ml-6">
+              <label class="text-2xl font-bold text-gray-900 dark:text-white">Feature
+              Requests</label>
+              <p class="text-xl text-gray-700 dark:text-gray-200" id="candidates-description">
+                Sometimes customers have the best ideas,
+              this way they can submit them directly to you.</p>
             </div>
           </div>
-          <div class="ml-6">
-            <label class="text-2xl font-bold text-gray-900 dark:text-white">Owner Issue Posts</label>
-            <p class="text-xl text-gray-700 dark:text-gray-200">You can make posts updating your most engaged users on the progress and awareness of ongoing production issues.</p>
-          </div>
-        </div>
-        <div class="flex gap-3">
-          <div class="flex h-6 shrink-0 items-center">
-            <div class="group grid size-4 grid-cols-1">
-              <p-toggleswitch [formControl]="userIssuesEnabledFormControl()"/>
+          <div class="flex gap-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <p-toggleswitch [formControl]="featureFeedbackEnabledFormControl()"/>
+              </div>
+            </div>
+            <div class="ml-6">
+              <label class="text-2xl font-bold text-gray-900 dark:text-white">Feature
+              Feedback</label>
+              <p class="text-xl text-gray-700 dark:text-gray-200">You can
+                see exactly how customers are
+              responding to your newly launched features.</p>
             </div>
           </div>
-          <div class="ml-6">
-            <label class="text-2xl font-bold text-gray-900 dark:text-white">User/Customer Issue Posts</label>
-            <p class="text-xl text-gray-700 dark:text-gray-200" id="offers-description">Popular for community-driven software, users or customers can create posts making you aware of any production issues or potential improvements that customers desire.</p>
+          <p-divider />
+          <p class="text-xl text-gray-700 dark:text-gray-200">These features are related to the product page and roadmap, these are only visible on the Zenigo platform. (Intended for your most engaged community members).</p>
+          <div class="flex gap-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <p-toggleswitch [formControl]="ownerUpdatesEnabledFormControl()"/>
+              </div>
+            </div>
+            <div class="ml-6">
+              <label class="text-2xl font-bold text-gray-900 dark:text-white">Owner Update Posts</label>
+              <p class="text-xl text-gray-700 dark:text-gray-200">You can make posts updating your most engaged users on the progress you&apos;re making with your product.</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <p-toggleswitch [formControl]="ownerIssuesEnabledFormControl()"/>
+              </div>
+            </div>
+            <div class="ml-6">
+              <label class="text-2xl font-bold text-gray-900 dark:text-white">Owner Issue Posts</label>
+              <p class="text-xl text-gray-700 dark:text-gray-200">You can make posts updating your most engaged users on the progress and awareness of ongoing production issues.</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <p-toggleswitch [formControl]="userIssuesEnabledFormControl()"/>
+              </div>
+            </div>
+            <div class="ml-6">
+              <label class="text-2xl font-bold text-gray-900 dark:text-white">User/Customer Issue Posts</label>
+              <p class="text-xl text-gray-700 dark:text-gray-200" id="offers-description">Popular for community-driven software, users or customers can create posts making you aware of any production issues or potential improvements that customers desire.</p>
+            </div>
           </div>
         </div>
-      </div>
-    </fieldset>
-    <ng-template #loadingSpinner>
+      </fieldset>
+    } @else {
       <div class="flex justify-center items-center">
         <p-progressSpinner styleClass="mt-8" />
       </div>
-    </ng-template>
+    }
   </div>
 </div>

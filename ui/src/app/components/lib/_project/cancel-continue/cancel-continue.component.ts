@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {Component, inject, input} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {RouterLink} from '@angular/router';
@@ -15,9 +15,8 @@ import {rebaseRoutePath} from '../../../../util/router/Router.utils';
   imports: [
     ArrowRightIcon,
     ButtonDirective,
-    NgIf,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './cancel-continue.component.html',
   styleUrl: './cancel-continue.component.scss',
 })

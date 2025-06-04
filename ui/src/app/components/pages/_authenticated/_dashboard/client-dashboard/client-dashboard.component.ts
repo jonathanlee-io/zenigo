@@ -1,4 +1,4 @@
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import { NgClass } from '@angular/common';
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
@@ -18,15 +18,12 @@ import {rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
   selector: 'app-client-dashboard',
   imports: [
     ButtonModule,
-    NgIf,
     ProgressSpinnerModule,
     TableModule,
     TagModule,
     RouterLink,
-    NgClass,
-    NgForOf,
-
-  ],
+    NgClass
+],
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.scss',
 })

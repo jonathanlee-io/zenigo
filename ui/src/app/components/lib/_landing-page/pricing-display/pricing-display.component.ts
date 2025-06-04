@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {Component, input} from '@angular/core';
 import {RouterLink} from '@angular/router';
 
@@ -9,9 +9,8 @@ import {rebaseRoutePath} from '../../../../util/router/Router.utils';
 @Component({
   selector: 'app-pricing-display',
   imports: [
-    RouterLink,
-    NgIf,
-  ],
+    RouterLink
+],
   templateUrl: './pricing-display.component.html',
   styleUrl: './pricing-display.component.scss',
   standalone: true,

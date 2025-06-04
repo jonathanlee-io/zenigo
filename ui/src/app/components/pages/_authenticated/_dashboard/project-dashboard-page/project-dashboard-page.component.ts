@@ -1,4 +1,4 @@
-import {NgClass, NgIf} from '@angular/common';
+import { NgClass } from '@angular/common';
 import {Component, inject, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, Validators} from '@angular/forms';
@@ -32,14 +32,12 @@ import {
     ProjectFeaturesSwitchesComponent,
     FormsModule,
     ProjectActionsPanelComponent,
-    NgIf,
     NgClass,
     UserSegmentsTabComponent,
     FeatureFlagsTabComponent,
     FeedbackTabComponent,
-    AnalyticsTabComponent,
-
-  ],
+    AnalyticsTabComponent
+],
   templateUrl: './project-dashboard-page.component.html',
   styleUrl: './project-dashboard-page.component.scss',
 })

@@ -1,14 +1,13 @@
-import {NgClass, NgIf} from '@angular/common';
+import { NgClass } from '@angular/common';
 import {Component, input} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-client-form',
   imports: [
-    NgIf,
     ReactiveFormsModule,
-    NgClass,
-  ],
+    NgClass
+],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss',
 })

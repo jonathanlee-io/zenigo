@@ -1,4 +1,4 @@
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import { NgClass } from '@angular/common';
 import {Component, computed, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
@@ -23,11 +23,9 @@ import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/rout
     RatingModule,
     FormsModule,
     RouterLink,
-    NgIf,
     ProgressSpinnerModule,
-    NgClass,
-    NgForOf,
-  ],
+    NgClass
+],
   templateUrl: './main-dashboard.component.html',
   styleUrl: './main-dashboard.component.scss',
 })

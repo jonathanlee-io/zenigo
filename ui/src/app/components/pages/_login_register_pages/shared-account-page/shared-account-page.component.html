@@ -8,21 +8,16 @@
 
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white dark:bg-slate-800 px-8 py-8 shadow-lg rounded-xl border border-slate-200 dark:border-slate-700">
-      <ng-template #loading>
-        <div class="flex justify-center items-center py-8">
-          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-500"></div>
-        </div>
-      </ng-template>
 
-      <ng-container *ngIf="!userAuthenticationStore.isLoading() else loading">
+      @if (!userAuthenticationStore.isLoading()) {
         <div>
           <div class="grid grid-cols-1 gap-4">
             <!-- Google Button -->
             <button (click)="doGoogleLogin()"
-                    [disabled]="isGoogleButtonDisabled()"
-                    [ngClass]="{'opacity-50 cursor-not-allowed': isGoogleButtonDisabled()}"
-                    class="flex w-full items-center justify-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-slate-700 dark:text-white bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
-                    data-testid="sign-in-with-google-button">
+              [disabled]="isGoogleButtonDisabled()"
+              [ngClass]="{'opacity-50 cursor-not-allowed': isGoogleButtonDisabled()}"
+              class="flex w-full items-center justify-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-slate-700 dark:text-white bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+              data-testid="sign-in-with-google-button">
               <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24">
                 <path
                   d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z"
@@ -39,21 +34,19 @@
               </svg>
               <span>Continue with Google</span>
             </button>
-
             <!-- GitHub Button -->
             <button (click)="doGithubLogin()"
-                    [disabled]="isGitHubButtonDisabled()"
-                    [ngClass]="{'opacity-50 cursor-not-allowed': isGitHubButtonDisabled()}"
-                    class="flex w-full items-center justify-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-white bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
-                    data-testid="sign-in-with-github-button">
+              [disabled]="isGitHubButtonDisabled()"
+              [ngClass]="{'opacity-50 cursor-not-allowed': isGitHubButtonDisabled()}"
+              class="flex w-full items-center justify-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-white bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+              data-testid="sign-in-with-github-button">
               <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path clip-rule="evenodd"
-                      d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
-                      fill-rule="evenodd" />
+                  d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
+                  fill-rule="evenodd" />
               </svg>
               <span>Continue with GitHub</span>
             </button>
-
             <!-- Optional divider -->
             <div class="relative my-2">
               <div class="absolute inset-0 flex items-center">
@@ -63,7 +56,6 @@
                 <span class="px-2 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400">or</span>
               </div>
             </div>
-
             <!-- Email Button (optional) -->
             <button class="flex w-full items-center justify-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-white bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
               <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +65,11 @@
             </button>
           </div>
         </div>
-      </ng-container>
+      } @else {
+        <div class="flex justify-center items-center py-8">
+          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-500"></div>
+        </div>
+      }
     </div>
 
     <p class="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
