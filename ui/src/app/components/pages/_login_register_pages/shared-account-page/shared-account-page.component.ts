@@ -1,4 +1,4 @@
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import {NgClass, NgOptimizedImage} from '@angular/common';
 import {Component, inject, input, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
@@ -14,8 +14,8 @@ import {FeatureFlagsStore} from '../../../../+state/feature-flags/feature-flags.
     ButtonModule,
     RouterLink,
     NgClass,
-    NgOptimizedImage
-],
+    NgOptimizedImage,
+  ],
   templateUrl: './shared-account-page.component.html',
   styleUrl: './shared-account-page.component.scss',
   standalone: true,

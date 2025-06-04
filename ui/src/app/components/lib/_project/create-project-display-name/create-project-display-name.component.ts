@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import {NgClass} from '@angular/common';
 import {Component, input} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 
@@ -6,8 +6,8 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
   selector: 'app-create-project-display-name',
   imports: [
     ReactiveFormsModule,
-    NgClass
-],
+    NgClass,
+  ],
   templateUrl: './create-project-display-name.component.html',
   styleUrl: './create-project-display-name.component.scss',
 })

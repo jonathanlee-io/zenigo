@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import {NgClass} from '@angular/common';
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
@@ -22,8 +22,8 @@ import {rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
     TableModule,
     TagModule,
     RouterLink,
-    NgClass
-],
+    NgClass,
+  ],
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.scss',
 })

@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import {NgClass} from '@angular/common';
 import {Component, computed, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
@@ -24,8 +24,8 @@ import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/rout
     FormsModule,
     RouterLink,
     ProgressSpinnerModule,
-    NgClass
-],
+    NgClass,
+  ],
   templateUrl: './main-dashboard.component.html',
   styleUrl: './main-dashboard.component.scss',
 })

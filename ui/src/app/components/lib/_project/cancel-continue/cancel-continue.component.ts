@@ -15,8 +15,8 @@ import {rebaseRoutePath} from '../../../../util/router/Router.utils';
   imports: [
     ArrowRightIcon,
     ButtonDirective,
-    RouterLink
-],
+    RouterLink,
+  ],
   templateUrl: './cancel-continue.component.html',
   styleUrl: './cancel-continue.component.scss',
 })

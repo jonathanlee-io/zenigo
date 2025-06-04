@@ -9,8 +9,8 @@ import {PaginatorComponent} from '../../paginator/paginator.component';
 @Component({
   selector: 'app-product-feedback-dashboard-panel',
   imports: [
-    PaginatorComponent
-],
+    PaginatorComponent,
+  ],
   templateUrl: './product-feedback-dashboard-panel.component.html',
   styleUrl: './product-feedback-dashboard-panel.component.scss',
 })

@@ -42,8 +42,8 @@ interface UserSegment {
     ButtonModule,
     DropdownModule,
     ToggleSwitch,
-    TooltipModule
-],
+    TooltipModule,
+  ],
   templateUrl: './user-segment-edit-dialog.component.html',
   styleUrl: './user-segment-edit-dialog.component.scss',
 })

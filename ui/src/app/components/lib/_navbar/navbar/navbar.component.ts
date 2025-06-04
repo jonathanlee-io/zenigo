@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import {NgClass} from '@angular/common';
 import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
@@ -30,8 +30,8 @@ import {rebaseRoutePath} from '../../../../util/router/Router.utils';
     InputGroupModule,
     InputTextModule,
     DividerModule,
-    ChevronDownIcon
-],
+    ChevronDownIcon,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })

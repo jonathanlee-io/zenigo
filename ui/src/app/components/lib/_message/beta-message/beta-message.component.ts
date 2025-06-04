@@ -7,8 +7,8 @@ import {FeatureFlagsStore} from '../../../../+state/feature-flags/feature-flags.
 @Component({
   selector: 'app-beta-message',
   imports: [
-    Message
-],
+    Message,
+  ],
   templateUrl: './beta-message.component.html',
   styleUrl: './beta-message.component.scss',
 })

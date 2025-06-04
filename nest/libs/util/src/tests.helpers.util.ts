@@ -15,8 +15,9 @@ export class TestHelpersUtil {
     databaseUrlKey?: string;
     schemaOverride?: string;
   }) {
-    const initializedPostgresContainer =
-      await new PostgreSqlContainer().start();
+    const initializedPostgresContainer = await new PostgreSqlContainer(
+      'postgres:16.9',
+    ).start();
     const initializedPostgresClient = new Client({
       connectionString: initializedPostgresContainer.getConnectionUri(),
     });

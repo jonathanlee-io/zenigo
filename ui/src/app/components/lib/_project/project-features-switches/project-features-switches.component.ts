@@ -13,8 +13,8 @@ import {ProjectStore} from '../../../../+state/project/project.store';
     ToggleSwitchModule,
     ReactiveFormsModule,
     ProgressSpinnerModule,
-    Divider
-],
+    Divider,
+  ],
   templateUrl: './project-features-switches.component.html',
   styleUrl: './project-features-switches.component.scss',
 })

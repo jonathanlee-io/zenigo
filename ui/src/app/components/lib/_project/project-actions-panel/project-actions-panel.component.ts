@@ -32,8 +32,8 @@ export interface PostType {
     Button,
     InputText,
     Select,
-    FormsModule
-],
+    FormsModule,
+  ],
   templateUrl: './project-actions-panel.component.html',
   styleUrl: './project-actions-panel.component.scss',
 })

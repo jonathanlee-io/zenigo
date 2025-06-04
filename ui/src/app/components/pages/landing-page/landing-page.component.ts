@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from '@angular/common';
+import {NgOptimizedImage} from '@angular/common';
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {SharedModule} from 'primeng/api';
@@ -34,8 +34,8 @@ import {BetaMessageComponent} from '../../lib/_message/beta-message/beta-message
     BetaMessageComponent,
     MeteorsComponent,
     NgOptimizedImage,
-    RouterLink
-],
+    RouterLink,
+  ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })

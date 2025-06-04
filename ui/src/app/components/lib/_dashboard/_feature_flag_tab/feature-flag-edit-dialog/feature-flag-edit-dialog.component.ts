@@ -35,8 +35,8 @@ interface FeatureFlag {
     InputSwitchModule,
     DropdownModule,
     TooltipModule,
-    ToggleSwitch
-],
+    ToggleSwitch,
+  ],
   templateUrl: './feature-flag-edit-dialog.component.html',
   styleUrl: './feature-flag-edit-dialog.component.scss',
 })

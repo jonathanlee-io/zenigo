@@ -9,8 +9,8 @@ import {rebaseRoutePath} from '../../../../util/router/Router.utils';
 @Component({
   selector: 'app-pricing-display',
   imports: [
-    RouterLink
-],
+    RouterLink,
+  ],
   templateUrl: './pricing-display.component.html',
   styleUrl: './pricing-display.component.scss',
   standalone: true,

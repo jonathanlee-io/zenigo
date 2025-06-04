@@ -25,8 +25,8 @@ import {FooterComponent} from './components/lib/footer/footer.component';
     FooterComponent,
     ToastModule,
     ConfirmDialog,
-    ToastComponent
-],
+    ToastComponent,
+  ],
   providers: [MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

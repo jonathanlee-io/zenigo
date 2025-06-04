@@ -17,8 +17,8 @@ export type TabValue = 'updates' | 'issues';
   imports: [
     ProductPostComponent,
     Divider,
-    RouterLink
-],
+    RouterLink,
+  ],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss',
 })
