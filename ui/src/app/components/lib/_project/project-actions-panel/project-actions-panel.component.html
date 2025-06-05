@@ -1,73 +1,101 @@
-<div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-  <div>
-    <h2 class="text-4xl font-extrabold text-light-text-primary dark:text-dark-text-primary tracking-wide">
-      Project Actions
-    </h2>
+<div class="bg-white dark:bg-slate-800 shadow-md rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+  <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+    <div>
+      <h2 class="text-lg font-medium text-slate-800 dark:text-white">Project Actions</h2>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Preview, manage posts, and administrative tasks</p>
+    </div>
   </div>
 
-  <div class="space-y-10">
+  <div class="p-6">
     @if (!projectStore.isLoading()) {
-      <fieldset>
-        <legend class="text-3xl font-bold text-light-text-primary dark:text-dark-text-primary">Preview / Create Post / Delete
-        </legend>
-        <div class="mt-6 space-y-6">
-          <div class="flex gap-3">
-            <div class="flex items-center">
-              <div class="grid grid-cols-1">
-                <a [routerLink]="getProductPath()" pButton>
-                  <span pButtonLabel>Go to Product Page</span>
-                  <span class="pi pi-arrow-right" pButtonIcon></span>
-                  <span class="sr-only">Go to Product Page</span>
-                </a>
-              </div>
+      <div class="space-y-4">
+        <!-- Action buttons in a clean grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Go to Product Page -->
+          <a [routerLink]="getProductPath()"
+             class="inline-flex items-center justify-center px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-800 transition-colors duration-200">
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            Product Page
+          </a>
+
+          <!-- Create Post -->
+          <button (click)="isCreatePostDialogVisible = true;"
+                  [disabled]="!isOwnerPostsEnabled()"
+                  class="inline-flex items-center justify-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Create Post
+          </button>
+
+          <!-- Delete Project -->
+          <button (click)="promptDeleteProject()"
+                  class="inline-flex items-center justify-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 dark:bg-rose-500 dark:hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 dark:focus:ring-offset-slate-800 transition-colors duration-200">
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Delete Project
+          </button>
+        </div>
+      </div>
+
+      <!-- Create Post Dialog -->
+      <p-dialog [(visible)]="isCreatePostDialogVisible"
+                [header]="'Create Owner Post'"
+                [modal]="true"
+                [style]="{ width: '32rem' }"
+                [draggable]="false"
+                [resizable]="false">
+        <div class="space-y-6">
+          <p class="text-sm text-slate-600 dark:text-slate-400">Create a new post for your project</p>
+
+          <div class="space-y-4">
+            <div>
+              <label for="type" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Post Type</label>
+              <p-select [(ngModel)]="postType"
+                        [options]="filteredPostTypes()"
+                        id="type"
+                        optionLabel="name"
+                        placeholder="Select a Post Type"
+                        class="w-full" />
+            </div>
+
+            <div>
+              <label for="title" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Title</label>
+              <input id="title"
+                     pInputText
+                     autocomplete="off"
+                     class="w-full"
+                     placeholder="Enter post title" />
+            </div>
+
+            <div>
+              <label for="description" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Description</label>
+              <textarea id="description"
+                        pInputText
+                        autocomplete="off"
+                        rows="4"
+                        class="w-full"
+                        placeholder="Enter post description"></textarea>
             </div>
           </div>
-          <div class="flex gap-3">
-            <div class="flex items-center">
-              <div class="grid grid-cols-1">
-                <button (click)="isCreatePostDialogVisible = true;" [disabled]="!isOwnerPostsEnabled()" pButton>
-                  <span pButtonLabel>Create Post</span>
-                  <span class="pi pi-plus" pButtonIcon></span>
-                  <span class="sr-only">Go to Product Page</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <p-dialog [(visible)]="isCreatePostDialogVisible" [header]="'Owner Posts'" [modal]="true" [style]="{ width: '25rem' }">
-            <span class="p-text-secondary block mb-8">Create a Post</span>
-            <div class="flex items-center gap-4 mb-4">
-              <label class="font-semibold w-24" for="type">Post Type</label>
-              <p-select [(ngModel)]="postType" [options]="filteredPostTypes()" class="w-full md:w-56" id="type" optionLabel="name" placeholder="Select a Post Type" />
-            </div>
-            <div class="flex items-center gap-4 mb-4">
-              <label class="font-semibold w-24" for="title">Title</label>
-              <input autocomplete="off" class="flex-auto" id="title" pInputText />
-            </div>
-            <div class="flex items-center gap-4 mb-8">
-              <label class="font-semibold w-24" for="description">Description</label>
-              <textarea autocomplete="off" class="flex-auto" id="description" pInputText></textarea>
-            </div>
-            <div class="flex justify-end gap-2">
-              <p-button (click)="isCreatePostDialogVisible = false" label="Cancel" severity="secondary" />
-              <p-button (click)="isCreatePostDialogVisible = false" label="Post" />
-            </div>
-          </p-dialog>
-          <div class="flex gap-3">
-            <div class="flex items-center">
-              <div class="grid grid-cols-1">
-                <button (click)="promptDeleteProject()" pButton severity="danger">
-                  <span pButtonLabel>Delete Project</span>
-                  <span class="pi pi-trash" pButtonIcon></span>
-                  <span class="sr-only">Delete Project</span>
-                </button>
-              </div>
-            </div>
+
+          <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+            <p-button (click)="isCreatePostDialogVisible = false"
+                      label="Cancel"
+                      severity="secondary"
+                      [outlined]="true" />
+            <p-button (click)="isCreatePostDialogVisible = false"
+                      label="Create Post" />
           </div>
         </div>
-      </fieldset>
+      </p-dialog>
+
     } @else {
-      <div class="flex justify-center items-center">
-        <p-progressSpinner styleClass="mt-8" />
+      <div class="flex justify-center items-center py-8">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
       </div>
     }
   </div>
