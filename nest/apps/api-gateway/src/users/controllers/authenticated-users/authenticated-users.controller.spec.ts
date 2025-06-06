@@ -1,4 +1,4 @@
-import {Test, TestingModule} from '@nestjs/testing';
+import {TestBed} from '@suites/unit';
 
 import {AuthenticatedUsersController} from './authenticated-users.controller';
 
@@ -6,13 +6,11 @@ describe('AuthenticatedUsersController', () => {
   let controller: AuthenticatedUsersController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AuthenticatedUsersController],
-    }).compile();
-
-    controller = module.get<AuthenticatedUsersController>(
+    const {unit} = await TestBed.solitary(
       AuthenticatedUsersController,
-    );
+    ).compile();
+
+    controller = unit;
   });
 
   it('should be defined', () => {

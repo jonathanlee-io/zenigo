@@ -18,7 +18,7 @@ export class AuthenticatedUsersController {
       authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
     }: AuthenticatedMicroserviceControllerPayload<never>,
   ) {
-    await this.authenticatedUsersService.checkIn(
+    return this.authenticatedUsersService.checkIn(
       requestingUserId,
       requestingUserEmail,
     );

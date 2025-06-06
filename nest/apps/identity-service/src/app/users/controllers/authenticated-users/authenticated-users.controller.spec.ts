@@ -1,4 +1,5 @@
 import {faker} from '@faker-js/faker/locale/en';
+import {HttpStatus} from '@nestjs/common';
 import {Mocked, TestBed} from '@suites/unit';
 
 import {AuthenticatedUsersController} from './authenticated-users.controller';
@@ -29,15 +30,26 @@ describe('AuthenticatedUsersController', () => {
     const requestingUserEmail = faker.internet.email();
 
     mockAuthenticatedUserService.checkIn.mockResolvedValue({
-      isSuccessful: true,
-      isCreatedNew: true,
+      status: HttpStatus.OK,
+      data: {
+        isSuccessful: true,
+        isCreatedNew: true,
+      },
     });
 
     const result = await controller.checkIn({
-      requestingUserId,
-      requestingUserEmail,
-    } as never);
+      clientIp: faker.internet.ip(),
+      clientSubdomain: faker.internet.domainName(),
+      data: null as never,
+      authenticatedUser: {
+        id: requestingUserId,
+        email: requestingUserEmail,
+      },
+    });
 
-    expect(result).toStrictEqual({isSuccessful: true, isCreatedNew: true});
+    expect(result).toStrictEqual({
+      status: HttpStatus.OK,
+      data: {isSuccessful: true, isCreatedNew: true},
+    });
   });
 });

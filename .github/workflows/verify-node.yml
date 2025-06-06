@@ -55,40 +55,40 @@ jobs:
         working-directory: ./${{ matrix.target-project }}
         run: yarn run build
 
-#  test:
-#    runs-on: ubuntu-22.04
-#    strategy:
-#      matrix:
-#        node-version: [22.x]
-#        target-project: [nest, ui]
-#    name: Test ${{ matrix.target-project }} (v${{ matrix.node-version }})
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v4
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#          cache: yarn
-#          cache-dependency-path: '**/yarn.lock'
-#      - run: yarn install --frozen-lockfile
-#        working-directory: ./${{ matrix.target-project }}
-#      - name: Test ${{ matrix.target-project }} (v${{ matrix.node-version }})
-#        working-directory: ./${{ matrix.target-project }}
-#        run: yarn run test
-#        env:
-#          FEATURE_FLAGS_DATABASE_URL: ${{ secrets.FEATURE_FLAGS_DATABASE_URL }}
-#          FEEDBACK_DATABASE_URL: ${{ secrets.FEEDBACK_DATABASE_URL }}
-#          IDENTITY_DATABASE_URL: ${{ secrets.IDENTITY_DATABASE_URL }}
-#          PAYMENTS_DATABASE_URL: ${{ secrets.PAYMENTS_DATABASE_URL }}
-#          NODE_ENV: ${{ secrets.NODE_ENV }}
-#          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-#          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-#          RABBIT_MQ_URLS: ${{ secrets.RABBIT_MQ_URLS }}
-#          RABBIT_MQ_FEATURE_FLAGS_QUEUE: FEATURE_FLAGS
-#          RABBIT_MQ_FEEDBACK_QUEUE: FEEDBACK
-#          RABBIT_MQ_IDENTITY_QUEUE: IDENTITY
-#          RABBIT_MQ_PAYMENTS_QUEUE: PAYMENTS
+  test:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22.x]
+        target-project: [nest]
+    name: Test ${{ matrix.target-project }} (v${{ matrix.node-version }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./${{ matrix.target-project }}
+      - name: Test ${{ matrix.target-project }} (v${{ matrix.node-version }})
+        working-directory: ./${{ matrix.target-project }}
+        run: yarn run test
+        env:
+          FEATURE_FLAGS_DATABASE_URL: ${{ secrets.FEATURE_FLAGS_DATABASE_URL }}
+          FEEDBACK_DATABASE_URL: ${{ secrets.FEEDBACK_DATABASE_URL }}
+          IDENTITY_DATABASE_URL: ${{ secrets.IDENTITY_DATABASE_URL }}
+          PAYMENTS_DATABASE_URL: ${{ secrets.PAYMENTS_DATABASE_URL }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          RABBIT_MQ_URLS: ${{ secrets.RABBIT_MQ_URLS }}
+          RABBIT_MQ_FEATURE_FLAGS_QUEUE: FEATURE_FLAGS
+          RABBIT_MQ_FEEDBACK_QUEUE: FEEDBACK
+          RABBIT_MQ_IDENTITY_QUEUE: IDENTITY
+          RABBIT_MQ_PAYMENTS_QUEUE: PAYMENTS
 
   deploy-railway-api:
     name: Deploy Node.js API to Railway
