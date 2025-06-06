@@ -1,11 +1,13 @@
+import {createKeyv} from '@keyv/redis';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
-import {ConfigModule} from '@nestjs/config';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 import {EventEmitterModule} from '@nestjs/event-emitter';
 
 import {EmbedScriptsModule} from './embed-scripts/embed-scripts.module';
 import {IssuesModule} from './issues/issues.module';
 import {ProductsModule} from './products/products.module';
+import {FeedbackEnvironment} from '../config/environment';
 
 @Module({
   imports: [
@@ -16,8 +18,15 @@ import {ProductsModule} from './products/products.module';
     EventEmitterModule.forRoot({
       global: true,
     }),
-    CacheModule.register({
+    CacheModule.registerAsync({
       isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService<FeedbackEnvironment>) => {
+        return {
+          stores: [createKeyv({url: configService.getOrThrow('REDIS_URL')})],
+        };
+      },
     }),
     EmbedScriptsModule,
     IssuesModule,

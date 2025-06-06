@@ -7,6 +7,7 @@ export interface ApiGatewayEnvironment {
   RABBIT_MQ_FEEDBACK_QUEUE: string;
   RABBIT_MQ_IDENTITY_QUEUE: string;
   RABBIT_MQ_PAYMENTS_QUEUE: string;
+  REDIS_URL: string;
 }
 
 export const dummyApiGatewayEnvironment: ApiGatewayEnvironment = {
@@ -18,4 +19,5 @@ export const dummyApiGatewayEnvironment: ApiGatewayEnvironment = {
   RABBIT_MQ_FEEDBACK_QUEUE: 'feedback',
   RABBIT_MQ_IDENTITY_QUEUE: 'identity',
   RABBIT_MQ_PAYMENTS_QUEUE: 'payments',
+  REDIS_URL: 'redis://localhost',
 };

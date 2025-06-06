@@ -1,5 +1,7 @@
 import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
-import {Controller, Get, Header, Ip} from '@nestjs/common';
+import {CacheInterceptor} from '@nestjs/cache-manager';
+import {Controller, Get, Header, Ip, UseInterceptors} from '@nestjs/common';
+import {CacheTTL} from '@nestjs/common/cache';
 
 import {EmbedScriptsService} from '../../services/embed-scripts/embed-scripts.service';
 
@@ -21,6 +23,8 @@ export class EmbedScriptsController {
     });
   }
 
+  @CacheTTL(1000 * 60 * 60 * 24 * 7)
+  @UseInterceptors(CacheInterceptor)
   @IsPublic()
   @Get('feedback-widget.js')
   @Header('Content-Type', 'text/javascript')

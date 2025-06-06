@@ -17,7 +17,6 @@ import {FeedbackEnvironment} from '../../../../config/environment';
 
 @Injectable()
 export class EmbedScriptsService {
-  private static readonly SCRIPT_CACHE_KEY = 'widget-script';
   private readonly identityClient: TypedClientProxy<
     keyof IdentityServiceContract,
     IdentityServiceContract
@@ -60,23 +59,15 @@ export class EmbedScriptsService {
   }
 
   async getWidgetScript(): Promise<MicroserviceSendResult<string | null>> {
-    let widgetContents: string | null = await this.cacheManager.get<string>(
-      EmbedScriptsService.SCRIPT_CACHE_KEY,
-    );
-    if (widgetContents) {
-      return {
-        status: HttpStatus.OK,
-        data: widgetContents,
-      };
+    let widgetContents: string =
+      await this.cacheManager.get('get-widget-script');
+    if (!widgetContents) {
+      widgetContents = fs.readFileSync(
+        path.join(__dirname, '../../..', 'widget/dist/echonexus-widget.js'),
+        'utf8',
+      );
+      this.cacheManager.set('get-widget-script', widgetContents, 60_000);
     }
-    widgetContents = fs.readFileSync(
-      path.join(__dirname, '../../..', 'widget/dist/echonexus-widget.js'),
-      'utf8',
-    );
-    await this.cacheManager.set(
-      EmbedScriptsService.SCRIPT_CACHE_KEY,
-      widgetContents,
-    );
     return {
       status: HttpStatus.OK,
       data: widgetContents,

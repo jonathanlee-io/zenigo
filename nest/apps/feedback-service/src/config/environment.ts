@@ -4,6 +4,7 @@ export interface FeedbackEnvironment {
   RABBIT_MQ_URLS: string;
   RABBIT_MQ_FEEDBACK_QUEUE: string;
   RABBIT_MQ_IDENTITY_QUEUE: string;
+  REDIS_URL: string;
 }
 
 export const dummyFeedbackEnvironment: FeedbackEnvironment = {
@@ -12,4 +13,5 @@ export const dummyFeedbackEnvironment: FeedbackEnvironment = {
   RABBIT_MQ_URLS: 'amqp://localhost',
   RABBIT_MQ_FEEDBACK_QUEUE: 'feedback',
   RABBIT_MQ_IDENTITY_QUEUE: 'identity',
+  REDIS_URL: 'redis://localhost',
 };

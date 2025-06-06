@@ -4,6 +4,8 @@ import {
   featureFlagServiceConstants,
   paymentsServiceConstants,
 } from '@app/constants';
+import {createKeyv} from '@keyv/redis';
+import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {APP_GUARD, RouterModule} from '@nestjs/core';
@@ -23,6 +25,18 @@ import {UsersModule} from './users/users.module';
       envFilePath: './apps/api-gateway/.env',
     }),
     ThrottlerModule.forRoot(),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (
+        configService: ConfigService<ApiGatewayEnvironment>,
+      ) => {
+        return {
+          stores: [createKeyv({url: configService.getOrThrow('REDIS_URL')})],
+        };
+      },
+    }),
     ClientsModule.registerAsync([
       {
         name: FEEDBACK_SERVICE_QUEUE,
