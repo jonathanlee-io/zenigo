@@ -85,6 +85,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           RABBIT_MQ_URLS: ${{ secrets.RABBIT_MQ_URLS }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
           RABBIT_MQ_FEATURE_FLAGS_QUEUE: FEATURE_FLAGS
           RABBIT_MQ_FEEDBACK_QUEUE: FEEDBACK
           RABBIT_MQ_IDENTITY_QUEUE: IDENTITY
