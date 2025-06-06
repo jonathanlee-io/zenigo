@@ -92,10 +92,7 @@ jobs:
 
   deploy-railway-api:
     name: Deploy Node.js API to Railway
-    needs:
-      - lint
-      - build
-#      - test
+    needs: [lint, build, test]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -145,10 +142,7 @@ jobs:
 
   deploy-railway-ui:
     name: Deploy UI to Railway
-    needs:
-      - lint
-      - build
-    #      - test
+    needs: [lint, build, test]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -213,7 +207,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: yarn
           cache-dependency-path: '**/yarn.lock'
+      - name: Install Dependencies
+        working-directory: ./ui
+        run: yarn install --frozen-lockfile
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          project: ./ui
         env:
           CYPRESS_BASE_URL: https://www.zenigo.io
