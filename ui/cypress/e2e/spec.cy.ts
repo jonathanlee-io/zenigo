@@ -1,5 +1,5 @@
 describe('template spec', () => {
   it('passes', () => {
-    cy.visit('http://localhost:4200');
+    cy.visit(Cypress.env('BASE_URL') ?? 'http://localhost:4200');
   });
 });
