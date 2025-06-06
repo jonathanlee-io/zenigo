@@ -1,16 +1,9 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": [
-      "cypress"
-    ]
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "sourceMap": true,
+    "types": ["cypress", "node"]
   },
-  "include": [
-    "e2e/**/*.spec.ts",
-    "e2e/**/*.d.ts",
-    "../cypress.config.ts"
-  ]
+  "include": ["**/*.ts"]
 }
