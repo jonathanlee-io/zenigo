@@ -47,7 +47,12 @@ export class EmbedScriptsService {
       {clientSubdomain, clientIp, data: null as never},
     );
     if (getProjectResult.status !== HttpStatus.OK) {
-      return null;
+      this.logger.log(`Project not found for subdomain ${clientSubdomain}`);
+      return {
+        status: HttpStatus.NOT_FOUND,
+        data: null,
+        errorMessage: `Project not found for subdomain ${clientSubdomain}`,
+      };
     }
     return {
       status: HttpStatus.OK,
