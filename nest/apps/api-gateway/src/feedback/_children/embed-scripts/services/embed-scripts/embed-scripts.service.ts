@@ -6,7 +6,7 @@ import {
 import {FeedbackServiceContract} from '@app/comms/contracts/feedback-service';
 import {HttpHelpersUtil} from '@app/util';
 import {CACHE_MANAGER} from '@nestjs/cache-manager';
-import {Inject, Injectable, Logger} from '@nestjs/common';
+import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
 import {Cache} from 'cache-manager';
 
@@ -41,7 +41,12 @@ export class EmbedScriptsService {
         data: null as never,
       },
     );
-    return HttpHelpersUtil.returnDataOrThrowError(result);
+    return HttpHelpersUtil.returnDataOrThrowError(
+      result,
+      HttpStatus.OK,
+      result?.errorMessage,
+      result.status,
+    );
   }
 
   async getFeedbackWidgetScript({

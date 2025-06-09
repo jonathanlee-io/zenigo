@@ -8,15 +8,9 @@ export class HttpHelpersUtil {
     returnedErrorMessage: string = 'Oops, something went wrong.',
     returnedErrorStatus: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
   ) {
-    if (microserviceResponse.status === HttpStatus.NOT_FOUND) {
-      throw new HttpException(
-        {message: microserviceResponse.errorMessage ?? returnedErrorMessage},
-        HttpStatus.NOT_FOUND,
-      );
-    }
     if (microserviceResponse.status !== desiredStatus) {
       throw new HttpException(
-        {message: returnedErrorMessage},
+        microserviceResponse.errorMessage ?? returnedErrorMessage,
         returnedErrorStatus,
       );
     }
