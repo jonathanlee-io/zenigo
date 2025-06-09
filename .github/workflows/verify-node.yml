@@ -14,8 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [22.x]
-        target-project: [nest, ui]
+        node-version: [ 22.x ]
+        target-project: [ nest, ui ]
     name: Lint ${{ matrix.target-project }} (Node.js v${{ matrix.node-version }})
     steps:
       - name: Checkout
@@ -37,8 +37,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [22.x]
-        target-project: [nest, ui]
+        node-version: [ 22.x ]
+        target-project: [ nest, ui ]
     name: Build ${{ matrix.target-project }} (Node.js v${{ matrix.node-version }})
     steps:
       - name: Checkout
@@ -59,8 +59,8 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        node-version: [22.x]
-        target-project: [nest]
+        node-version: [ 22.x ]
+        target-project: [ nest ]
     name: Test ${{ matrix.target-project }} (v${{ matrix.node-version }})
     steps:
       - name: Checkout
@@ -93,12 +93,12 @@ jobs:
 
   deploy-railway-api:
     name: Deploy Node.js API to Railway
-    needs: [lint, build, test]
+    needs: [ lint, build, test ]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        target-service: [nest-gateway, feature-flags-service, feedback-service, identity-service, payments-service]
+        target-service: [ nest-gateway, feature-flags-service, feedback-service, identity-service, payments-service ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -143,12 +143,12 @@ jobs:
 
   deploy-railway-ui:
     name: Deploy UI to Railway
-    needs: [lint, build, test]
+    needs: [ lint, build, test ]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        target-service: [ui]
+        target-service: [ ui ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -192,7 +192,7 @@ jobs:
           done
 
   cypress-run:
-    needs: [deploy-railway-api, deploy-railway-ui]
+    needs: [ deploy-railway-api, deploy-railway-ui ]
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -211,10 +211,16 @@ jobs:
       - name: Install Dependencies
         working-directory: ./ui
         run: yarn install --frozen-lockfile
-      - name: Cypress run
+      - name: Cypress Install
         uses: cypress-io/github-action@v6
         with:
+          runTests: false
+          working-directory: ui
+      - name: Cypress Run
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          working-directory: ui
           browser: chrome
-          project: ./ui
         env:
           CYPRESS_BASE_URL: https://www.zenigo.io
