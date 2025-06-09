@@ -222,5 +222,4 @@ jobs:
           install: false
           working-directory: ui
           browser: chrome
-        env:
-          CYPRESS_BASE_URL: https://www.zenigo.io
+          env: CYPRESS_BASE_URL=https://www.zenigo.io
