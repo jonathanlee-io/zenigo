@@ -1,4 +1,5 @@
 import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
+import {CachingSubdomainInterceptor} from '@app/util/interceptors/caching/caching-subdomain.interceptor';
 import {CacheInterceptor} from '@nestjs/cache-manager';
 import {Controller, Get, Header, Ip, UseInterceptors} from '@nestjs/common';
 import {CacheTTL} from '@nestjs/common/cache';
@@ -10,6 +11,8 @@ export class EmbedScriptsController {
   constructor(private readonly embedScriptsService: EmbedScriptsService) {}
 
   @IsPublic()
+  @CacheTTL(1000 * 60 * 60)
+  @UseInterceptors(CachingSubdomainInterceptor)
   @Get('bootstrap-widget.js')
   @Header('Content-Type', 'text/javascript')
   @Header('Cache-Control', 'no-cache, no-store, must-revalidate')

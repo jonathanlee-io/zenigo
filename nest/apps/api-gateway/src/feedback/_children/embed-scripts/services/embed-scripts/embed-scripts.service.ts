@@ -33,12 +33,6 @@ export class EmbedScriptsService {
     clientSubdomain: string;
     ip: string;
   }) {
-    const fromCacheResult = await this.cacheManager.get(
-      `bootstrap-widget-script-${clientSubdomain.toLowerCase()}`,
-    );
-    if (fromCacheResult) {
-      return fromCacheResult;
-    }
     const result = await this.feedbackClient.sendAsync(
       FEEDBACK_SERVICE.GET_BOOTSTRAP_SCRIPT,
       {
@@ -46,10 +40,6 @@ export class EmbedScriptsService {
         clientIp: ip,
         data: null as never,
       },
-    );
-    await this.cacheManager.set(
-      `bootstrap-widget-script-${clientSubdomain.toLowerCase()}`,
-      result.data,
     );
     return HttpHelpersUtil.returnDataOrThrowError(result);
   }
