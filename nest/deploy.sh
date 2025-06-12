@@ -7,7 +7,7 @@ set -e
 NAMESPACE="zenigo-nestjs-microservices"
 CHART_PATH="./helm"
 DOCKER_REGISTRY="jonathanleedev"
-IMAGE_TAG="${IMAGE_TAG:-latest}"
+IMAGE_TAG="${IMAGE_TAG:-"0.0.1"}"
 
 # Colors for output
 RED='\033[0;31m'
