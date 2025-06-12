@@ -1,4 +1,4 @@
-import {Test, TestingModule} from '@nestjs/testing';
+import {TestBed} from '@suites/unit';
 
 import {FlagsController} from './flags.controller';
 
@@ -6,11 +6,8 @@ describe('FlagsController', () => {
   let controller: FlagsController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [FlagsController],
-    }).compile();
-
-    controller = module.get<FlagsController>(FlagsController);
+    const {unit} = await TestBed.solitary(FlagsController).compile();
+    controller = unit;
   });
 
   it('should be defined', () => {
