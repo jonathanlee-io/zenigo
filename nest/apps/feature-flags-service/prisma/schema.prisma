@@ -31,3 +31,10 @@ model UserSegmentOverrides {
   FeatureFlag   FeatureFlag?  @relation(fields: [featureFlagId], references: [id])
   featureFlagId String?
 }
+
+model ClientSideIdentity {
+  id        String   @id @default(nanoid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  traits    Json
+}

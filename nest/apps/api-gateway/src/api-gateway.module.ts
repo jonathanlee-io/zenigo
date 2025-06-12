@@ -12,10 +12,12 @@ import {APP_GUARD, RouterModule} from '@nestjs/core';
 import {ClientsModule, Transport} from '@nestjs/microservices';
 import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
 
+import {FeatureFlagsModule} from './app/feature-flags/feature-flags.module';
+import {FeedbackModule} from './app/feedback/feedback.module';
+import {IdentityModule} from './app/identity/identity.module';
+import {PaymentsModule} from './app/payments/payments.module';
 import {appRoutes} from './app.routes';
 import {ApiGatewayEnvironment} from './config/environment';
-import {FeedbackModule} from './feedback/feedback.module';
-import {UsersModule} from './users/users.module';
 
 @Module({
   imports: [
@@ -107,7 +109,9 @@ import {UsersModule} from './users/users.module';
     ]),
     AuthModule,
     FeedbackModule,
-    UsersModule,
+    IdentityModule,
+    FeatureFlagsModule,
+    PaymentsModule,
   ],
   providers: [
     {

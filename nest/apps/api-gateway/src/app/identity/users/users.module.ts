@@ -3,9 +3,9 @@ import {Logger, Module} from '@nestjs/common';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {ClientsModule, Transport} from '@nestjs/microservices';
 
-import {ApiGatewayEnvironment} from '../config/environment';
 import {AuthenticatedUsersController} from './controllers/authenticated-users/authenticated-users.controller';
 import {AuthenticatedUsersService} from './services/authenticated-users/authenticated-users.service';
+import {ApiGatewayEnvironment} from '../../../config/environment';
 
 @Module({
   imports: [

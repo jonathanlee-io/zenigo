@@ -3,7 +3,7 @@ import {Module} from '@nestjs/common';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {ClientsModule, Transport} from '@nestjs/microservices';
 
-import {ApiGatewayEnvironment} from '../config/environment';
+import {ApiGatewayEnvironment} from '../../config/environment';
 import {EmbedScriptsModule} from './_children/embed-scripts/embed-scripts.module';
 import {IssuesModule} from './_children/issues/issues.module';
 import {ProductsModule} from './_children/products/products.module';
