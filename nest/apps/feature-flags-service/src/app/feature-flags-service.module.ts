@@ -5,6 +5,9 @@ import {EventEmitterModule} from '@nestjs/event-emitter';
 
 import {PrismaClient as FeatureFlagPrismaClient} from '../../generated/client';
 import {FEATURE_FLAGS_PRISMA} from '../config/db.config';
+import {FlagsController} from './controllers/flags/flags.controller';
+import {FlagsRepository} from './repositories/flags/flags.repository';
+import {FlagsService} from './services/flags/flags.service';
 
 @Module({
   imports: [
@@ -22,5 +25,7 @@ import {FEATURE_FLAGS_PRISMA} from '../config/db.config';
       global: true,
     }),
   ],
+  controllers: [FlagsController],
+  providers: [FlagsRepository, FlagsService],
 })
 export class FeatureFlagsServiceModule {}
