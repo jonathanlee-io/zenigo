@@ -1,0 +1,48 @@
+
+# Values for API Gateway service
+service:
+  name: api-gateway
+  type: LoadBalancer  # Expose API Gateway externally
+  port: 8000
+  targetPort: 8000
+
+image:
+  repository: jonathanleedev/zenigo-nestjs-microservices-api-gateway
+  pullPolicy: IfNotPresent
+  tag: "0.0.1"
+
+replicaCount: 2
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: api.zenigo.io
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: api-gateway-tls
+      hosts:
+        - api.zenigo.io
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1

@@ -1,0 +1,27 @@
+
+# Values for Payments Service
+service:
+  name: payments-service
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+replicaCount: 2
+
+env:
+  NODE_ENV: production
+  PORT: "8000"
+  DATABASE_URL: "postgresql://username:password@postgres:5432/payments_db"
+  STRIPE_SECRET_KEY: "sk_test_your_stripe_secret_key"
+
+resources:
+  limits:
+    cpu: 600m
+    memory: 512Mi
+  requests:
+    cpu: 300m
+    memory: 256Mi
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1

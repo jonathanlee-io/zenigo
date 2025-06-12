@@ -1,0 +1,28 @@
+# Values for Identity Service
+service:
+  name: identity-service
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+replicaCount: 2
+
+resources:
+  limits:
+    cpu: 800m
+    memory: 768Mi
+  requests:
+    cpu: 400m
+    memory: 384Mi
+
+env:
+  NODE_ENV: production
+  PORT: "8000"
+  DATABASE_URL: "postgresql://username:password@postgres:5432/identity_db"
+  JWT_SECRET: "your-jwt-secret"
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 75

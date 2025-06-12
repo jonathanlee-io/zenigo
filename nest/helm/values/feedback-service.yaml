@@ -1,0 +1,14 @@
+
+# Values for Feedback Service
+service:
+  name: feedback-service
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+replicaCount: 1
+
+env:
+  NODE_ENV: production
+  PORT: "8000"
+  DATABASE_URL: "postgresql://username:password@postgres:5432/feedback_db"
