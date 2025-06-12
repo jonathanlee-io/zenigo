@@ -46,3 +46,23 @@ autoscaling:
 podDisruptionBudget:
   enabled: true
   minAvailable: 1
+
+envFrom:
+  - secretRef:
+        name: node-env
+  - secretRef:
+      name: jwt-secret
+  - secretRef:
+      name: rabbitmq-urls
+  - secretRef:
+      name: redis-url
+  - secretRef:
+      name: admin-email
+  - secretRef:
+      name: rabbitmq-feature-flags-queue
+  - secretRef:
+      name: rabbitmq-feedback-queue
+  - secretRef:
+      name: rabbitmq-identity-queue
+  - secretRef:
+      name: rabbitmq-payments-queue

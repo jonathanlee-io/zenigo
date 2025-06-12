@@ -5,10 +5,15 @@ import {EmbedScriptsModule} from './app/feedback/_children/embed-scripts/embed-s
 import {IssuesModule} from './app/feedback/_children/issues/issues.module';
 import {ProductsModule} from './app/feedback/_children/products/products.module';
 import {FeedbackModule} from './app/feedback/feedback.module';
+import {HealthModule} from './app/health/health.module';
 import {IdentityModule} from './app/identity/identity.module';
 import {PaymentsModule} from './app/payments/payments.module';
 
 export const appRoutes: Routes = [
+  {
+    path: 'health',
+    module: HealthModule,
+  },
   {
     path: 'flags',
     module: FeatureFlagsModule,

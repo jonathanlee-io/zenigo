@@ -14,6 +14,7 @@ import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
 
 import {FeatureFlagsModule} from './app/feature-flags/feature-flags.module';
 import {FeedbackModule} from './app/feedback/feedback.module';
+import {HealthModule} from './app/health/health.module';
 import {IdentityModule} from './app/identity/identity.module';
 import {PaymentsModule} from './app/payments/payments.module';
 import {appRoutes} from './app.routes';
@@ -108,6 +109,7 @@ import {ApiGatewayEnvironment} from './config/environment';
       },
     ]),
     AuthModule,
+    HealthModule,
     FeedbackModule,
     IdentityModule,
     FeatureFlagsModule,
