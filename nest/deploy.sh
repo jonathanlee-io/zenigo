@@ -7,7 +7,7 @@ set -e
 NAMESPACE="zenigo-nestjs-microservices"
 CHART_PATH="./helm"
 DOCKER_REGISTRY="jonathanleedev"
-IMAGE_TAG="${IMAGE_TAG:-"0.0.1"}"
+IMAGE_TAG="${IMAGE_TAG:-"0.0.1"}-$(date +%s)"
 
 # Colors for output
 RED='\033[0;31m'
@@ -61,7 +61,8 @@ deploy_service() {
         --set image.tag=$IMAGE_TAG \
         --set service.name=$service \
         ${values_file:+--values $CHART_PATH/$values_file} \
-        --wait
+        --wait \
+        --force
     
     log_info "Successfully deployed $service"
 }
