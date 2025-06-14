@@ -98,7 +98,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target-service: [ nest-gateway, feature-flags-service, feedback-service, identity-service, payments-service ]
+        target-service: [ api-gateway, feature-flags-service, feedback-service, identity-service, payments-service ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
