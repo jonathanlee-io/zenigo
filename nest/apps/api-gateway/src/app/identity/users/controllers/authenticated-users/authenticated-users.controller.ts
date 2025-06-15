@@ -5,7 +5,7 @@ import {ApiTags} from '@nestjs/swagger';
 import {AuthenticatedUsersService} from '../../services/authenticated-users/authenticated-users.service';
 
 @ApiTags('Authenticated Users')
-@Controller()
+@Controller('authenticated')
 export class AuthenticatedUsersController {
   constructor(
     private readonly authenticatedUsersService: AuthenticatedUsersService,

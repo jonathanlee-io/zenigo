@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   local: true,
   API_ENVIRONMENT: 'local',
-  WIDGET_URL: 'http://localhost:8080/widget.js',
+  WIDGET_URL: 'http://localhost:8000/widget.js',
   SUPABASE_URL: 'https://uezywdolnrfzetsumznw.supabase.co',
   SUPABASE_PUBLIC_KEY:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVlenl3ZG9sbnJmemV0c3Vtem53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY0Njc5NDksImV4cCI6MjA2MjA0Mzk0OX0.M_dNkjv08sJhW9xYArTdha2qOKYhOjJG2mOumunbbD8',

@@ -14,7 +14,7 @@ export class AuthService {
 
   checkIn() {
     return this.httpClient.post<{ isSuccessful: boolean; isCreatedNew: boolean }>(
-        this.tenantStore.getFullRequestUrl('v1/identity/users/check-in'),
+        this.tenantStore.getFullRequestUrl('v1/identity/users/authenticated/check-in'),
         {},
     );
   }

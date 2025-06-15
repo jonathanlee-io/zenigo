@@ -1,5 +1,10 @@
 import {HelpersUtil} from '@app/util';
-import {Inject, Injectable, InternalServerErrorException} from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
 import {IDENTITY_PRISMA} from '../../../../config/db.config';
@@ -8,6 +13,7 @@ import {UsersRepositoryService} from '../../../users/repositories/users-reposito
 @Injectable()
 export class ClientsRepositoryService {
   constructor(
+    private readonly logger: Logger,
     @Inject(IDENTITY_PRISMA)
     private readonly prismaService: IdentityPrismaClient,
     private readonly usersRepository: UsersRepositoryService,
@@ -58,13 +64,17 @@ export class ClientsRepositoryService {
             },
           },
         });
+        const apiKey = HelpersUtil.generateApiKey('ff');
+        this.logger.log(
+          `Creating project: ${projectDisplayName} with api key: ${apiKey.raw}`,
+        );
         const createdProject = await prisma.project.create({
           data: {
             name: projectDisplayName,
             isBugReportsEnabled,
             isFeatureRequestsEnabled,
             isFeatureFeedbackEnabled,
-            hashedFeatureFlagApiKey: HelpersUtil.generateApiKey('ff').hashed,
+            hashedFeatureFlagApiKey: apiKey.hashed,
             isOwnerIssuesEnabled: true,
             isOwnerUpdatesEnabled: true,
             isUserIssuesEnabled: false,

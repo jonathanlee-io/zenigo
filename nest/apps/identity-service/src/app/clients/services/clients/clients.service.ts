@@ -44,8 +44,8 @@ export class ClientsService implements OnModuleInit {
       const creationResult = await this.createClient(
         this.configService.getOrThrow('ADMIN_EMAIL'),
         {
-          clientDisplayName: 'EchoNexus',
-          projectDisplayName: 'EchoNexus',
+          clientDisplayName: 'Zenigo',
+          projectDisplayName: 'Zenigo',
           subdomain: 'www',
           isBugReportsEnabled: true,
           isFeatureRequestsEnabled: true,
@@ -58,11 +58,15 @@ export class ClientsService implements OnModuleInit {
         );
       }
       await this.clientsRepository.addSubdomainToProject(
-        'echonexus',
+        'zenigo',
+        creationResult.projectId,
+      );
+      await this.clientsRepository.addSubdomainToProject(
+        'localhost',
         creationResult.projectId,
       );
       this.logger.log(
-        'Default client created successfully with subdomains: www, echonexus',
+        `Default client created successfully with subdomains: www, zenigo, localhost`,
       );
       return;
     }

@@ -27,7 +27,7 @@ export const TenantStore = signalStore(
       return {
         getFullRequestUrl: (apiPath: string) => {
           const scheme = store.apiEnvironment() === 'local' ? 'http' : 'https';
-          const port = store.apiEnvironment() === 'local' ? '8080' : '443';
+          const port = store.apiEnvironment() === 'local' ? '8000' : '443';
           if (window.location.hostname.toLowerCase().includes('localhost')) {
             return `${scheme}://${window.location.hostname}:${port}/${apiPath}`;
           }

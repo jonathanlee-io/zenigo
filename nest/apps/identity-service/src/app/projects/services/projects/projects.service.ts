@@ -10,21 +10,62 @@ import {
   ForbiddenException,
   HttpStatus,
   Injectable,
+  Logger,
   NotFoundException,
+  OnModuleInit,
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 
 import {IdentityEnvironment} from '../../../../config/environment';
 import {ClientsService} from '../../../clients/services/clients/clients.service';
+import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 import {ProjectsRepositoryService} from '../../repositories/projects-repository/projects-repository.service';
 
 @Injectable()
-export class ProjectsService {
+export class ProjectsService implements OnModuleInit {
   constructor(
+    private readonly logger: Logger,
+    private readonly usersRepository: UsersRepositoryService,
     private readonly projectsRepository: ProjectsRepositoryService,
     private readonly clientsService: ClientsService,
     private readonly configService: ConfigService<IdentityEnvironment>,
   ) {}
+
+  async onModuleInit() {
+    const adminUserRecord = await this.usersRepository.findByEmail(
+      this.configService.getOrThrow('ADMIN_EMAIL'),
+    );
+    if (!adminUserRecord) {
+      this.logger.log(
+        `Unable to create default project as admin user does not exist, skipping...`,
+      );
+      return;
+    }
+    const [defaultProject] = await this.projectsRepository.findBySubdomain(
+      'www',
+      {isIncludeClient: true},
+    );
+    if (!defaultProject) {
+      this.logger.log('Creating default project as no project exists yet');
+      await this.createProject(adminUserRecord.supabaseUserId, {
+        clientId: defaultProject.clientId,
+        name: 'Zenigo',
+        subdomain: 'www',
+        isBugReportsEnabled: true,
+        isFeatureRequestsEnabled: true,
+        isFeatureFeedbackEnabled: true,
+      });
+      const apiKey = HelpersUtil.generateApiKey('ff');
+      await this.projectsRepository.updateProjectFeatureFlagsApiKeyById({
+        projectId: defaultProject.id,
+        hashedKey: apiKey.hashed,
+      });
+      this.logger.log(
+        `Default project created successfully with API Key: ${apiKey.raw}`,
+      );
+      return;
+    }
+  }
 
   async createProject(
     requestingUserId: string,

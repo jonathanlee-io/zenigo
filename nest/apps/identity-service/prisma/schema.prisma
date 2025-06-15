@@ -22,6 +22,15 @@ model User {
   clientId           String?
 }
 
+model AnonymousUser {
+  id        String   @id @default(nanoid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
+}
+
 model Client {
   id            String    @id @default(nanoid())
   displayName   String
@@ -36,12 +45,13 @@ model Client {
 }
 
 model Project {
-  id                       String      @id @default(nanoid())
+  id                       String          @id @default(nanoid())
   name                     String
-  createdAt                DateTime    @default(now())
-  updatedAt                DateTime    @default(now())
-  createdBy                User        @relation(fields: [userId], references: [id])
+  createdAt                DateTime        @default(now())
+  updatedAt                DateTime        @default(now())
+  createdBy                User            @relation(fields: [userId], references: [id])
   hashedFeatureFlagApiKey  String
+  anonymousUsers           AnonymousUser[]
   isBugReportsEnabled      Boolean
   isFeatureRequestsEnabled Boolean
   isFeatureFeedbackEnabled Boolean
@@ -50,7 +60,7 @@ model Project {
   isUserIssuesEnabled      Boolean
   hostnames                Hostname[]
   subdomains               Subdomain[]
-  client                   Client?     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  client                   Client?         @relation(fields: [clientId], references: [id], onDelete: Cascade)
   clientId                 String?
   userId                   String
 }

@@ -1,4 +1,5 @@
 import {ApiKeyGuard} from '@app/auth/guards/api-key/api-key.guard';
+import {ApiKeyWithUserEmailGuard} from '@app/auth/guards/api-key-with-user-email/api-key-with-user-email.guard';
 import {JwtStrategy} from '@app/auth/strategies';
 import {Module} from '@nestjs/common';
 import {ConfigModule, ConfigService} from '@nestjs/config';
@@ -16,7 +17,7 @@ import {PassportModule} from '@nestjs/passport';
       inject: [ConfigService],
     }),
   ],
-  providers: [JwtStrategy, ApiKeyGuard],
-  exports: [ApiKeyGuard],
+  providers: [JwtStrategy, ApiKeyGuard, ApiKeyWithUserEmailGuard],
+  exports: [ApiKeyGuard, ApiKeyWithUserEmailGuard],
 })
 export class AuthModule {}

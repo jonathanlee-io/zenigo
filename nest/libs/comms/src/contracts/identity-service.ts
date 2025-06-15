@@ -12,6 +12,7 @@ export const IDENTITY_SERVICE_QUEUE = 'IDENTITY';
 export const IDENTITY_SERVICE = {
   // Users
   USER_CHECK_IN: 'USER_CHECK_IN',
+  ANONYMOUS_USER_CHECK_IN: 'ANONYMOUS_USER_CHECK_IN',
   // Projects
   GET_PROJECT_BY_ID: 'GET_PROJECT_BY_ID',
   GET_PROJECT_BY_CLIENT_SUBDOMAIN: 'GET_PROJECT_BY_CLIENT_SUBDOMAIN',
@@ -21,6 +22,11 @@ export const IDENTITY_SERVICE = {
 export interface IdentityServiceContract {
   [IDENTITY_SERVICE.USER_CHECK_IN]: Message<
     AuthenticatedMicroserviceControllerPayload<never>,
+    POSTSuccessDto & {isCreatedNew: boolean}
+  >;
+
+  [IDENTITY_SERVICE.ANONYMOUS_USER_CHECK_IN]: Message<
+    AnonymousMicroserviceControllerPayload<{apiKey: string; userEmail: string}>,
     POSTSuccessDto & {isCreatedNew: boolean}
   >;
 
