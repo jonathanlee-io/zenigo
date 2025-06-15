@@ -7,6 +7,7 @@ import {ProductsModule} from './app/feedback/_children/products/products.module'
 import {FeedbackModule} from './app/feedback/feedback.module';
 import {HealthModule} from './app/health/health.module';
 import {IdentityModule} from './app/identity/identity.module';
+import {UsersModule} from './app/identity/users/users.module';
 import {PaymentsModule} from './app/payments/payments.module';
 
 export const appRoutes: Routes = [
@@ -39,6 +40,12 @@ export const appRoutes: Routes = [
   {
     path: 'identity',
     module: IdentityModule,
+    children: [
+      {
+        path: 'users',
+        module: UsersModule,
+      },
+    ],
   },
   {
     path: 'payments',
