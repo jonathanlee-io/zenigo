@@ -26,14 +26,16 @@ export class FlagsService {
     clientSubdomain,
     ip: clientIp,
     apiKey,
+    userEmail,
   }: {
     clientSubdomain: string;
     ip: string;
     apiKey: string;
+    userEmail: string | undefined;
   }) {
     const result = await this.flagsClient.sendAsync(
       FEATURE_FLAGS_SERVICE.GET_ALL_FLAGS,
-      {clientSubdomain, clientIp, data: {apiKey}},
+      {clientSubdomain, clientIp, data: {apiKey, userEmail}},
     );
     return HttpHelpersUtil.returnDataOrThrowError(result);
   }

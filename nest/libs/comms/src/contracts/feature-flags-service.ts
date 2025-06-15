@@ -10,7 +10,10 @@ export const FEATURE_FLAGS_SERVICE = {
 
 export interface FeatureFlagsServiceContract {
   [FEATURE_FLAGS_SERVICE.GET_ALL_FLAGS]: Message<
-    AnonymousMicroserviceControllerPayload<{apiKey: string}>,
+    AnonymousMicroserviceControllerPayload<{
+      apiKey: string;
+      userEmail: string | undefined;
+    }>,
     FeatureFlagBatchResponseDto
   >;
 }
