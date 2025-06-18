@@ -39,7 +39,7 @@ export class AnonymousUsersController {
   ) {
     await this.anonymousUsersService.checkIn(
       {clientSubdomain, ip},
-      {apiKey, userEmail},
+      {apiKey, userEmail: userEmail?.toLowerCase().trim()},
     );
   }
 }

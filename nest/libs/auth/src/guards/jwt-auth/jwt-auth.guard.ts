@@ -1,12 +1,10 @@
-import {FLAG_API_KEY} from '@app/auth/decorators';
+import {FLAG_API_KEY, IS_PUBLIC_KEY} from '@app/auth/decorators';
 import {FLAG_API_KEY_WITH_USER_EMAIL} from '@app/auth/decorators/api-key-with-user-email/api-key-with-user-email.decorator';
 import {ApiKeyGuard} from '@app/auth/guards/api-key/api-key.guard';
 import {ApiKeyWithUserEmailGuard} from '@app/auth/guards/api-key-with-user-email/api-key-with-user-email.guard';
 import {ExecutionContext, Injectable} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
 import {AuthGuard} from '@nestjs/passport';
-
-import {IS_PUBLIC_KEY} from '../../decorators/is-public/is-public.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {

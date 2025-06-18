@@ -1,5 +1,4 @@
-import {createHash} from 'crypto';
-
+import {HelpersUtil} from '@app/util';
 import {Inject, Injectable, Logger} from '@nestjs/common';
 import {DateTime} from 'luxon';
 
@@ -38,11 +37,13 @@ export class AnonymousUsersService {
       );
       return;
     }
-    const hashedApiKey = createHash(apiKey)
-      .update(apiKey)
-      .digest('hex')
-      .toString();
-    if (hashedApiKey !== project.hashedFeatureFlagApiKey) {
+
+    if (
+      !HelpersUtil.compareRawApiKeyToHashedApiKey(
+        apiKey,
+        project.hashedFeatureFlagApiKey,
+      )
+    ) {
       this.logger.warn(
         `User with client header: ${userEmail} attempted and failed to check in anonymous user with subdomain: ${clientSubdomain} with invalid api key`,
       );
@@ -58,7 +59,6 @@ export class AnonymousUsersService {
         },
       },
       update: {
-        email: userEmail,
         updatedAt: DateTime.now().toJSDate(),
       },
       where: {

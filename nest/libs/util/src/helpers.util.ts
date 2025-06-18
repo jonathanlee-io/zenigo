@@ -42,4 +42,12 @@ export class HelpersUtil {
       hashed: hashedApiKey,
     };
   }
+
+  static compareRawApiKeyToHashedApiKey(apiKey: string, hashedApiKey: string) {
+    const rawApiKeyHashed = createHash('sha256')
+      .update(apiKey)
+      .digest('hex')
+      .toString();
+    return rawApiKeyHashed === hashedApiKey;
+  }
 }
