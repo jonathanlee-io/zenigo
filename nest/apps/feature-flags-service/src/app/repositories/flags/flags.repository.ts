@@ -1,5 +1,5 @@
 import {HelpersUtil} from '@app/util';
-import {Inject, Injectable} from '@nestjs/common';
+import {Inject, Injectable, Logger} from '@nestjs/common';
 
 import {PrismaClient as FeatureFlagsPrismaClient} from '../../../../generated/client';
 import {FEATURE_FLAGS_PRISMA} from '../../../config/db.config';
@@ -20,11 +20,40 @@ export class FlagsRepository {
     key: string;
     isEnabledGlobally: boolean;
   }) {
-    return this.prismaService.featureFlag.create({
+    const newFlag = await this.prismaService.featureFlag.create({
       data: {
         key,
         isEnabledGlobally,
         hashedApiKey: HelpersUtil.hashApiKey(apiKey),
+      },
+    });
+    await this.createUserSegmentOverride({
+      flagId: newFlag.id,
+      isEnabledOverrideValue: true,
+    });
+    Logger.log(`Key to look out for: ${newFlag.key}`);
+  }
+
+  async createUserSegmentOverride({
+    flagId,
+    isEnabledOverrideValue,
+  }: {
+    flagId: string;
+    isEnabledOverrideValue: boolean;
+  }) {
+    await this.prismaService.userSegmentOverrides.create({
+      data: {
+        isEnabledOverrideValue,
+        userSegments: {
+          create: {
+            emails: ['jonathan.lee.devel@gmail.com'],
+          },
+        },
+        FeatureFlag: {
+          connect: {
+            id: flagId,
+          },
+        },
       },
     });
   }

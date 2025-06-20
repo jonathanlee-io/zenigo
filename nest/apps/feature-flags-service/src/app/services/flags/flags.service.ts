@@ -35,14 +35,17 @@ export class FlagsService {
         };
       }
 
+      const matchingOverride = flag.userSegmentOverrides.find((override) =>
+        userSegmentsWhereUserIsIn.some(
+          (segment) => segment.userSegmentOverridesId === override.id,
+        ),
+      );
+
       return {
         key: flag.key,
-        isEnabled:
-          flag.userSegmentOverrides.find(
-            (override) =>
-              userSegmentsWhereUserIsIn[0].userSegmentOverridesId ===
-              override.id,
-          )?.isEnabledOverrideValue ?? flag.isEnabledGlobally,
+        isEnabled: matchingOverride
+          ? matchingOverride.isEnabledOverrideValue
+          : flag.isEnabledGlobally,
       };
     });
     return {
