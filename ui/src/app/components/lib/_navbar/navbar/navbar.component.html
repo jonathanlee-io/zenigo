@@ -22,7 +22,7 @@
           <p-button (click)="userActionOverlayPanel.toggle($event)" (keydown.enter)="userActionOverlayPanel.toggle($event)"
                     class="shadow-none p-button-text p-button-rounded flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50">
             <img [src]="userAuthenticationStore.currentUserAvatarUrl()"
-                 [alt]="userAuthenticationStore.currentUserEmail() || 'User avatar'"
+                 [alt]="userAuthenticationStore.currentUserEmail() ?? 'User avatar'"
                  class="w-10 h-10 rounded-full object-cover border-2 border-slate-200 dark:border-slate-600 -m-0.5">
           </p-button>
         } @else {
