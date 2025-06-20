@@ -157,7 +157,7 @@ export const UserAuthenticationStore = signalStore(
             return `https://ui-avatars.com/api/?name=${firstLetter}&background=6366f1&color=fff&size=32&rounded=true`;
           }
 
-          return avatarUrl || null;
+          return avatarUrl ?? null;
         }),
         isLoggedIn: computed(() => store.loggedInState() === 'LOGGED_IN'),
         isLoading: computed(() => store.loggedInState() === 'LOADING'),
