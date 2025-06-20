@@ -1,5 +1,4 @@
-
-import {computed, inject, DOCUMENT} from '@angular/core';
+import {computed, DOCUMENT, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
 import {MessageService} from 'primeng/api';
@@ -143,6 +142,23 @@ export const UserAuthenticationStore = signalStore(
       return {
         currentUserEmail: computed(() => supabaseService?.session?.user.email),
         currentUserId: computed(() => supabaseService?.session?.user.id),
+        currentUserAvatarUrl: computed(() => {
+          const session = supabaseService?.session;
+          if (!session?.user) return null;
+
+          const avatarUrl = session.user.user_metadata?.['avatar_url'] ||
+            session.user.user_metadata?.['picture'] ||
+            session.user.user_metadata?.['profilePicture'];
+
+          // If no avatar URL from OAuth provider, generate a fallback
+          if (!avatarUrl && session.user.email) {
+            const email = session.user.email;
+            const firstLetter = email.charAt(0).toUpperCase();
+            return `https://ui-avatars.com/api/?name=${firstLetter}&background=6366f1&color=fff&size=32&rounded=true`;
+          }
+
+          return avatarUrl || null;
+        }),
         isLoggedIn: computed(() => store.loggedInState() === 'LOGGED_IN'),
         isLoading: computed(() => store.loggedInState() === 'LOADING'),
       };
