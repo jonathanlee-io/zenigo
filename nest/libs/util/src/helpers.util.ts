@@ -43,6 +43,10 @@ export class HelpersUtil {
     };
   }
 
+  static hashApiKey(apiKey: string) {
+    return createHash('sha256').update(apiKey).digest('hex').toString();
+  }
+
   static compareRawApiKeyToHashedApiKey(apiKey: string, hashedApiKey: string) {
     const rawApiKeyHashed = createHash('sha256')
       .update(apiKey)

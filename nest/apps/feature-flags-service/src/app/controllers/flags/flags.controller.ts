@@ -22,6 +22,6 @@ export class FlagsController {
     Logger.log(
       `Received request to get all flags for apiKey: ${apiKey} with optional userEmail: ${userEmail}`,
     );
-    return this.flagsService.getAllFlags();
+    return this.flagsService.getAllFlags({apiKey, userEmail});
   }
 }
