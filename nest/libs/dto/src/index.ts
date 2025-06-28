@@ -5,3 +5,4 @@ export * from './POSTSuccess.dto';
 export * from './feedback';
 export * from './identity';
 export * from './micro';
+export * from './payments';

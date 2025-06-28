@@ -1,8 +1,14 @@
+import {MicroserviceSendResult, PaymentPlanDto} from '@app/dto';
 import {Cache, CACHE_MANAGER} from '@nestjs/cache-manager';
-import {Inject, Injectable, Logger, OnModuleInit} from '@nestjs/common';
+import {
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+  OnModuleInit,
+} from '@nestjs/common';
 import {isDeepEqual} from 'remeda';
 
-import {PaymentPlanDto} from '../../dto/PaymentPlan.dto';
 import {PaymentsRepositoryService} from '../../repositories/payments-repository/payments-repository.service';
 
 @Injectable()
@@ -63,8 +69,12 @@ export class PaymentsService implements OnModuleInit {
     private readonly paymentsRepository: PaymentsRepositoryService,
   ) {}
 
-  async getPlans() {
-    return this.paymentsRepository.getAllPaymentPlans();
+  async getPlans(): Promise<MicroserviceSendResult<PaymentPlanDto[]>> {
+    const paymentPlans = await this.paymentsRepository.getAllPaymentPlans();
+    return {
+      status: HttpStatus.OK,
+      data: paymentPlans,
+    };
   }
 
   async onModuleInit() {

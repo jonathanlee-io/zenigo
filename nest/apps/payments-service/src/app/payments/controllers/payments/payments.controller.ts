@@ -1,8 +1,6 @@
-import {IsPublic} from '@app/auth';
-import {oneDayInMilliseconds} from '@app/constants';
-import {CacheInterceptor} from '@nestjs/cache-manager';
-import {Controller, Get, UseInterceptors} from '@nestjs/common';
-import {CacheTTL} from '@nestjs/common/cache';
+import {PAYMENTS_SERVICE} from '@app/comms';
+import {Controller} from '@nestjs/common';
+import {MessagePattern} from '@nestjs/microservices';
 
 import {PaymentsService} from '../../services/payments/payments.service';
 
@@ -10,10 +8,7 @@ import {PaymentsService} from '../../services/payments/payments.service';
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
-  @IsPublic()
-  @Get('plans')
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(oneDayInMilliseconds)
+  @MessagePattern(PAYMENTS_SERVICE.GET_PAYMENT_PLANS)
   async getPlans() {
     return this.paymentsService.getPlans();
   }

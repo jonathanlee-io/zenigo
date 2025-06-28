@@ -1,5 +1,6 @@
-import {IsPublic} from '@app/auth';
-import {Controller, Get} from '@nestjs/common';
+import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
+import {HttpHelpersUtil} from '@app/util';
+import {Controller, Get, Ip, Logger} from '@nestjs/common';
 
 import {PaymentPlansService} from '../../services/payment-plans/payment-plans.service';
 
@@ -9,7 +10,15 @@ export class PaymentPlansController {
 
   @IsPublic()
   @Get()
-  async getPlans() {
-    return this.paymentPlansService.getPlans();
+  async getPlans(
+    @CurrentUser() {clientSubdomain}: CurrentUserDto,
+    @Ip() ip: string,
+  ) {
+    const result = await this.paymentPlansService.getPlans({
+      clientSubdomain,
+      ip,
+    });
+    Logger.log(result);
+    return HttpHelpersUtil.returnDataOrThrowError(result);
   }
 }

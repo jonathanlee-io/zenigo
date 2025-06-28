@@ -3,8 +3,8 @@ import * as path from 'node:path';
 
 import {
   IDENTITY_SERVICE,
-  IDENTITY_SERVICE_QUEUE,
   IdentityServiceContract,
+  PAYMENTS_SERVICE_QUEUE,
   TypedClientProxy,
 } from '@app/comms';
 import {MicroserviceSendResult} from '@app/dto';
@@ -26,7 +26,7 @@ export class EmbedScriptsService {
     private readonly logger: Logger,
     private readonly configService: ConfigService<FeedbackEnvironment>,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
-    @Inject(IDENTITY_SERVICE_QUEUE)
+    @Inject(PAYMENTS_SERVICE_QUEUE)
     readonly untypedIdentityClientProxy: ClientProxy,
   ) {
     this.identityClient = new TypedClientProxy<

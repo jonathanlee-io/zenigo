@@ -1,4 +1,4 @@
-import {IDENTITY_SERVICE_QUEUE} from '@app/comms';
+import {PAYMENTS_SERVICE_QUEUE} from '@app/comms';
 import {PrismaModule} from '@app/database';
 import {RabbitmqModule} from '@app/init';
 import {Logger, Module} from '@nestjs/common';
@@ -15,7 +15,7 @@ import {FEEDBACK_PRISMA} from '../../config/db.config';
       {client: FeedbackPrismaClient},
       {injectionKey: FEEDBACK_PRISMA},
     ),
-    RabbitmqModule.register({serviceName: IDENTITY_SERVICE_QUEUE}),
+    RabbitmqModule.register({serviceName: PAYMENTS_SERVICE_QUEUE}),
   ],
   controllers: [ProductsController],
   providers: [

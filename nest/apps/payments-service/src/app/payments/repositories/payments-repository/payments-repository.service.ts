@@ -1,8 +1,8 @@
+import {PaymentPlanDto} from '@app/dto/payments/PaymentPlan.dto';
 import {Inject, Injectable, Logger} from '@nestjs/common';
 
 import {PrismaClient as PaymentsPrismaClient} from '../../../../../generated/client';
 import {PAYMENTS_PRISMA} from '../../../../config/db.config';
-import {PaymentPlanDto} from '../../dto/PaymentPlan.dto';
 
 @Injectable()
 export class PaymentsRepositoryService {

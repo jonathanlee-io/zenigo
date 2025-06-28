@@ -1,9 +1,6 @@
 import {AuthModule, JwtAuthGuard} from '@app/auth';
 import {FEEDBACK_SERVICE_QUEUE, IDENTITY_SERVICE_QUEUE} from '@app/comms';
-import {
-  featureFlagServiceConstants,
-  paymentsServiceConstants,
-} from '@app/constants';
+import {featureFlagServiceConstants} from '@app/constants';
 import {createKeyv} from '@keyv/redis';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
@@ -84,22 +81,6 @@ import {ApiGatewayEnvironment} from './config/environment';
             queue: configService.getOrThrow<string>(
               'RABBIT_MQ_FEATURE_FLAGS_QUEUE',
             ),
-            noAck: true,
-            queueOptions: {
-              durable: true,
-            },
-          },
-        }),
-      },
-      {
-        name: paymentsServiceConstants.queueName,
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
-            queue: configService.getOrThrow<string>('RABBIT_MQ_PAYMENTS_QUEUE'),
             noAck: true,
             queueOptions: {
               durable: true,

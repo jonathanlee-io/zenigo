@@ -1,12 +1,15 @@
 import {PrismaModule} from '@app/database';
+import {createKeyv} from '@keyv/redis';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Logger, Module} from '@nestjs/common';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 
 import {PaymentsController} from './controllers/payments/payments.controller';
 import {PaymentsRepositoryService} from './repositories/payments-repository/payments-repository.service';
 import {PaymentsService} from './services/payments/payments.service';
 import {PrismaClient as PaymentsPrismaClient} from '../../../generated/client';
 import {PAYMENTS_PRISMA} from '../../config/db.config';
+import {PaymentsEnvironment} from '../../config/environment';
 
 @Module({
   imports: [
@@ -14,7 +17,16 @@ import {PAYMENTS_PRISMA} from '../../config/db.config';
       {client: PaymentsPrismaClient},
       {injectionKey: PAYMENTS_PRISMA},
     ),
-    CacheModule.register(),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService<PaymentsEnvironment>) => {
+        return {
+          stores: [createKeyv({url: configService.getOrThrow('REDIS_URL')})],
+        };
+      },
+    }),
   ],
   controllers: [PaymentsController],
   providers: [
