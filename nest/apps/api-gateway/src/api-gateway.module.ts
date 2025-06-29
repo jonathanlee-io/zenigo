@@ -1,11 +1,9 @@
 import {AuthModule, JwtAuthGuard} from '@app/auth';
-import {featureFlagServiceConstants} from '@app/constants';
 import {createKeyv} from '@keyv/redis';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Module} from '@nestjs/common';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {APP_GUARD, RouterModule} from '@nestjs/core';
-import {ClientsModule, Transport} from '@nestjs/microservices';
 import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
 
 import {FeatureFlagsModule} from './app/feature-flags/feature-flags.module';
@@ -36,26 +34,6 @@ import {ApiGatewayEnvironment} from './config/environment';
         };
       },
     }),
-    ClientsModule.registerAsync([
-      {
-        name: featureFlagServiceConstants.queueName,
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
-            queue: configService.getOrThrow<string>(
-              'RABBIT_MQ_FEATURE_FLAGS_QUEUE',
-            ),
-            noAck: true,
-            queueOptions: {
-              durable: true,
-            },
-          },
-        }),
-      },
-    ]),
     AuthModule,
     HealthModule,
     FeedbackModule,
