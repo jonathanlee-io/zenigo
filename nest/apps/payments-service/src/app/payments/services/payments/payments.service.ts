@@ -99,7 +99,7 @@ export class PaymentsService implements OnModuleInit {
       PaymentsService.paymentPlans,
     );
     this.logger.log(`Updated payment plans, clearing cache`);
-    await this.cacheManager.clear();
+    await this.cacheManager.del('PAYMENTS_SERVICE_PAYMENT_PLANS');
     this.logger.log(`Cleared cache`);
   }
 }

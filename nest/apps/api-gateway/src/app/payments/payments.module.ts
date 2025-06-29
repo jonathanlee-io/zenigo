@@ -19,7 +19,6 @@ import {ApiGatewayEnvironment} from '../../config/environment';
           options: {
             urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
             queue: configService.getOrThrow<string>('RABBIT_MQ_PAYMENTS_QUEUE'),
-            noAck: true,
             queueOptions: {
               durable: true,
             },

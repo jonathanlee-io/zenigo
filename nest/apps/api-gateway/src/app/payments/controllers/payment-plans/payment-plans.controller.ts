@@ -1,6 +1,8 @@
 import {CurrentUser, CurrentUserDto, IsPublic} from '@app/auth';
 import {HttpHelpersUtil} from '@app/util';
-import {Controller, Get, Ip, Logger} from '@nestjs/common';
+import {CacheInterceptor, CacheKey} from '@nestjs/cache-manager';
+import {Controller, Get, Ip, UseInterceptors} from '@nestjs/common';
+import {CacheTTL} from '@nestjs/common/cache';
 
 import {PaymentPlansService} from '../../services/payment-plans/payment-plans.service';
 
@@ -9,6 +11,9 @@ export class PaymentPlansController {
   constructor(private readonly paymentPlansService: PaymentPlansService) {}
 
   @IsPublic()
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey('PAYMENTS_SERVICE_PAYMENT_PLANS')
+  @CacheTTL(60 * 60 * 24)
   @Get()
   async getPlans(
     @CurrentUser() {clientSubdomain}: CurrentUserDto,
@@ -18,7 +23,6 @@ export class PaymentPlansController {
       clientSubdomain,
       ip,
     });
-    Logger.log(result);
     return HttpHelpersUtil.returnDataOrThrowError(result);
   }
 }

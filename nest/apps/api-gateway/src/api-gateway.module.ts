@@ -1,5 +1,4 @@
 import {AuthModule, JwtAuthGuard} from '@app/auth';
-import {FEEDBACK_SERVICE_QUEUE, IDENTITY_SERVICE_QUEUE} from '@app/comms';
 import {featureFlagServiceConstants} from '@app/constants';
 import {createKeyv} from '@keyv/redis';
 import {CacheModule} from '@nestjs/cache-manager';
@@ -38,38 +37,6 @@ import {ApiGatewayEnvironment} from './config/environment';
       },
     }),
     ClientsModule.registerAsync([
-      {
-        name: FEEDBACK_SERVICE_QUEUE,
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
-            queue: configService.getOrThrow<string>('RABBIT_MQ_FEEDBACK_QUEUE'),
-            noAck: true,
-            queueOptions: {
-              durable: true,
-            },
-          },
-        }),
-      },
-      {
-        name: IDENTITY_SERVICE_QUEUE,
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService<ApiGatewayEnvironment>) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: configService.getOrThrow<string>('RABBIT_MQ_URLS').split(','),
-            queue: configService.getOrThrow<string>('RABBIT_MQ_IDENTITY_QUEUE'),
-            noAck: true,
-            queueOptions: {
-              durable: true,
-            },
-          },
-        }),
-      },
       {
         name: featureFlagServiceConstants.queueName,
         imports: [ConfigModule],

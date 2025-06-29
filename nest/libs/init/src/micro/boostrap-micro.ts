@@ -18,7 +18,7 @@ export async function bootstrapMicroservice({
   const app = await createRabbitMQMicroservice({
     module: appModule,
     queueName: rabbitMqQueueName,
-    rabbitMqUrls: process.env.RABBIT_MQ_URLS,
+    rabbitMqUrls: process.env.RABBIT_MQ_URLS?.split(',') ?? [],
   });
 
   const configService = app.get<ConfigService>(ConfigService);
