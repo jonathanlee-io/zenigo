@@ -9,16 +9,18 @@ export class StripeService {
   constructor(private readonly logger: Logger) {}
 
   @StripeWebhookHandler('payment_intent.succeeded')
-  handlePaymentIntentCreated(event: stripe.Stripe.PaymentIntentCreatedEvent) {
+  handlePaymentIntentCreated() {
     this.logger.log(`Handling payment intent succeeded event...`);
-    this.logger.log(event);
-    return true;
   }
 
-  @StripeWebhookHandler('*')
-  async handleAllEvents(event: any) {
-    this.logger.log(`Handling all events...`);
-    this.logger.log(event);
-    return true;
+  @StripeWebhookHandler('charge.updated')
+  handleChargeUpdated() {
+    this.logger.log(`Handling charge updated event...`);
+  }
+
+  @StripeWebhookHandler('charge.succeeded')
+  handleChargeSucceeded(event: stripe.Stripe.ChargeSucceededEvent) {
+    this.logger.log(`Handling charge succeeded event...`);
+    this.logger.log(event.data.object.receipt_url);
   }
 }
