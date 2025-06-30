@@ -8,6 +8,8 @@ export interface ApiGatewayEnvironment {
   RABBIT_MQ_IDENTITY_QUEUE: string;
   RABBIT_MQ_PAYMENTS_QUEUE: string;
   REDIS_URL: string;
+  STRIPE_API_KEY: string;
+  STRIPE_WEBHOOK_SECRET: string;
 }
 
 export const dummyApiGatewayEnvironment: ApiGatewayEnvironment = {
@@ -20,4 +22,6 @@ export const dummyApiGatewayEnvironment: ApiGatewayEnvironment = {
   RABBIT_MQ_IDENTITY_QUEUE: 'identity',
   RABBIT_MQ_PAYMENTS_QUEUE: 'payments',
   REDIS_URL: 'redis://localhost',
+  STRIPE_API_KEY: 'sk_test_123',
+  STRIPE_WEBHOOK_SECRET: 'whsec_123',
 };

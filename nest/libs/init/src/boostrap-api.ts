@@ -12,10 +12,20 @@ export async function bootstrapFastifyApi(
   requiredConfigKeys: string[],
 ) {
   const app = await NestFactory.create<NestFastifyApplication>(
-    // @ts-expect-error within this monorepo is valid as IEntryNestModule, IEntryNestModule type is not exported from @nestjs/common
-    appModule,
+    appModule as any,
     new FastifyAdapter(),
+    {
+      rawBody: true,
+    },
   );
+
+  await app.register(await import('fastify-raw-body'), {
+    field: 'rawBody',
+    global: false,
+    encoding: 'utf-8',
+    runFirst: true,
+    routes: ['/payments/stripe/webhook'],
+  });
 
   const configService =
     app.get<ConfigService<ApiGatewayEnvironment>>(ConfigService);
