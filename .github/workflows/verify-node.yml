@@ -90,6 +90,8 @@ jobs:
           RABBIT_MQ_FEEDBACK_QUEUE: FEEDBACK
           RABBIT_MQ_IDENTITY_QUEUE: IDENTITY
           RABBIT_MQ_PAYMENTS_QUEUE: PAYMENTS
+          STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
 
   deploy-railway-api:
     name: Deploy Node.js API to Railway
