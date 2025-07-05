@@ -20,7 +20,7 @@ export class FlagsController {
     description: 'The email of the user requesting the flags',
   })
   @UseFlagApiKey()
-  @Get()
+  @Get('status')
   async getBatchStatusFeatureFlags(
     @CurrentUser() {clientSubdomain}: CurrentUserDto,
     @Ip() ip: string,
