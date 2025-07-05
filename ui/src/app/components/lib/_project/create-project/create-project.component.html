@@ -1,9 +1,9 @@
-<div class="grid grid-cols-1 gap-x-8 gap-y-10 py-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+<div class="grid grid-cols-1 gap-x-8 gap-y-10 py-10 border-b border-slate-200 dark:border-slate-700 pb-12 md:grid-cols-3">
   <div>
-    <h2 class="text-4xl font-extrabold tracking-wide text-light-text-primary dark:text-dark-text-primary">
+    <h2 class="text-4xl font-extrabold tracking-wide text-slate-900 dark:text-slate-100">
       Project Subdomain
     </h2>
-    <p class="mt-1 text-xl text-light-text-primary dark:text-dark-text-primary">This information will be displayed
+    <p class="mt-1 text-xl text-slate-700 dark:text-slate-300">This information will be displayed
       publicly so be careful what you
       share. You can create more projects after this one if you like.</p>
   </div>
@@ -13,44 +13,44 @@
       <div class="mt-2">
         <div class="mt-2">
           <div
-            [ngClass]="{'outline-light-error text-light-error': (subdomainState() !== 'LOADING' && ((subdomainFormControl().invalid && subdomainFormControl().dirty) || subdomainState() === 'UNAVAILABLE')), 'outline-light-success': (subdomainState() !== 'LOADING' && (subdomainFormControl().valid && subdomainState() === 'AVAILABLE'))}"
-            class="flex items-center rounded-full py-2 px-4 shadow-lg outline outline-2 dark:outline-dark-text-primary focus-within:outline-pink-500">
+            [ngClass]="{'outline-red-500 text-red-500': (subdomainState() !== 'LOADING' && ((subdomainFormControl().invalid && subdomainFormControl().dirty) || subdomainState() === 'UNAVAILABLE')), 'outline-green-500': (subdomainState() !== 'LOADING' && (subdomainFormControl().valid && subdomainState() === 'AVAILABLE'))}"
+            class="flex items-center rounded-full py-2 px-4 shadow-lg outline outline-2 outline-slate-300 dark:outline-slate-600 bg-white dark:bg-slate-800 focus-within:outline-pink-500">
             <div
-              class="shrink-0 select-none text-lg text-light-text-primary dark:text-dark-text-primary mr-2 sm:text-base">
+              class="shrink-0 select-none text-lg text-slate-700 dark:text-slate-300 mr-2 sm:text-base">
               https://
             </div>
-            <input [formControl]="subdomainFormControl()" [ngClass]="{'placeholder-light-error': (subdomainState() !== 'LOADING' && ((subdomainFormControl().invalid && subdomainFormControl().dirty) || subdomainState() === 'UNAVAILABLE')), 'text-light-success outline-light-success': (subdomainState() !== 'LOADING' && (subdomainFormControl().valid && subdomainState() === 'AVAILABLE'))}" autocomplete="off"
-                   class="w-full text-lg rounded-full focus:outline-none text-light-text-primary dark:text-light-text-primary"
+            <input [formControl]="subdomainFormControl()" [ngClass]="{'placeholder-red-500': (subdomainState() !== 'LOADING' && ((subdomainFormControl().invalid && subdomainFormControl().dirty) || subdomainState() === 'UNAVAILABLE')), 'text-green-600 outline-green-500': (subdomainState() !== 'LOADING' && (subdomainFormControl().valid && subdomainState() === 'AVAILABLE'))}" autocomplete="off"
+                   class="w-full text-lg rounded-full focus:outline-none text-slate-900 dark:text-slate-100 bg-transparent placeholder-slate-400 dark:placeholder-slate-500"
                    id="subdomain"
                    name="subdomain"
                    placeholder="Enter subdomain"
                    type="text">
             <div
-              class="shrink-0 select-none text-lg text-gray-700 ml-2 sm:text-base text-light-text-primary dark:text-dark-text-primary">
+              class="shrink-0 select-none text-lg ml-2 sm:text-base text-slate-700 dark:text-slate-300">
               .zenigo.io
             </div>
             <div class="flex items-center ml-2 mt-2 pb-2">
               <ng-container [ngSwitch]="subdomainState()">
                 <p-progress-spinner *ngSwitchCase="'LOADING'" styleClass="w-8 h-8" />
                 <ng-container *ngIf="subdomainFormControl().valid">
-                  <i *ngSwitchCase="'AVAILABLE'" class="pi pi-thumbs-up text-light-success"></i>
+                  <i *ngSwitchCase="'AVAILABLE'" class="pi pi-thumbs-up text-green-600"></i>
                 </ng-container>
-                <i *ngSwitchCase="'UNAVAILABLE'" class="pi pi-thumbs-down text-light-error"></i>
+                <i *ngSwitchCase="'UNAVAILABLE'" class="pi pi-thumbs-down text-red-500"></i>
               </ng-container>
               <ng-container *ngIf="subdomainFormControl().invalid && subdomainFormControl().dirty">
-                <i class="pi pi-thumbs-down text-light-error"></i>
+                <i class="pi pi-thumbs-down text-red-500"></i>
               </ng-container>
             </div>
           </div>
 
           <div
             *ngIf="(subdomainState() !== 'LOADING' && (subdomainFormControl().invalid && subdomainFormControl().dirty) || subdomainState() === 'UNAVAILABLE')"
-            class="text-light-error mt-4" style="font-size: 1.25rem;">
+            class="text-red-500 mt-4" style="font-size: 1.25rem;">
             {{ subdomainState() === 'UNAVAILABLE' ? 'That subdomain is already taken' : 'Please enter a valid subdomain.' }}
           </div>
           <div
             *ngIf="(subdomainState() !== 'LOADING' && (subdomainFormControl().valid && subdomainState() === 'AVAILABLE'))"
-            class="text-light-success mt-4" style="font-size: 1.25rem;">
+            class="text-green-600 mt-4" style="font-size: 1.25rem;">
             Valid subdomain.
           </div>
         </div>
