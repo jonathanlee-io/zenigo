@@ -220,6 +220,28 @@ export class ClientsService implements OnModuleInit {
     return this.clientsRepository.addMemberToClientById(clientId, emailToAdd);
   }
 
+  async getClientByClientSubdomain({
+    clientSubdomain,
+    requestingUserEmail,
+  }: {
+    clientSubdomain: string;
+    requestingUserEmail: string;
+  }) {
+    const [client] =
+      await this.clientsRepository.getClientByClientSubdomain(clientSubdomain);
+    if (
+      !client.admins
+        .map((admin) => admin.email)
+        .includes(requestingUserEmail) &&
+      !client.members
+        .map((member) => member.email)
+        .includes(requestingUserEmail)
+    ) {
+      throw new ForbiddenException();
+    }
+    return client;
+  }
+
   private async getClientForModification(
     requestingUserEmail: string,
     clientId: string,

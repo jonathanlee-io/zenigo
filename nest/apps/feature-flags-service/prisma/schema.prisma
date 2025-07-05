@@ -8,14 +8,34 @@ datasource db {
   url      = env("FEATURE_FLAGS_DATABASE_URL")
 }
 
+model FeatureFlagProject {
+  id           String                   @id @default(nanoid())
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @default(now())
+  clientId     String
+  name         String
+  environments FeatureFlagEnvironment[]
+}
+
+model FeatureFlagEnvironment {
+  id        String              @id @default(nanoid())
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @default(now())
+  projectId String
+  projects  FeatureFlagProject? @relation(fields: [projectId], references: [id])
+  name      String
+  apiKey    String
+}
+
 model FeatureFlag {
   id                   String                 @id @default(nanoid())
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @default(now())
   key                  String
+  description          String
   isEnabledGlobally    Boolean
   userSegmentOverrides UserSegmentOverrides[]
-  hashedApiKey         String
+  apiKey               String
 }
 
 model UserSegment {
@@ -23,7 +43,7 @@ model UserSegment {
   createdAt              DateTime              @default(now())
   updatedAt              DateTime              @default(now())
   emails                 String[]
-  UserSegmentOverrides   UserSegmentOverrides? @relation(fields: [userSegmentOverridesId], references: [id])
+  userSegmentOverrides   UserSegmentOverrides? @relation(fields: [userSegmentOverridesId], references: [id])
   userSegmentOverridesId String?
 }
 
@@ -33,7 +53,7 @@ model UserSegmentOverrides {
   updatedAt              DateTime      @default(now())
   userSegments           UserSegment[]
   isEnabledOverrideValue Boolean
-  FeatureFlag            FeatureFlag?  @relation(fields: [featureFlagId], references: [id])
+  featureFlag            FeatureFlag?  @relation(fields: [featureFlagId], references: [id])
   featureFlagId          String?
 }
 
@@ -41,5 +61,6 @@ model ClientSideIdentity {
   id        String   @id @default(nanoid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  email     String
   traits    Json
 }

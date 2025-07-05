@@ -4,6 +4,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
@@ -267,5 +268,35 @@ export class ClientsRepositoryService {
         },
       },
     });
+  }
+
+  async getClientByClientSubdomain(clientSubdomain: string) {
+    const subdomainRecord = await this.prismaService.subdomain.findUnique({
+      where: {
+        subdomain: clientSubdomain,
+      },
+    });
+    if (!subdomainRecord) {
+      throw new NotFoundException();
+    }
+    const clientRecord = await this.prismaService.client.findMany({
+      where: {
+        projects: {
+          some: {
+            id: subdomainRecord.projectId,
+          },
+        },
+      },
+      include: {
+        admins: true,
+        members: true,
+        createdBy: true,
+        projects: true,
+      },
+    });
+    if (!clientRecord) {
+      throw new NotFoundException();
+    }
+    return clientRecord;
   }
 }

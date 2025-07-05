@@ -2,6 +2,7 @@ import {Message} from '@app/comms';
 import {
   AnonymousMicroserviceControllerPayload,
   AuthenticatedMicroserviceControllerPayload,
+  ClientDto,
   POSTSuccessDto,
   ProjectDto,
 } from '@app/dto';
@@ -13,6 +14,8 @@ export const IDENTITY_SERVICE = {
   // Users
   USER_CHECK_IN: 'USER_CHECK_IN',
   ANONYMOUS_USER_CHECK_IN: 'ANONYMOUS_USER_CHECK_IN',
+  // Clients
+  GET_CLIENT_BY_CLIENT_SUBDOMAIN: 'GET_CLIENT_BY_CLIENT_SUBDOMAIN',
   // Projects
   GET_PROJECT_BY_ID: 'GET_PROJECT_BY_ID',
   GET_PROJECT_BY_CLIENT_SUBDOMAIN: 'GET_PROJECT_BY_CLIENT_SUBDOMAIN',
@@ -23,6 +26,11 @@ export interface IdentityServiceContract {
   [IDENTITY_SERVICE.USER_CHECK_IN]: Message<
     AuthenticatedMicroserviceControllerPayload<never>,
     POSTSuccessDto & {isCreatedNew: boolean}
+  >;
+
+  [IDENTITY_SERVICE.GET_CLIENT_BY_CLIENT_SUBDOMAIN]: Message<
+    AuthenticatedMicroserviceControllerPayload<never>,
+    ClientDto | null
   >;
 
   [IDENTITY_SERVICE.ANONYMOUS_USER_CHECK_IN]: Message<

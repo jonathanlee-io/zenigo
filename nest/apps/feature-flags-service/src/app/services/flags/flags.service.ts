@@ -1,11 +1,92 @@
+import {
+  IDENTITY_SERVICE,
+  IDENTITY_SERVICE_QUEUE,
+  IdentityServiceContract,
+  TypedClientProxy,
+} from '@app/comms';
 import {MicroserviceSendResult} from '@app/dto';
-import {HttpStatus, Injectable} from '@nestjs/common';
+import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
+import {ClientProxy} from '@nestjs/microservices';
 
 import {FlagsRepository} from '../../repositories/flags/flags.repository';
 
 @Injectable()
 export class FlagsService {
-  constructor(private readonly flagsRepository: FlagsRepository) {}
+  private readonly identityClient: TypedClientProxy<
+    keyof IdentityServiceContract,
+    IdentityServiceContract
+  >;
+
+  constructor(
+    private readonly logger: Logger,
+    private readonly flagsRepository: FlagsRepository,
+    @Inject(IDENTITY_SERVICE_QUEUE) readonly untypedIdentityClient: ClientProxy,
+  ) {
+    this.identityClient = new TypedClientProxy(untypedIdentityClient);
+  }
+
+  async createFeatureFlagProject({
+    clientSubdomain,
+    clientIp,
+    requestingUserId,
+    requestingUserEmail,
+    projectName,
+  }: {
+    clientSubdomain: string;
+    clientIp: string;
+    requestingUserId: string;
+    requestingUserEmail: string;
+    projectName: string;
+  }): Promise<MicroserviceSendResult<unknown>> {
+    const {status: getClientBySubdomainStatus, data: getClientBySubdomainData} =
+      await this.identityClient.sendAsync(
+        IDENTITY_SERVICE.GET_CLIENT_BY_CLIENT_SUBDOMAIN,
+        {
+          clientSubdomain,
+          clientIp,
+          authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
+          data: null as never,
+        },
+      );
+    if (getClientBySubdomainStatus !== HttpStatus.OK) {
+      this.logger.error(`Failed to get client by subdomain ${clientSubdomain}`);
+      return {
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        data: null,
+      };
+    }
+    const project = await this.flagsRepository.createFeatureFlagProject({
+      projectName,
+      clientId: getClientBySubdomainData.id,
+    });
+    return {
+      status: HttpStatus.CREATED,
+      data: project,
+    };
+  }
+
+  async createFlag({
+    apiKey,
+    key,
+    description,
+    isEnabledGlobally,
+  }: {
+    apiKey: string;
+    key: string;
+    description: string;
+    isEnabledGlobally: boolean;
+  }) {
+    const createdFlag = await this.flagsRepository.createFlag({
+      apiKey,
+      key,
+      description,
+      isEnabledGlobally,
+    });
+    return {
+      status: HttpStatus.CREATED,
+      data: createdFlag,
+    };
+  }
 
   async getAllFlags({
     apiKey,

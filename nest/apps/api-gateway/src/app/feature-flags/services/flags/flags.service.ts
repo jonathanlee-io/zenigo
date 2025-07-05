@@ -17,7 +17,8 @@ export class FlagsService {
 
   constructor(
     private readonly logger: Logger,
-    @Inject(FEATURE_FLAGS_QUEUE) readonly untypedFlagsClient: ClientProxy,
+    @Inject(FEATURE_FLAGS_QUEUE)
+    readonly untypedFlagsClient: ClientProxy,
   ) {
     this.flagsClient = new TypedClientProxy(untypedFlagsClient);
   }
@@ -36,6 +37,34 @@ export class FlagsService {
     const result = await this.flagsClient.sendAsync(
       FEATURE_FLAGS_SERVICE.GET_ALL_FLAGS,
       {clientSubdomain, clientIp, data: {apiKey, userEmail}},
+    );
+    return HttpHelpersUtil.returnDataOrThrowError(result);
+  }
+
+  async createFeatureFlagProject({
+    clientSubdomain,
+    requestingUserId,
+    requestingUserEmail,
+    ip: clientIp,
+    projectName,
+  }: {
+    clientSubdomain: string;
+    requestingUserId: string;
+    requestingUserEmail: string;
+    ip: string;
+    projectName: string;
+  }) {
+    const result = await this.flagsClient.sendAsync(
+      FEATURE_FLAGS_SERVICE.CREATE_FEATURE_FLAG_PROJECT,
+      {
+        clientSubdomain,
+        clientIp,
+        authenticatedUser: {
+          id: requestingUserId,
+          email: requestingUserEmail,
+        },
+        data: {projectName},
+      },
     );
     return HttpHelpersUtil.returnDataOrThrowError(result);
   }

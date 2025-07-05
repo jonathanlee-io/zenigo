@@ -6,3 +6,4 @@ export * from './feedback';
 export * from './identity';
 export * from './micro';
 export * from './payments';
+export * from './flags';

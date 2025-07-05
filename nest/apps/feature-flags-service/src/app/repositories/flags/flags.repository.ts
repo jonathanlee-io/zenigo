@@ -1,5 +1,5 @@
 import {HelpersUtil} from '@app/util';
-import {Inject, Injectable, Logger} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 
 import {PrismaClient as FeatureFlagsPrismaClient} from '../../../../generated/client';
 import {FEATURE_FLAGS_PRISMA} from '../../../config/db.config';
@@ -11,45 +11,77 @@ export class FlagsRepository {
     private readonly prismaService: FeatureFlagsPrismaClient,
   ) {}
 
+  async createFeatureFlagProject({
+    clientId,
+    projectName,
+  }: {
+    clientId: string;
+    projectName: string;
+  }) {
+    await this.prismaService.featureFlagProject.create({
+      data: {
+        clientId,
+        name: projectName,
+        environments: {
+          createMany: {
+            data: [
+              {
+                apiKey: HelpersUtil.generateApiKey('ff').raw,
+                name: 'Development',
+              },
+              {
+                apiKey: HelpersUtil.generateApiKey('ff').raw,
+                name: 'Production',
+              },
+            ],
+          },
+        },
+      },
+      include: {
+        environments: true,
+      },
+    });
+  }
+
   async createFlag({
     apiKey,
     key,
+    description,
     isEnabledGlobally,
   }: {
     apiKey: string;
     key: string;
+    description: string;
     isEnabledGlobally: boolean;
   }) {
-    const newFlag = await this.prismaService.featureFlag.create({
+    return this.prismaService.featureFlag.create({
       data: {
         key,
+        description,
         isEnabledGlobally,
-        hashedApiKey: HelpersUtil.hashApiKey(apiKey),
+        apiKey,
       },
     });
-    await this.createUserSegmentOverride({
-      flagId: newFlag.id,
-      isEnabledOverrideValue: true,
-    });
-    Logger.log(`Key to look out for: ${newFlag.key}`);
   }
 
   async createUserSegmentOverride({
     flagId,
     isEnabledOverrideValue,
+    emails,
   }: {
     flagId: string;
     isEnabledOverrideValue: boolean;
+    emails: string[];
   }) {
     await this.prismaService.userSegmentOverrides.create({
       data: {
         isEnabledOverrideValue,
         userSegments: {
           create: {
-            emails: ['jonathan.lee.devel@gmail.com'],
+            emails,
           },
         },
-        FeatureFlag: {
+        featureFlag: {
           connect: {
             id: flagId,
           },
@@ -65,7 +97,7 @@ export class FlagsRepository {
           userSegmentOverrides: true,
         },
         where: {
-          hashedApiKey: HelpersUtil.hashApiKey(apiKey),
+          apiKey,
         },
       });
       const overrideIds = featureFlagsWithOverrides.flatMap((flag) =>
