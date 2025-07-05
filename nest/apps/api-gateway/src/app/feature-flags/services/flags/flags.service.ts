@@ -5,7 +5,7 @@ import {
   TypedClientProxy,
 } from '@app/comms';
 import {HttpHelpersUtil} from '@app/util';
-import {Inject, Injectable, Logger} from '@nestjs/common';
+import {HttpStatus, Inject, Injectable, Logger} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
 
 @Injectable()
@@ -66,6 +66,6 @@ export class FlagsService {
         data: {projectName},
       },
     );
-    return HttpHelpersUtil.returnDataOrThrowError(result);
+    return HttpHelpersUtil.returnDataOrThrowError(result, HttpStatus.CREATED);
   }
 }

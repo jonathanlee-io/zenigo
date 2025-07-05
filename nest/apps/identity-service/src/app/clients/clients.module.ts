@@ -6,6 +6,7 @@ import {UsersModule} from '../users/users.module';
 import {ClientsRepositoryService} from './repositories/clients-repository/clients-repository.service';
 import {ClientsService} from './services/clients/clients.service';
 import {IDENTITY_PRISMA} from '../../config/db.config';
+import {ClientsController} from './controllers/clients/clients.controller';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import {IDENTITY_PRISMA} from '../../config/db.config';
     ),
     UsersModule,
   ],
+  controllers: [ClientsController],
   providers: [
     {
       provide: Logger,

@@ -2,11 +2,9 @@ import {IDENTITY_SERVICE} from '@app/comms';
 import {AuthenticatedMicroserviceControllerPayload} from '@app/dto';
 import {Controller, HttpStatus} from '@nestjs/common';
 import {MessagePattern, Payload} from '@nestjs/microservices';
-import {ApiTags} from '@nestjs/swagger';
 
 import {ClientsService} from '../../services/clients/clients.service';
 
-@ApiTags('Clients')
 @Controller()
 export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}

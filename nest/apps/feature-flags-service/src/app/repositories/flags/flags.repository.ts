@@ -18,7 +18,7 @@ export class FlagsRepository {
     clientId: string;
     projectName: string;
   }) {
-    await this.prismaService.featureFlagProject.create({
+    return this.prismaService.featureFlagProject.create({
       data: {
         clientId,
         name: projectName,
