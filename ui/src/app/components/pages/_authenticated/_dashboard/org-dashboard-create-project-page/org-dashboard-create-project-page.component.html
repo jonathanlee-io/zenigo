@@ -32,7 +32,7 @@
 
     <app-cancel-continue
       [bugReportsEnabledFormControl]="bugReportsEnabledFormControl"
-      [cancelRoutePath]="rebaseRoutePath(RoutePath.DASHBOARD)"
+      [cancelRoutePath]="rebaseRoutePathAsString(RoutePath.CLIENT_DASHBOARD.replace(':clientId', clientStore.clientById()?.id ?? 'not-found'))"
       [clientDisplayNameFormControl]="clientDisplayNameFormControl"
       [featureFeedbackEnabledFormControl]="featureFeedbackEnabledFormControl"
       [featureRequestsEnabledFormControl]="featureRequestsEnabledFormControl"

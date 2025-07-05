@@ -10,7 +10,7 @@ import {ClientStore} from '../../../../../+state/client/client.store';
 import {RoutePath} from '../../../../../app.routes';
 import {PaymentPlanDto} from '../../../../../dtos/payments/PaymentPlan.dto';
 import {PaymentsService} from '../../../../../services/payments/payments.service';
-import {rebaseRoutePath} from '../../../../../util/router/Router.utils';
+import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
 import {CancelContinueComponent} from '../../../../lib/_project/cancel-continue/cancel-continue.component';
 import {ClientFormComponent} from '../../../../lib/_project/client-form/client-form.component';
 import {CreateProjectComponent} from '../../../../lib/_project/create-project/create-project.component';
@@ -91,6 +91,7 @@ export class CreateProjectPageComponent implements OnInit, OnDestroy {
   protected readonly RoutePath = RoutePath;
   protected readonly clientStore = inject(ClientStore);
   protected readonly isReadyToContinue = signal<boolean>(false);
+  protected readonly rebaseRoutePathAsString = rebaseRoutePathAsString;
   private readonly pricingPlans = signal<PaymentPlanDto[]>([]);
   private readonly paymentsService = inject(PaymentsService);
   private subdomainValueChangesSubscription?: Subscription;
