@@ -15,11 +15,13 @@ export type LoggedInState = 'INIT' | 'NOT_LOGGED_IN' | 'LOADING' | 'LOGGED_IN';
 export type UserAuthenticationState = {
   loggedInState: LoggedInState;
   isDarkMode: boolean;
+  isUseDefaultAvatarUrl: boolean;
 };
 
 const initialState: UserAuthenticationState = {
   loggedInState: 'INIT',
   isDarkMode: false,
+  isUseDefaultAvatarUrl: false,
 };
 
 export const UserAuthenticationStore = signalStore(
@@ -30,6 +32,10 @@ export const UserAuthenticationStore = signalStore(
       const route = inject(ActivatedRoute);
       const router = inject(Router);
       return {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        onUserAvatarUrlError: (_event: ErrorEvent) => {
+          patchState(store, {isUseDefaultAvatarUrl: true});
+        },
         userCheckIn: () => {
           if (store.loggedInState() === 'LOGGED_IN') {
             authService.checkIn().pipe(take(1)).subscribe();
@@ -146,9 +152,9 @@ export const UserAuthenticationStore = signalStore(
           const session = supabaseService?.session;
           if (!session?.user) return null;
 
-          const avatarUrl = session.user.user_metadata?.['avatar_url'] ||
-            session.user.user_metadata?.['picture'] ||
-            session.user.user_metadata?.['profilePicture'];
+          const avatarUrl = session.user.user_metadata?.['avatar_url'] ??
+          session.user.user_metadata?.['picture'] ??
+          session.user.user_metadata?.['profilePicture'];
 
           // If no avatar URL from OAuth provider, generate a fallback
           if (!avatarUrl && session.user.email) {
@@ -157,7 +163,7 @@ export const UserAuthenticationStore = signalStore(
             return `https://ui-avatars.com/api/?name=${firstLetter}&background=6366f1&color=fff&size=32&rounded=true`;
           }
 
-          return avatarUrl ?? null;
+          return (store.isUseDefaultAvatarUrl()) ? `https://ui-avatars.com/api/?name=${session.user.email?.charAt(0).toUpperCase()}&background=6366f1&color=fff&size=32&rounded=true` : avatarUrl;
         }),
         isLoggedIn: computed(() => store.loggedInState() === 'LOGGED_IN'),
         isLoading: computed(() => store.loggedInState() === 'LOADING'),
