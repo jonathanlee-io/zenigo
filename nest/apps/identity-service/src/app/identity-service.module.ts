@@ -3,8 +3,8 @@ import {ConfigModule} from '@nestjs/config';
 
 import {ClientsModule} from './clients/clients.module';
 import {ProjectsModule} from './projects/projects.module';
+import {SubdomainModule} from './subdomain/subdomain.module';
 import {UsersModule} from './users/users.module';
-import { SubdomainModule } from './subdomain/subdomain.module';
 
 @Module({
   imports: [
