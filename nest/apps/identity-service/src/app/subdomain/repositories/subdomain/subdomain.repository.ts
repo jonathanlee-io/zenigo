@@ -13,6 +13,6 @@ export class SubdomainRepository {
     const subdomainRecord = await this.prisma.subdomain.findFirst({
       where: {subdomain},
     });
-    return !!subdomainRecord;
+    return subdomainRecord == null;
   }
 }
