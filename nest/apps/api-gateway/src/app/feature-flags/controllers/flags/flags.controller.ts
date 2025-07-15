@@ -1,4 +1,5 @@
 import {CurrentUser, CurrentUserDto, UseFlagApiKey} from '@app/auth';
+import {CreateFeatureFLagProjectRequestDto} from '@app/dto/flags/CreateFeatureFLagProjectRequest.dto';
 import {Body, Controller, Get, Headers, Ip, Post} from '@nestjs/common';
 import {ApiHeader} from '@nestjs/swagger';
 
@@ -40,7 +41,7 @@ export class FlagsController {
     @CurrentUser()
     {clientSubdomain, requestingUserId, requestingUserEmail}: CurrentUserDto,
     @Ip() ip: string,
-    @Body() {projectName}: {projectName: string},
+    @Body() {projectName}: CreateFeatureFLagProjectRequestDto,
   ) {
     return this.flagsService.createFeatureFlagProject({
       clientSubdomain,

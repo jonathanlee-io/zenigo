@@ -13,4 +13,5 @@ export const environment = {
   APPLICATION_MESSAGES_SERVICE_BASE_URL: 'v1/application-messages',
   USERS_SERVICE_BASE_URL: 'v1/users',
   NOTIFICATIONS_SERVICE_BASE_URL: 'v1/notifications',
+  FEATURE_FLAGS_SERVICE_BASE_URL: 'v1/flags',
 };

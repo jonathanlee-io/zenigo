@@ -11,7 +11,7 @@ import {RoutePath} from '../../../../../app.routes';
 import {PaymentPlanDto} from '../../../../../dtos/payments/PaymentPlan.dto';
 import {PaymentsService} from '../../../../../services/payments/payments.service';
 import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
-import {CancelContinueComponent} from '../../../../lib/_project/cancel-continue/cancel-continue.component';
+import {CancelContinueComponent} from '../../../../lib/_button/cancel-continue/cancel-continue.component';
 import {ClientFormComponent} from '../../../../lib/_project/client-form/client-form.component';
 import {CreateProjectComponent} from '../../../../lib/_project/create-project/create-project.component';
 import {

@@ -7,6 +7,7 @@ import {ProductsModule} from './app/feedback/_children/products/products.module'
 import {FeedbackModule} from './app/feedback/feedback.module';
 import {HealthModule} from './app/health/health.module';
 import {IdentityModule} from './app/identity/identity.module';
+import {SubdomainModule} from './app/identity/subdomain/subdomain.module';
 import {UsersModule} from './app/identity/users/users.module';
 import {PaymentsModule} from './app/payments/payments.module';
 
@@ -44,6 +45,10 @@ export const appRoutes: Routes = [
       {
         path: 'users',
         module: UsersModule,
+      },
+      {
+        path: 'subdomains',
+        module: SubdomainModule,
       },
     ],
   },

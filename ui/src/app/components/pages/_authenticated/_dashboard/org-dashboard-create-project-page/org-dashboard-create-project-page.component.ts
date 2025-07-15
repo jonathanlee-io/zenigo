@@ -7,15 +7,12 @@ import {debounceTime, filter, Subscription, take, tap} from 'rxjs';
 import {ClientStore} from '../../../../../+state/client/client.store';
 import {RoutePath} from '../../../../../app.routes';
 import {rebaseRoutePath, rebaseRoutePathAsString} from '../../../../../util/router/Router.utils';
-import {CancelContinueComponent} from '../../../../lib/_project/cancel-continue/cancel-continue.component';
+import {CancelContinueComponent} from '../../../../lib/_button/cancel-continue/cancel-continue.component';
 import {ClientFormComponent} from '../../../../lib/_project/client-form/client-form.component';
 import {CreateProjectComponent} from '../../../../lib/_project/create-project/create-project.component';
 import {
   CreateProjectDisplayNameComponent,
 } from '../../../../lib/_project/create-project-display-name/create-project-display-name.component';
-import {
-  ProjectFeaturesSwitchesComponent,
-} from '../../../../lib/_project/project-features-switches/project-features-switches.component';
 import {SubdomainState} from '../../_create_client_pages/create-project-page/create-project-page.component';
 
 @Component({
@@ -24,7 +21,6 @@ import {SubdomainState} from '../../_create_client_pages/create-project-page/cre
     CancelContinueComponent,
     ClientFormComponent,
     CreateProjectComponent,
-    ProjectFeaturesSwitchesComponent,
     ReactiveFormsModule,
     CreateProjectDisplayNameComponent,
   ],
@@ -119,6 +115,7 @@ export class OrgDashboardCreateProjectPageComponent implements OnDestroy {
         filter(() => this.subdomainFormControl.valid),
         debounceTime(500),
         tap((subdomain) => {
+          // TODO: Re-implement this store and service functionality
           this.clientStore.fetchIsSubdomainAvailable(subdomain!);
           this.subdomainState = 'LOADING';
         }),

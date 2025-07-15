@@ -1,4 +1,4 @@
-import {NgClass, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
+import {NgClass} from '@angular/common';
 import {Component, input} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {ProgressSpinner} from 'primeng/progressspinner';
@@ -10,11 +10,8 @@ import {
 @Component({
   selector: 'app-create-project',
   imports: [
-    NgIf,
-    NgSwitchCase,
     ProgressSpinner,
     ReactiveFormsModule,
-    NgSwitch,
     NgClass,
   ],
   templateUrl: './create-project.component.html',
