@@ -7,6 +7,7 @@ import {ToggleSwitchModule} from 'primeng/toggleswitch';
 import {debounceTime, filter, Subscription, take, tap} from 'rxjs';
 
 import {ClientStore} from '../../../../../+state/client/client.store';
+import {IdentityStore} from '../../../../../+state/identity/identity.store';
 import {RoutePath} from '../../../../../app.routes';
 import {PaymentPlanDto} from '../../../../../dtos/payments/PaymentPlan.dto';
 import {PaymentsService} from '../../../../../services/payments/payments.service';
@@ -92,13 +93,14 @@ export class CreateProjectPageComponent implements OnInit, OnDestroy {
   protected readonly clientStore = inject(ClientStore);
   protected readonly isReadyToContinue = signal<boolean>(false);
   protected readonly rebaseRoutePathAsString = rebaseRoutePathAsString;
+  private readonly identityStore = inject(IdentityStore);
   private readonly pricingPlans = signal<PaymentPlanDto[]>([]);
   private readonly paymentsService = inject(PaymentsService);
   private subdomainValueChangesSubscription?: Subscription;
   private clientDisplayNameValueChangesSubscription?: Subscription;
 
   constructor() {
-    watchState(this.clientStore, (state) => {
+    watchState(this.identityStore, (state) => {
       if (state.isLoading) {
         this.subdomainState = 'LOADING';
         return;
@@ -117,7 +119,7 @@ export class CreateProjectPageComponent implements OnInit, OnDestroy {
         filter(() => this.subdomainFormControl.valid),
         debounceTime(500),
         tap((subdomain) => {
-          this.clientStore.fetchIsSubdomainAvailable(subdomain!);
+          this.identityStore.fetchIsSubdomainAvailable(subdomain);
           this.subdomainState = 'LOADING';
         }),
     ).subscribe();

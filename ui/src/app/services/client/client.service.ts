@@ -13,16 +13,6 @@ export class ClientService {
   private readonly httpClient = inject(HttpClient);
   private readonly tenantStore = inject(TenantStore);
 
-  fetchIsSubdomainAvailable(subdomain: string) {
-    return this.httpClient.post<{
-      isSubdomainAvailable: boolean;
-      subdomain: string;
-    }>(
-        this.tenantStore.getFullRequestUrl('v1/clients/is-subdomain-available'),
-        {subdomain},
-    );
-  }
-
   registerNewClientAndProjectWithPlan(
       clientDisplayName: string,
       projectDisplayName: string,
