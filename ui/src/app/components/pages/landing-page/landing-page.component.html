@@ -1,30 +1,28 @@
 <app-beta-message />
-<div class="bg-slate-50 dark:bg-slate-900 isolate">
+<div class="bg-white dark:bg-slate-900 min-h-screen">
   <!-- Hero section -->
-  <div class="relative pt-4">
-    <div class="py-12 sm:py-32 lg:pb-40">
+  <div class="relative">
+    <div class="py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
-          <div class="sm:mx-auto sm:w-full sm:max-w-md flex justify-center py-10 relative">
+        <div class="mx-auto max-w-3xl text-center">
+          <div class="sm:mx-auto sm:w-full sm:max-w-md flex justify-center py-8 relative">
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
               <app-meteors [meteorCount]="30" />
             </div>
-            <img alt="Your Company" class="h-16 w-auto relative z-10" height="16" ngSrc="/logo.svg" width="16">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 relative z-10">
+              <img alt="Your Company" class="h-12 w-auto" height="12" ngSrc="/logo.svg" width="12">
+            </div>
           </div>
-          <h1 class="text-slate-800 dark:text-white text-6xl font-bold transition-transform duration-300 hover:shadow-xl hover:scale-105">
+          <h1 class="text-slate-900 dark:text-white text-5xl md:text-6xl font-semibold tracking-tight mb-6">
             Zenigo.io
           </h1>
-          <p class="mt-8 text-pretty text-lg font-medium hover:text-indigo-500 cursor-pointer sm:text-xl/8 text-slate-600 dark:text-slate-300 animate__animated animate__bounce animate__slow hover-animation" style="text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <p class="text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-8">
             An all-in-one feature flag and release management solution with user-segmentation, analytics, and feedback capabilities.
           </p>
-          <div class="mt-10 flex items-center justify-center gap-x-6">
+          <div class="flex items-center justify-center">
             <a
               [routerLink]="rebaseRoutePath(RoutePath.REGISTER)"
-              class="bg-indigo-600 dark:bg-indigo-500 text-white px-5 py-3 text-sm font-semibold rounded-lg
-              shadow-lg hover:shadow-indigo-500/20
-              transform transition-all duration-300 hover:scale-105
-              focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
-              animate__animated animate__fadeIn animate__slower">
+              class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white px-6 py-3 text-sm font-medium rounded-xl shadow-sm transition-all duration-200 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Get started
             </a>
           </div>
@@ -33,113 +31,157 @@
     </div>
   </div>
 
-  <div class="pb-12 mt-2 flex justify-center animate__animated animate__slideInUp">
+  <!-- Code example section -->
+  <div class="py-16 bg-slate-50 dark:bg-slate-800/50">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Gather Feedback</h2>
-        <p class="mt-2 text-3xl font-bold tracking-tight text-slate-800 dark:text-white sm:text-4xl">Actionable insights, right at your fingertips, with a single line of code</p>
-      </div>
-
-      <div class="hidden sm:block md:block lg:block xl:block 2xl:block mt-8 mx-auto max-w-2xl text-center">
-        <h3 class="text-base font-semibold leading-7 text-slate-600 dark:text-slate-300">Example Implementation</h3>
-        <div class="mt-4 bg-slate-800 dark:bg-slate-800/70 text-white p-4 rounded-lg shadow-md overflow-x-auto whitespace-nowrap animate__animated animate__fadeIn animate__slower">
-          <code class="inline-bloc text-slate-200 dark:text-slate-200">&lt;script async defer src="https://your-subdomain.api.zenigo.io/v1/scripts/feedback-widget.js"&gt;&lt;/script&gt;</code>
+      <div class="mx-auto max-w-3xl text-center">
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 mb-4">
+          <i class="pi pi-code mr-2 text-xs"></i>
+          Gather Feedback
         </div>
-        <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">Simply add this script tag to your HTML to embed the feedback widget on your site.</p>
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white mb-4">
+          Actionable insights, right at your fingertips
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-lg mb-8">
+          with a single line of code
+        </p>
+
+        <div class="hidden sm:block">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-4">
+            <div class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3 text-left">
+              Example Implementation
+            </div>
+            <div class="bg-slate-900 dark:bg-slate-950 rounded-xl overflow-hidden shadow-lg">
+              <div class="flex items-center justify-between px-4 py-2 bg-slate-800 dark:bg-slate-900 border-b border-slate-700">
+                <div class="flex items-center space-x-2">
+                  <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs text-slate-400 font-medium">HTML</span>
+                  <button class="text-slate-400 hover:text-slate-200 transition-colors duration-200"
+                          title="Copy to clipboard">
+                    <i class="pi pi-copy text-xs"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="p-4 relative">
+                <pre class="text-sm font-mono text-slate-100 whitespace-pre-wrap"><code><span class="text-blue-400">&lt;</span><span class="text-red-400">script</span> <span class="text-green-400">async</span> <span class="text-green-400">defer</span> <span class="text-yellow-400">src</span><span class="text-blue-400">=</span><span class="text-orange-400">"https://your-subdomain.api.zenigo.io/v1/scripts/feedback-widget.js"</span><span class="text-blue-400">&gt;&lt;/</span><span class="text-red-400">script</span><span class="text-blue-400">&gt;</span></code></pre>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">
+            Simply add this script tag to your HTML to embed the feedback widget on your site.
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Feature section -->
-  <div class="mx-auto mt-5 max-w-7xl px-6 animate__animated animate__slideInUp">
-    <div class="mx-auto max-w-2xl lg:text-center">
-      <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Drastically improve customer relations</h2>
-      <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl lg:text-balance">
-      Everything you need to gather feedback from your customers</p>
-      <p class="mt-6 text-pretty text-lg/8 text-slate-600 dark:text-slate-300">With the ability to embed a feedback widget directly in your
-      web application.</p>
-    </div>
-    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-      <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-        @for(featureDisplay of featureDisplays(); track $index;) {
-          <app-feature-display
-            [description]="featureDisplay.description"
-            [primeIconClass]="featureDisplay.primeIconClass"
-            [title]="featureDisplay.title"
-            />
-        }
-      </dl>
+  <div class="py-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center mb-16">
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 mb-4">
+          <i class="pi pi-heart mr-2 text-xs"></i>
+          Drastically improve customer relations
+        </div>
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white mb-4">
+          Everything you need to gather feedback from your customers
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-lg">
+          With the ability to embed a feedback widget directly in your web application.
+        </p>
+      </div>
+
+      <div class="mx-auto max-w-5xl">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          @for(featureDisplay of featureDisplays(); track $index;) {
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow duration-200">
+              <app-feature-display
+                [description]="featureDisplay.description"
+                [primeIconClass]="featureDisplay.primeIconClass"
+                [title]="featureDisplay.title"
+                />
+            </div>
+          }
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Pricing section -->
-  <div class="pb-24 sm:pt-24">
+  <div class="py-16 bg-slate-50 dark:bg-slate-800/50">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Pricing</h2>
-        <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl lg:text-balance">
-        Pricing that grows with you</p>
+      <div class="mx-auto max-w-3xl text-center mb-16">
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 mb-4">
+          <i class="pi pi-dollar mr-2 text-xs"></i>
+          Pricing
+        </div>
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white mb-4">
+          Pricing that grows with you
+        </h2>
       </div>
+
       @if (pricingPlans().length > 0) {
-        <div
-          class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          @for(pricingPlan of pricingPlans(); track $index;) {
-            <app-pricing-display
-              [name]="pricingPlan.name"
-              [description]="pricingPlan.description"
-              [monthlyPrice]="pricingPlan.monthlyPrice"
-              [paymentPlanDetails]="pricingPlan"
-              [tag]="pricingPlan.tag"
-              />
-          }
+        <div class="mx-auto max-w-5xl">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            @for(pricingPlan of pricingPlans(); track $index;) {
+              <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow duration-200">
+                <app-pricing-display
+                  [name]="pricingPlan.name"
+                  [description]="pricingPlan.description"
+                  [monthlyPrice]="pricingPlan.monthlyPrice"
+                  [paymentPlanDetails]="pricingPlan"
+                  [tag]="pricingPlan.tag"
+                  />
+              </div>
+            }
+          </div>
         </div>
       } @else {
-        <div class="flex justify-center items-center text-center mt-10">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
+        <div class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-8 w-8 border-2 border-indigo-500 border-t-transparent"></div>
         </div>
       }
     </div>
   </div>
 
   <!-- FAQs -->
-  <div class="mx-auto max-w-2xl divide-y divide-slate-200 dark:divide-slate-700 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
-    <h2 class="text-4xl font-semibold tracking-tight text-slate-800 dark:text-white sm:text-5xl">
-      Frequently asked questions
-    </h2>
-    <dl class="mt-10 space-y-8 divide-y divide-slate-200 dark:divide-slate-700">
-      <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-        <dt class="text-base font-semibold leading-7 text-slate-800 dark:text-white lg:col-span-5">
-          What is Zenigo.io?
-        </dt>
-        <dd class="mt-4 lg:col-span-7 lg:mt-0">
-          <p class="text-base leading-7 text-slate-600 dark:text-slate-300">
-            Zenigo.io is a fully-featured release management software aimed at fellow web developers creating their own products.
-          </p>
-        </dd>
+  <div class="py-16">
+    <div class="mx-auto max-w-4xl px-6 lg:px-8">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white mb-8">
+          Frequently asked questions
+        </h2>
+        <div class="space-y-8">
+          <div class="border-b border-slate-200 dark:border-slate-700 pb-8">
+            <dt class="text-base font-semibold text-slate-900 dark:text-white mb-3">
+              What is Zenigo.io?
+            </dt>
+            <dd class="text-slate-600 dark:text-slate-300 leading-relaxed">
+              Zenigo.io is a fully-featured release management software aimed at fellow web developers creating their own products.
+            </dd>
+          </div>
+          <div class="border-b border-slate-200 dark:border-slate-700 pb-8">
+            <dt class="text-base font-semibold text-slate-900 dark:text-white mb-3">
+              How do I add the Zenigo.io feedback widget to my website?
+            </dt>
+            <dd class="text-slate-600 dark:text-slate-300 leading-relaxed">
+              Adding the feedback widget is as simple as copying and pasting a one-line HTML script tag into your website's code. The widget integrates seamlessly and requires no additional setup.
+            </dd>
+          </div>
+          <div>
+            <dt class="text-base font-semibold text-slate-900 dark:text-white mb-3">
+              What kind of insights can I gather with Zenigo.io?
+            </dt>
+            <dd class="text-slate-600 dark:text-slate-300 leading-relaxed">
+              Zenigo.io helps you collect detailed feedback from users, including ratings, comments, and feature suggestions. It also provides real-time insights and analytics to help you understand your customers' needs better.
+            </dd>
+          </div>
+        </div>
       </div>
-      <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-        <dt class="text-base font-semibold leading-7 text-slate-800 dark:text-white lg:col-span-5">
-          How do I add the Zenigo.io feedback widget to my website?
-        </dt>
-        <dd class="mt-4 lg:col-span-7 lg:mt-0">
-          <p class="text-base leading-7 text-slate-600 dark:text-slate-300">
-            Adding the feedback widget is as simple as copying and pasting a one-line HTML script tag into your
-            website's code. The widget integrates seamlessly and requires no additional setup.
-          </p>
-        </dd>
-      </div>
-      <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-        <dt class="text-base font-semibold leading-7 text-slate-800 dark:text-white lg:col-span-5">
-          What kind of insights can I gather with Zenigo.io?
-        </dt>
-        <dd class="mt-4 lg:col-span-7 lg:mt-0">
-          <p class="text-base leading-7 text-slate-600 dark:text-slate-300">
-            Zenigo.io helps you collect detailed feedback from users, including ratings, comments, and feature
-            suggestions. It also provides real-time insights and analytics to help you understand your
-            customers' needs better.
-          </p>
-        </dd>
-      </div>
-    </dl>
+    </div>
   </div>
 </div>
