@@ -128,15 +128,13 @@
         <div class="mx-auto max-w-5xl">
           <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
             @for(pricingPlan of pricingPlans(); track $index;) {
-              <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow duration-200">
-                <app-pricing-display
-                  [name]="pricingPlan.name"
-                  [description]="pricingPlan.description"
-                  [monthlyPrice]="pricingPlan.monthlyPrice"
-                  [paymentPlanDetails]="pricingPlan"
-                  [tag]="pricingPlan.tag"
-                  />
-              </div>
+              <app-pricing-display
+                [name]="pricingPlan.name"
+                [description]="pricingPlan.description"
+                [monthlyPrice]="pricingPlan.monthlyPrice"
+                [paymentPlanDetails]="pricingPlan"
+                [tag]="pricingPlan.tag"
+                />
             }
           </div>
         </div>
