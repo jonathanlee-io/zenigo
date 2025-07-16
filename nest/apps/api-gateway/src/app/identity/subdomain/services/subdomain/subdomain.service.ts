@@ -34,16 +34,14 @@ export class SubdomainService {
     ip: string;
     subdomain: string;
   }) {
-    Logger.log(`Getting subdomain availability for ${subdomain}`);
+    this.logger.log(`Getting subdomain availability for ${subdomain}`);
     return this.identityClient.sendAsync(
       IDENTITY_SERVICE.GET_SUBDOMAIN_AVAILABILITY,
       {
         authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
         clientSubdomain,
         clientIp: ip,
-        data: {
-          subdomain,
-        },
+        data: {subdomain},
       },
     );
   }

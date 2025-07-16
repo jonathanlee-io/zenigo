@@ -1,51 +1,64 @@
-<div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 dark:border-slate-700 pb-12 md:grid-cols-3">
-  <div>
-    <h2 class="text-4xl font-extrabold tracking-wide text-light-text-primary dark:text-dark-text-primary">
-      Organization
-    </h2>
-    @if (!isReadonly()) {
-      <p class="mt-1 text-xl text-light-text-primary dark:text-dark-text-primary">This is just a display name for
-      your organization, for example, your company name.</p>
-    }
-  </div>
+<div class="max-w-4xl mx-auto px-6 py-8">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl font-semibold text-light-text-primary dark:text-dark-text-primary mb-3">
+        Organization
+      </h2>
+      @if (!isReadonly()) {
+        <p class="text-light-text-primary dark:text-dark-text-primary text-base leading-relaxed mb-8 opacity-80">
+          This is just a display name for your organization, for example, your company name.
+        </p>
+      }
+    </div>
 
-  <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
-    <div class="sm:col-span-4">
-      <div class="mt-2">
-        <div class="mt-2">
-          <div
-            [ngClass]="{'outline-light-error text-light-error': (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty), 'outline-light-success': clientDisplayNameFormControl().valid}"
-            class="flex items-center rounded-full py-2 px-4 shadow-lg outline outline-2 outline-slate-300 dark:outline-slate-600 bg-white dark:bg-slate-800 focus-within:outline-pink-500">
-            <input [formControl]="clientDisplayNameFormControl()" [ngClass]="{'placeholder-light-error': (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty), 'text-light-success outline-light-success': clientDisplayNameFormControl().valid}" autocomplete="off"
-              class="w-full text-lg rounded-full focus:outline-none text-light-text-primary dark:text-white bg-transparent"
-              id="clientDisplayName"
-              name="clientDisplayName"
-              placeholder="Enter Organization Display Name"
-              type="text">
-            <div class="flex items-center ml-2 mt-2 pb-2">
-              @if (clientDisplayNameFormControl().valid) {
-                <i class="pi pi-thumbs-up text-light-success"></i>
-              }
-              @if (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty) {
-                <i
-                class="pi pi-thumbs-down text-light-error"></i>
-              }
-            </div>
+    <div class="max-w-xl">
+      <div class="relative">
+        <div
+          [ngClass]="{
+            'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20': (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty),
+            'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20': clientDisplayNameFormControl().valid && clientDisplayNameFormControl().value
+          }"
+          class="flex items-center rounded-xl py-3 px-4 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-all duration-200 focus-within:border-pink-400 focus-within:shadow-sm focus-within:shadow-pink-100 dark:focus-within:shadow-pink-900/20">
+
+          <input
+            [formControl]="clientDisplayNameFormControl()"
+            [ngClass]="{
+              'text-red-600 dark:text-red-400': (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty),
+              'text-green-600 dark:text-green-400': clientDisplayNameFormControl().valid && clientDisplayNameFormControl().value
+            }"
+            autocomplete="off"
+            class="flex-1 text-light-text-primary dark:text-white bg-transparent placeholder-gray-400 dark:placeholder-slate-500 text-sm font-medium focus:outline-none"
+            id="clientDisplayName"
+            name="clientDisplayName"
+            placeholder="Enter Organization Display Name"
+            type="text">
+
+          <div class="ml-3 flex items-center">
+            @if (clientDisplayNameFormControl().valid && clientDisplayNameFormControl().value) {
+              <div class="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                <i class="pi pi-check text-green-600 dark:text-green-400 text-xs"></i>
+              </div>
+            }
+            @if (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty) {
+              <div class="w-5 h-5 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <i class="pi pi-times text-red-500 dark:text-red-400 text-xs"></i>
+              </div>
+            }
           </div>
-
-          @if (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty) {
-            <div
-              class="text-light-error mt-4" style="font-size: 1.25rem;">
-              Please enter a valid display name between 3 and 100 characters long.
-            </div>
-          }
-          @if (clientDisplayNameFormControl().valid) {
-            <div
-              class="text-light-success mt-4" style="font-size: 1.25rem;">
-              Valid display name.
-            </div>
-          }
         </div>
+
+        @if (clientDisplayNameFormControl().invalid && clientDisplayNameFormControl().dirty) {
+          <div class="flex items-center mt-3 text-red-600 dark:text-red-400 text-sm">
+            <i class="pi pi-exclamation-triangle text-xs mr-2"></i>
+            Please enter a valid display name between 3 and 100 characters long.
+          </div>
+        }
+        @if (clientDisplayNameFormControl().valid && clientDisplayNameFormControl().value) {
+          <div class="flex items-center mt-3 text-green-600 dark:text-green-400 text-sm">
+            <i class="pi pi-check-circle text-xs mr-2"></i>
+            Valid display name
+          </div>
+        }
       </div>
     </div>
   </div>
