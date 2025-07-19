@@ -16,6 +16,7 @@ export const IDENTITY_SERVICE = {
   ANONYMOUS_USER_CHECK_IN: 'ANONYMOUS_USER_CHECK_IN',
   // Clients
   GET_CLIENT_BY_CLIENT_SUBDOMAIN: 'GET_CLIENT_BY_CLIENT_SUBDOMAIN',
+  GET_CLIENT_BY_CLIENT_ID: 'GET_CLIENT_BY_CLIENT_ID',
   // Projects
   GET_PROJECT_BY_ID: 'GET_PROJECT_BY_ID',
   GET_PROJECT_BY_CLIENT_SUBDOMAIN: 'GET_PROJECT_BY_CLIENT_SUBDOMAIN',
@@ -32,6 +33,11 @@ export interface IdentityServiceContract {
 
   [IDENTITY_SERVICE.GET_CLIENT_BY_CLIENT_SUBDOMAIN]: Message<
     AuthenticatedMicroserviceControllerPayload<never>,
+    ClientDto | null
+  >;
+
+  [IDENTITY_SERVICE.GET_CLIENT_BY_CLIENT_ID]: Message<
+    AuthenticatedMicroserviceControllerPayload<{clientId: string}>,
     ClientDto | null
   >;
 

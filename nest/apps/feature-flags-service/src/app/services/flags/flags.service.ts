@@ -31,33 +31,35 @@ export class FlagsService {
     requestingUserId,
     requestingUserEmail,
     projectName,
+    clientId,
   }: {
     clientSubdomain: string;
     clientIp: string;
     requestingUserId: string;
     requestingUserEmail: string;
     projectName: string;
+    clientId: string;
   }): Promise<MicroserviceSendResult<unknown>> {
-    const {status: getClientBySubdomainStatus, data: getClientBySubdomainData} =
+    const {status: getClientByIdStatus, data: getClientByIdData} =
       await this.identityClient.sendAsync(
-        IDENTITY_SERVICE.GET_CLIENT_BY_CLIENT_SUBDOMAIN,
+        IDENTITY_SERVICE.GET_CLIENT_BY_CLIENT_ID,
         {
           clientSubdomain,
           clientIp,
           authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
-          data: null as never,
+          data: {clientId},
         },
       );
-    if (getClientBySubdomainStatus !== HttpStatus.OK) {
-      this.logger.error(`Failed to get client by subdomain ${clientSubdomain}`);
+    if (getClientByIdStatus !== HttpStatus.OK) {
+      this.logger.error(`Failed to get client by ID ${clientId}`);
       return {
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        status: HttpStatus.NOT_FOUND,
         data: null,
       };
     }
     const project = await this.flagsRepository.createFeatureFlagProject({
       projectName,
-      clientId: getClientBySubdomainData.id,
+      clientId: getClientByIdData.id,
     });
     return {
       status: HttpStatus.CREATED,

@@ -19,7 +19,7 @@ export class FlagsController {
       clientSubdomain,
       clientIp,
       authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
-      data: {projectName},
+      data: {projectName, clientId},
     }: AuthenticatedMicroserviceControllerPayload<never>,
   ) {
     return this.flagsService.createFeatureFlagProject({
@@ -28,6 +28,7 @@ export class FlagsController {
       requestingUserId,
       requestingUserEmail,
       projectName,
+      clientId,
     });
   }
 

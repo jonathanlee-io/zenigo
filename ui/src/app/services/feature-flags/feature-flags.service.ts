@@ -10,7 +10,7 @@ import {CreateFeatureFlagProjectResponseDto} from '../../dtos/feature-flags/Crea
 export class FeatureFlagsService {
   private readonly httpClient = inject(HttpClient);
 
-  createFeatureFlagProject(createFeatureFlagProjectDto: { projectName: string }) {
+  createFeatureFlagProject(createFeatureFlagProjectDto: { projectName: string; clientId: string }) {
     return this.httpClient.post<CreateFeatureFlagProjectResponseDto>(`${environment.FEATURE_FLAGS_SERVICE_BASE_URL}/projects`, createFeatureFlagProjectDto);
   }
 }

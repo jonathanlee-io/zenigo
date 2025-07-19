@@ -1,12 +1,10 @@
-
 import {Component, computed, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {ConfirmationService} from 'primeng/api';
-import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from 'primeng/button';
+import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 import {InputText} from 'primeng/inputtext';
-import {ProgressSpinner} from 'primeng/progressspinner';
 import {Select} from 'primeng/select';
 
 import {ProjectStore} from '../../../../+state/project/project.store';
@@ -23,11 +21,7 @@ export interface PostType {
 @Component({
   selector: 'app-project-actions-panel',
   imports: [
-    ProgressSpinner,
-    ButtonDirective,
-    ButtonIcon,
     RouterLink,
-    ButtonLabel,
     Dialog,
     Button,
     InputText,

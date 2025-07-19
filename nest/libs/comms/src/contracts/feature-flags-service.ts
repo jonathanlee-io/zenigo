@@ -23,7 +23,10 @@ export interface FeatureFlagsServiceContract {
   >;
 
   [FEATURE_FLAGS_SERVICE.CREATE_FEATURE_FLAG_PROJECT]: Message<
-    AuthenticatedMicroserviceControllerPayload<{projectName: string}>,
+    AuthenticatedMicroserviceControllerPayload<{
+      projectName: string;
+      clientId: string;
+    }>,
     CreateFeatureFlagProjectResponseDto
   >;
 }

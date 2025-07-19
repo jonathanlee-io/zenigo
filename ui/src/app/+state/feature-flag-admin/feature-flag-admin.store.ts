@@ -21,9 +21,9 @@ export const FeatureFlagAdminStore = signalStore(
     withMethods((store) => {
       const featureFlagsService = inject(FeatureFlagsService);
       return {
-        createFeatureFlagProject: ({projectName}: {projectName: string}) => {
+        createFeatureFlagProject: ({projectName, clientId}: {projectName: string, clientId: string}) => {
           patchState(store, {isLoading: true});
-          featureFlagsService.createFeatureFlagProject({projectName}).pipe(
+          featureFlagsService.createFeatureFlagProject({projectName, clientId}).pipe(
               take(1),
               tap((response) => {
                 patchState(store, {isLoading: false, currentFeatureFlagProject: {...response}});

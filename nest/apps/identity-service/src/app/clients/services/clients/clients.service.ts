@@ -242,6 +242,31 @@ export class ClientsService implements OnModuleInit {
     return client;
   }
 
+  async getClientByClientId({
+    clientId,
+    requestingUserEmail,
+  }: {
+    clientId: string;
+    requestingUserEmail: string;
+  }) {
+    const client = await this.clientsRepository.getClientById(clientId, {
+      isIncludeAdmins: true,
+      isIncludeMembers: true,
+      isIncludeCreatedBy: true,
+    });
+    if (
+      !client.admins
+        .map((admin) => admin.email)
+        .includes(requestingUserEmail) &&
+      !client.members
+        .map((member) => member.email)
+        .includes(requestingUserEmail)
+    ) {
+      throw new ForbiddenException();
+    }
+    return client;
+  }
+
   private async getClientForModification(
     requestingUserEmail: string,
     clientId: string,

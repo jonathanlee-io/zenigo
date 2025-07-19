@@ -64,10 +64,10 @@
                     </a>
                   </td>
                   <td class="px-6 py-4 truncate text-sm text-slate-700 dark:text-slate-300">
-                    {{ (project.subdomains?.length === 0) ? 'None' : commaListSubdomains(project.subdomains) }}
+                    {{ (project.subdomains.length === 0) ? 'None' : commaListSubdomains(project.subdomains) }}
                   </td>
                   <td class="px-6 py-4 truncate text-sm text-slate-700 dark:text-slate-300">
-                    {{ (project.hostnames?.length === 0) ? 'None' : project.hostnames?.[0] }}
+                    {{ (project.hostnames.length === 0) ? 'None' : project.hostnames[0] }}
                   </td>
                   <td class="px-6 py-4">
                 <span [ngClass]="project.isBugReportsEnabled ?

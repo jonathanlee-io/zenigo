@@ -42,28 +42,30 @@ export class FlagsService {
   }
 
   async createFeatureFlagProject({
-    clientSubdomain,
     requestingUserId,
     requestingUserEmail,
     ip: clientIp,
+    clientSubdomain,
+    clientId,
     projectName,
   }: {
-    clientSubdomain: string;
     requestingUserId: string;
     requestingUserEmail: string;
+    clientSubdomain: string;
     ip: string;
     projectName: string;
+    clientId: string;
   }) {
     const result = await this.flagsClient.sendAsync(
       FEATURE_FLAGS_SERVICE.CREATE_FEATURE_FLAG_PROJECT,
       {
-        clientSubdomain,
         clientIp,
+        clientSubdomain,
         authenticatedUser: {
           id: requestingUserId,
           email: requestingUserEmail,
         },
-        data: {projectName},
+        data: {projectName, clientId},
       },
     );
     return HttpHelpersUtil.returnDataOrThrowError(result, HttpStatus.CREATED);
