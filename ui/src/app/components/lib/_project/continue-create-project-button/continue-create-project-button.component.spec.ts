@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ContinueCreateProjectButtonComponent } from './continue-create-project-button.component';
+import {ContinueCreateProjectButtonComponent} from './continue-create-project-button.component';
 
 describe('ContinueCreateProjectButtonComponent', () => {
   let component: ContinueCreateProjectButtonComponent;
@@ -8,9 +8,9 @@ describe('ContinueCreateProjectButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContinueCreateProjectButtonComponent]
+      imports: [ContinueCreateProjectButtonComponent],
     })
-    .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(ContinueCreateProjectButtonComponent);
     component = fixture.componentInstance;
