@@ -16,7 +16,7 @@ export class ProjectsRepositoryService {
   ) {}
 
   async create(
-    requestingUserId: string,
+    requestingUserEmail: string,
     {
       clientId,
       name,
@@ -26,10 +26,10 @@ export class ProjectsRepositoryService {
       isFeatureFeedbackEnabled,
     }: CreateProjectDto,
   ) {
-    const user = await this.usersRepository.findBySupabaseId(requestingUserId);
+    const user = await this.usersRepository.findByEmail(requestingUserEmail);
     if (!user) {
       throw new InternalServerErrorException(
-        `Could not find user with id: ${requestingUserId}`,
+        `Could not find user with e-mail: ${requestingUserEmail}`,
       );
     }
     const [createdProject, createdSubdomain] =
@@ -51,7 +51,7 @@ export class ProjectsRepositoryService {
             },
             createdBy: {
               connect: {
-                id: user.id,
+                email: requestingUserEmail,
               },
             },
           },

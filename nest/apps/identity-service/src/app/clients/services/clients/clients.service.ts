@@ -142,7 +142,13 @@ export class ClientsService implements OnModuleInit {
     };
   }
 
-  async getClientById(requestingUserId: string, clientId: string) {
+  async getClientById({
+    requestingUserEmail,
+    clientId,
+  }: {
+    requestingUserEmail: string;
+    clientId: string;
+  }) {
     const client = await this.clientsRepository.getClientById(clientId, {
       isIncludeAdmins: true,
       isIncludeMembers: true,
@@ -152,13 +158,11 @@ export class ClientsService implements OnModuleInit {
       throw new NotFoundException(`Could not find client with id: ${clientId}`);
     }
     if (
-      client.createdBy.supabaseUserId !== requestingUserId &&
+      client.createdBy.email !== requestingUserEmail &&
       !client.members
-        .map((member) => member.supabaseUserId)
-        .includes(requestingUserId) &&
-      !client.admins
-        .map((admin) => admin.supabaseUserId)
-        .includes(requestingUserId)
+        .map((member) => member.email)
+        .includes(requestingUserEmail) &&
+      !client.admins.map((admin) => admin.email).includes(requestingUserEmail)
     ) {
       throw new ForbiddenException();
     }

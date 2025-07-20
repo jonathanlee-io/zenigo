@@ -3,7 +3,6 @@ import * as path from 'node:path';
 
 import {MicroserviceSendResult} from '@app/dto';
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
-import {UpdateProjectDto} from '@app/dto/identity/UpdateProject.dto';
 import {HelpersUtil} from '@app/util';
 import {
   BadRequestException,
@@ -11,7 +10,6 @@ import {
   HttpStatus,
   Injectable,
   Logger,
-  NotFoundException,
   OnModuleInit,
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
@@ -47,14 +45,21 @@ export class ProjectsService implements OnModuleInit {
     );
     if (!defaultProject) {
       this.logger.log('Creating default project as no project exists yet');
-      await this.createProject(adminUserRecord.supabaseUserId, {
-        clientId: defaultProject.clientId,
-        name: 'Zenigo',
-        subdomain: 'www',
-        isBugReportsEnabled: true,
-        isFeatureRequestsEnabled: true,
-        isFeatureFeedbackEnabled: true,
-      });
+      await this.createProject(
+        {
+          clientSubdomain: 'www',
+          requestingUserId: adminUserRecord.supabaseUserId,
+          requestingUserEmail: adminUserRecord.email,
+        },
+        {
+          clientId: defaultProject.clientId,
+          name: 'Zenigo',
+          subdomain: 'www',
+          isBugReportsEnabled: true,
+          isFeatureRequestsEnabled: true,
+          isFeatureFeedbackEnabled: true,
+        },
+      );
       const apiKey = HelpersUtil.generateApiKey('ff');
       await this.projectsRepository.updateProjectFeatureFlagsApiKeyById({
         projectId: defaultProject.id,
@@ -63,18 +68,25 @@ export class ProjectsService implements OnModuleInit {
       this.logger.log(
         `Default project created successfully with API Key: ${apiKey.raw}`,
       );
-      return;
     }
   }
 
   async createProject(
-    requestingUserId: string,
+    {
+      requestingUserId,
+      requestingUserEmail,
+    }: {
+      requestingUserId: string;
+      requestingUserEmail: string;
+      clientSubdomain: string;
+    },
     createProjectDto: CreateProjectDto,
   ) {
-    const client = await this.clientsService.getClientById(
+    const client = await this.clientsService.getClientById({
       requestingUserId,
-      createProjectDto.clientId,
-    );
+      requestingUserEmail,
+      clientId: createProjectDto.clientId,
+    });
     if (
       !client.admins
         .map((admin) => admin.supabaseUserId)
@@ -92,44 +104,6 @@ export class ProjectsService implements OnModuleInit {
       return new BadRequestException('Subdomain already exists');
     }
     return this.projectsRepository.create(requestingUserId, createProjectDto);
-  }
-
-  async getProjectsWhereInvolved(requestingUserId: string) {
-    return this.projectsRepository.getProjectsWhereInvolved(requestingUserId);
-  }
-
-  async getProjectById(requestingUserId: string, projectId: string) {
-    const project = await this.projectsRepository.findById(projectId);
-    await this.clientsService.getClientById(requestingUserId, project.clientId); // Will throw not found or forbidden exception
-    return project;
-  }
-
-  async updateProjectById(
-    requestingUserId: string,
-    projectId: string,
-    updateProjectDto: UpdateProjectDto,
-  ) {
-    const project = await this.projectsRepository.findById(projectId);
-    const client = await this.clientsService.getClientById(
-      requestingUserId,
-      project.clientId,
-    ); // Will throw not found or forbidden exception
-    if (
-      !client.admins
-        .map((admin) => admin.supabaseUserId)
-        .includes(requestingUserId)
-    ) {
-      throw new ForbiddenException();
-    }
-    return this.projectsRepository.updateProjectById(
-      projectId,
-      updateProjectDto,
-    );
-  }
-
-  async getProjectsForClient(requestingUserId: string, clientId: string) {
-    await this.clientsService.getClientById(requestingUserId, clientId); // Will throw not found or forbidden exception
-    return this.projectsRepository.getProjectsForClient(clientId);
   }
 
   async getFeedbackWidgetScript(clientSubdomain: string) {
@@ -158,27 +132,6 @@ export class ProjectsService implements OnModuleInit {
       path.join(__dirname, '../../../../..', 'widget/dist/feedback-widget.js'),
       'utf8',
     );
-  }
-
-  async deleteProjectById(requestingUserId: string, projectId: string) {
-    const project = await this.projectsRepository.findById(projectId);
-    if (!project) {
-      throw new NotFoundException(
-        `Could not find project with id: ${projectId}`,
-      );
-    }
-    const client = await this.clientsService.getClientById(
-      requestingUserId,
-      project.clientId,
-    );
-    if (
-      !client.admins
-        .map((admin) => admin.supabaseUserId)
-        .includes(requestingUserId)
-    ) {
-      throw new ForbiddenException();
-    }
-    return this.projectsRepository.deleteProjectById(projectId);
   }
 
   async getProjectFromSubdomain(
@@ -220,10 +173,11 @@ export class ProjectsService implements OnModuleInit {
         errorMessage: `Could not find project with subdomain: ${clientSubdomain}`,
       };
     }
-    const client = await this.clientsService.getClientById(
+    const client = await this.clientsService.getClientById({
       requestingUserId,
-      project.clientId,
-    );
+      requestingUserEmail,
+      clientId: project.clientId,
+    });
     if (
       !client.admins.map((admin) => admin.email).includes(requestingUserEmail)
     ) {

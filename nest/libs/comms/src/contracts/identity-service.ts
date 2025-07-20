@@ -3,6 +3,7 @@ import {
   AnonymousMicroserviceControllerPayload,
   AuthenticatedMicroserviceControllerPayload,
   ClientDto,
+  CreateProjectDto,
   POSTSuccessDto,
   ProjectDto,
 } from '@app/dto';
@@ -21,6 +22,7 @@ export const IDENTITY_SERVICE = {
   GET_PROJECT_BY_ID: 'GET_PROJECT_BY_ID',
   GET_PROJECT_BY_CLIENT_SUBDOMAIN: 'GET_PROJECT_BY_CLIENT_SUBDOMAIN',
   GENERATE_AND_STORE_API_KEY: 'GENERATE_AND_STORE_API_KEY',
+  CREATE_PROJECT: 'CREATE_PROJECT',
   // Subdomains
   GET_SUBDOMAIN_AVAILABILITY: 'GET_SUBDOMAIN_AVAILABILITY',
 } as const;
@@ -64,5 +66,10 @@ export interface IdentityServiceContract {
   [IDENTITY_SERVICE.GET_SUBDOMAIN_AVAILABILITY]: Message<
     AuthenticatedMicroserviceControllerPayload<{subdomain: string}>,
     {isSubdomainAvailable: boolean}
+  >;
+
+  [IDENTITY_SERVICE.CREATE_PROJECT]: Message<
+    AuthenticatedMicroserviceControllerPayload<CreateProjectDto>,
+    {isSuccessfullyCreated: boolean}
   >;
 }
