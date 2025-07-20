@@ -4,6 +4,7 @@ import * as path from 'node:path';
 import {MicroserviceSendResult} from '@app/dto';
 import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
 import {HelpersUtil} from '@app/util';
+import {MicroserviceSendResultBuilder} from '@app/util/microservice-send-result.helper';
 import {
   BadRequestException,
   ForbiddenException,
@@ -47,8 +48,6 @@ export class ProjectsService implements OnModuleInit {
       this.logger.log('Creating default project as no project exists yet');
       await this.createProject(
         {
-          clientSubdomain: 'www',
-          requestingUserId: adminUserRecord.supabaseUserId,
           requestingUserEmail: adminUserRecord.email,
         },
         {
@@ -73,24 +72,18 @@ export class ProjectsService implements OnModuleInit {
 
   async createProject(
     {
-      requestingUserId,
       requestingUserEmail,
     }: {
-      requestingUserId: string;
       requestingUserEmail: string;
-      clientSubdomain: string;
     },
     createProjectDto: CreateProjectDto,
   ) {
     const client = await this.clientsService.getClientById({
-      requestingUserId,
       requestingUserEmail,
       clientId: createProjectDto.clientId,
     });
     if (
-      !client.admins
-        .map((admin) => admin.supabaseUserId)
-        .includes(requestingUserId)
+      !client.admins.map((admin) => admin.email).includes(requestingUserEmail)
     ) {
       throw new ForbiddenException();
     }
@@ -103,7 +96,10 @@ export class ProjectsService implements OnModuleInit {
     ) {
       return new BadRequestException('Subdomain already exists');
     }
-    return this.projectsRepository.create(requestingUserId, createProjectDto);
+    return this.projectsRepository.create(
+      requestingUserEmail,
+      createProjectDto,
+    );
   }
 
   async getFeedbackWidgetScript(clientSubdomain: string) {
@@ -141,29 +137,21 @@ export class ProjectsService implements OnModuleInit {
       clientSubdomain,
       {isIncludeCreatedBy: true, isIncludeClient: true},
     );
-    if (!project) {
-      return {
-        status: HttpStatus.NOT_FOUND,
-        data: null,
-      };
-    }
-    return {
-      status: HttpStatus.OK,
-      data: project,
-    };
+
+    return !project
+      ? MicroserviceSendResultBuilder.notFound()
+      : MicroserviceSendResultBuilder.ok(project);
   }
 
   async generateAndStoreApiKey({
-    requestingUserId,
     requestingUserEmail,
     clientSubdomain,
     prefixCharacters,
   }: {
-    requestingUserId: string;
     requestingUserEmail: string;
     clientSubdomain: string;
     prefixCharacters: string;
-  }): Promise<MicroserviceSendResult<{apiKey: string}>> {
+  }): Promise<MicroserviceSendResult<{apiKey: string} | null>> {
     const [project] =
       await this.projectsRepository.findBySubdomain(clientSubdomain);
     if (!project) {
@@ -174,17 +162,13 @@ export class ProjectsService implements OnModuleInit {
       };
     }
     const client = await this.clientsService.getClientById({
-      requestingUserId,
       requestingUserEmail,
       clientId: project.clientId,
     });
     if (
       !client.admins.map((admin) => admin.email).includes(requestingUserEmail)
     ) {
-      return {
-        status: HttpStatus.FORBIDDEN,
-        data: null,
-      };
+      return MicroserviceSendResultBuilder.forbidden();
     }
     const {hashed: hashedApiKey, raw: rawApiKey} =
       HelpersUtil.generateApiKey(prefixCharacters);
@@ -192,12 +176,7 @@ export class ProjectsService implements OnModuleInit {
       projectId: project.id,
       hashedKey: hashedApiKey,
     });
-    return {
-      status: HttpStatus.OK,
-      data: {
-        apiKey: rawApiKey,
-      },
-    };
+    return MicroserviceSendResultBuilder.ok({apiKey: rawApiKey});
   }
 
   private async generateWidgetInitScript(
