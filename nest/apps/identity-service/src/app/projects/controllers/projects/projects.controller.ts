@@ -25,14 +25,13 @@ export class ProjectsController {
     @Payload()
     {
       clientSubdomain,
-      authenticatedUser: {id: requestingUserId, email: requestingUserEmail},
+      authenticatedUser: {email: requestingUserEmail},
       data: {prefixCharacters},
     }: AuthenticatedMicroserviceControllerPayload<{
       prefixCharacters: string;
     }>,
   ) {
     return this.projectsService.generateAndStoreApiKey({
-      requestingUserId,
       requestingUserEmail,
       clientSubdomain,
       prefixCharacters,
@@ -43,16 +42,13 @@ export class ProjectsController {
   async registerNewProject(
     @Payload()
     {
-      clientSubdomain,
-      authenticatedUser: {email: requestingUserEmail, id: requestingUserId},
+      authenticatedUser: {email: requestingUserEmail},
       data: createProjectDto,
     }: AuthenticatedMicroserviceControllerPayload<CreateProjectDto>,
   ) {
     return this.projectsService.createProject(
       {
-        requestingUserId,
         requestingUserEmail,
-        clientSubdomain,
       },
       createProjectDto,
     );
