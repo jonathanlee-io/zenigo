@@ -3,7 +3,6 @@ import {
   AnonymousMicroserviceControllerPayload,
   AuthenticatedMicroserviceControllerPayload,
   ClientDto,
-  CreateProjectDto,
   POSTSuccessDto,
   ProjectDto,
 } from '@app/dto';
@@ -16,6 +15,7 @@ export const IDENTITY_SERVICE = {
   USER_CHECK_IN: 'USER_CHECK_IN',
   ANONYMOUS_USER_CHECK_IN: 'ANONYMOUS_USER_CHECK_IN',
   // Clients
+  CREATE_CLIENT: 'CREATE_CLIENT',
   GET_CLIENT_BY_CLIENT_SUBDOMAIN: 'GET_CLIENT_BY_CLIENT_SUBDOMAIN',
   GET_CLIENT_BY_CLIENT_ID: 'GET_CLIENT_BY_CLIENT_ID',
   // Projects
@@ -68,8 +68,20 @@ export interface IdentityServiceContract {
     {isSubdomainAvailable: boolean}
   >;
 
+  [IDENTITY_SERVICE.CREATE_CLIENT]: Message<
+    AuthenticatedMicroserviceControllerPayload<{clientDisplayName: string}>,
+    unknown
+  >;
+
   [IDENTITY_SERVICE.CREATE_PROJECT]: Message<
-    AuthenticatedMicroserviceControllerPayload<CreateProjectDto>,
-    {isSuccessfullyCreated: boolean}
+    AuthenticatedMicroserviceControllerPayload<{
+      clientId: string;
+      name: string;
+      subdomain: string;
+    }>,
+    {
+      createdClientProject: {id: string};
+      createdFeatureFlagProject: {id: string};
+    }
   >;
 }

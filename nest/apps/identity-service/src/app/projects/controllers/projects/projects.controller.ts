@@ -3,8 +3,9 @@ import {
   AnonymousMicroserviceControllerPayload,
   AuthenticatedMicroserviceControllerPayload,
 } from '@app/dto';
-import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
-import {Controller} from '@nestjs/common';
+import {CreateClientProjectDto} from '@app/dto/identity/CreateClientProjectDto';
+import {HttpHelpersUtil} from '@app/util';
+import {Controller, HttpStatus} from '@nestjs/common';
 import {MessagePattern, Payload} from '@nestjs/microservices';
 
 import {ProjectsService} from '../../services/projects/projects.service';
@@ -42,15 +43,21 @@ export class ProjectsController {
   async registerNewProject(
     @Payload()
     {
-      authenticatedUser: {email: requestingUserEmail},
+      clientSubdomain,
+      clientIp,
+      authenticatedUser: {email: requestingUserEmail, id: requestingUserId},
       data: createProjectDto,
-    }: AuthenticatedMicroserviceControllerPayload<CreateProjectDto>,
+    }: AuthenticatedMicroserviceControllerPayload<CreateClientProjectDto>,
   ) {
-    return this.projectsService.createProject(
+    const result = await this.projectsService.createProject(
       {
+        clientSubdomain,
+        ip: clientIp,
+        requestingUserId,
         requestingUserEmail,
       },
       createProjectDto,
     );
+    return HttpHelpersUtil.returnDataOrThrowError(result, HttpStatus.CREATED);
   }
 }

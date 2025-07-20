@@ -1,4 +1,6 @@
+import {IDENTITY_SERVICE_QUEUE} from '@app/comms';
 import {PrismaModule} from '@app/database';
+import {RabbitmqModule} from '@app/init';
 import {Logger, Module} from '@nestjs/common';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../generated/client';
@@ -14,6 +16,7 @@ import {ClientsController} from './controllers/clients/clients.controller';
       {client: IdentityPrismaClient},
       {injectionKey: IDENTITY_PRISMA},
     ),
+    RabbitmqModule.register({serviceName: IDENTITY_SERVICE_QUEUE}),
     UsersModule,
   ],
   controllers: [ClientsController],

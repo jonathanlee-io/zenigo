@@ -1,8 +1,16 @@
+import {
+  IDENTITY_SERVICE,
+  IDENTITY_SERVICE_QUEUE,
+  IdentityServiceContract,
+  TypedClientProxy,
+} from '@app/comms';
 import {reservedSubdomains} from '@app/constants';
 import {POSTSuccessDto} from '@app/dto';
 import {
   BadRequestException,
   ForbiddenException,
+  HttpStatus,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -10,6 +18,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
+import {ClientProxy} from '@nestjs/microservices';
 
 import {PaymentsService} from '../../../../../../payments-service/src/app/payments/services/payments/payments.service';
 import {IdentityEnvironment} from '../../../../config/environment';
@@ -20,12 +29,20 @@ import {ClientsRepositoryService} from '../../repositories/clients-repository/cl
 
 @Injectable()
 export class ClientsService implements OnModuleInit {
+  private readonly identityClient: TypedClientProxy<
+    keyof IdentityServiceContract,
+    IdentityServiceContract
+  >;
+
   constructor(
     private readonly logger: Logger,
     private readonly configService: ConfigService<IdentityEnvironment>,
     private readonly clientsRepository: ClientsRepositoryService,
     private readonly usersRepository: UsersRepositoryService,
-  ) {}
+    @Inject(IDENTITY_SERVICE_QUEUE) readonly untypedIdentityClient: ClientProxy,
+  ) {
+    this.identityClient = new TypedClientProxy(untypedIdentityClient);
+  }
 
   async onModuleInit() {
     const adminUserRecord = await this.usersRepository.findByEmail(
@@ -45,11 +62,7 @@ export class ClientsService implements OnModuleInit {
         this.configService.getOrThrow('ADMIN_EMAIL'),
         {
           clientDisplayName: 'Zenigo',
-          projectDisplayName: 'Zenigo',
-          subdomain: 'www',
-          isBugReportsEnabled: true,
-          isFeatureRequestsEnabled: true,
-          isFeatureFeedbackEnabled: true,
+          paymentPlanId: PaymentsService.paymentPlans[0].id,
         },
       );
       if (!creationResult.isSuccessful) {
@@ -57,13 +70,34 @@ export class ClientsService implements OnModuleInit {
           'Failed to create default client',
         );
       }
+      const createdClientProject = await this.identityClient.sendAsync(
+        IDENTITY_SERVICE.CREATE_PROJECT,
+        {
+          clientSubdomain: 'www',
+          clientIp: '::',
+          authenticatedUser: {
+            email: adminUserRecord.email,
+            id: adminUserRecord.id,
+          },
+          data: {
+            clientId: creationResult.clientId,
+            name: 'Zenigo',
+            subdomain: 'www',
+          },
+        },
+      );
+      if (createdClientProject.status !== HttpStatus.CREATED) {
+        throw new InternalServerErrorException(
+          'Failed to create default client project',
+        );
+      }
       await this.clientsRepository.addSubdomainToProject(
         'zenigo',
-        creationResult.projectId,
+        createdClientProject.data.createdClientProject.id,
       );
       await this.clientsRepository.addSubdomainToProject(
         'localhost',
-        creationResult.projectId,
+        createdClientProject.data.createdClientProject.id,
       );
       this.logger.log(
         `Default client created successfully with subdomains: www, zenigo, localhost`,
@@ -91,43 +125,16 @@ export class ClientsService implements OnModuleInit {
 
   async createClient(
     requestingUserEmail: string,
-    {
-      clientDisplayName,
-      projectDisplayName,
-      subdomain,
-      isBugReportsEnabled,
-      isFeatureRequestsEnabled,
-      isFeatureFeedbackEnabled,
-    }: CreateClientDto,
+    {clientDisplayName, paymentPlanId}: CreateClientDto,
   ) {
-    this.logger.log(
-      `User with e-mail: <${requestingUserEmail}> attempting to create/update client with subdomain: ${subdomain}`,
-    );
-    if (
-      !(await this.checkIfSubdomainAvailable({subdomain})).isSubdomainAvailable
-    ) {
-      throw new BadRequestException('Subdomain already exists');
-    }
-    const {createdClient, createdSubdomain, createdProject} =
-      await this.clientsRepository.registerNewClientWithTransaction(
-        requestingUserEmail,
-        clientDisplayName,
-        projectDisplayName,
-        subdomain,
-        PaymentsService.paymentPlans[0].id,
-        {
-          isBugReportsEnabled,
-          isFeatureRequestsEnabled,
-          isFeatureFeedbackEnabled,
-        },
-      );
-    if (!createdClient || !createdSubdomain || !createdProject) {
-      throw new InternalServerErrorException();
-    }
-    return <POSTSuccessDto & {clientId: string; projectId: string}>{
+    const createdClient = await this.clientsRepository.create({
+      requestingUserEmail,
+      clientDisplayName,
+      paymentPlanId,
+    });
+    return <POSTSuccessDto & {clientId: string}>{
       isSuccessful: true,
       clientId: createdClient.id,
-      projectId: createdProject.id,
     };
   }
 

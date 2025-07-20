@@ -1,20 +1,27 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
+import {
+  FEATURE_FLAGS_QUEUE,
+  FEATURE_FLAGS_SERVICE,
+  FeatureFlagsServiceContract,
+  TypedClientProxy,
+} from '@app/comms';
 import {MicroserviceSendResult} from '@app/dto';
-import {CreateProjectDto} from '@app/dto/identity/CreateProject.dto';
+import {CreateClientProjectDto} from '@app/dto/identity/CreateClientProjectDto';
 import {HelpersUtil} from '@app/util';
 import {MicroserviceSendResultBuilder} from '@app/util/microservice-send-result.helper';
 import {
-  BadRequestException,
-  ForbiddenException,
   HttpStatus,
+  Inject,
   Injectable,
   Logger,
   OnModuleInit,
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
+import {ClientProxy} from '@nestjs/microservices';
 
+import {PaymentsService} from '../../../../../../payments-service/src/app/payments/services/payments/payments.service';
 import {IdentityEnvironment} from '../../../../config/environment';
 import {ClientsService} from '../../../clients/services/clients/clients.service';
 import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
@@ -22,13 +29,21 @@ import {ProjectsRepositoryService} from '../../repositories/projects-repository/
 
 @Injectable()
 export class ProjectsService implements OnModuleInit {
+  private readonly featureFlagsClient: TypedClientProxy<
+    keyof FeatureFlagsServiceContract,
+    FeatureFlagsServiceContract
+  >;
   constructor(
     private readonly logger: Logger,
     private readonly usersRepository: UsersRepositoryService,
     private readonly projectsRepository: ProjectsRepositoryService,
     private readonly clientsService: ClientsService,
     private readonly configService: ConfigService<IdentityEnvironment>,
-  ) {}
+    @Inject(FEATURE_FLAGS_QUEUE)
+    readonly untypedFeatureFlagsClient: ClientProxy,
+  ) {
+    this.featureFlagsClient = new TypedClientProxy(untypedFeatureFlagsClient);
+  }
 
   async onModuleInit() {
     const adminUserRecord = await this.usersRepository.findByEmail(
@@ -46,17 +61,24 @@ export class ProjectsService implements OnModuleInit {
     );
     if (!defaultProject) {
       this.logger.log('Creating default project as no project exists yet');
+      const createdClientResult = await this.clientsService.createClient(
+        adminUserRecord.email,
+        {
+          clientDisplayName: 'Zenigo',
+          paymentPlanId: PaymentsService.paymentPlans[0].id,
+        },
+      );
       await this.createProject(
         {
           requestingUserEmail: adminUserRecord.email,
+          requestingUserId: adminUserRecord.supabaseUserId,
+          ip: '::',
+          clientSubdomain: 'www',
         },
         {
-          clientId: defaultProject.clientId,
+          clientId: createdClientResult.clientId,
           name: 'Zenigo',
           subdomain: 'www',
-          isBugReportsEnabled: true,
-          isFeatureRequestsEnabled: true,
-          isFeatureFeedbackEnabled: true,
         },
       );
       const apiKey = HelpersUtil.generateApiKey('ff');
@@ -72,20 +94,29 @@ export class ProjectsService implements OnModuleInit {
 
   async createProject(
     {
+      requestingUserId,
       requestingUserEmail,
+      clientSubdomain,
+      ip,
     }: {
+      requestingUserId: string;
       requestingUserEmail: string;
+      clientSubdomain: string;
+      ip: string;
     },
-    createProjectDto: CreateProjectDto,
-  ) {
-    const client = await this.clientsService.getClientById({
-      requestingUserEmail,
+    createProjectDto: CreateClientProjectDto,
+  ): Promise<MicroserviceSendResult<unknown>> {
+    const client = await this.clientsService.getClientByClientId({
       clientId: createProjectDto.clientId,
+      requestingUserEmail,
     });
+    if (!client) {
+      return MicroserviceSendResultBuilder.notFound();
+    }
     if (
       !client.admins.map((admin) => admin.email).includes(requestingUserEmail)
     ) {
-      throw new ForbiddenException();
+      return MicroserviceSendResultBuilder.forbidden();
     }
     if (
       !(
@@ -94,12 +125,43 @@ export class ProjectsService implements OnModuleInit {
         })
       ).isSubdomainAvailable
     ) {
-      return new BadRequestException('Subdomain already exists');
+      return MicroserviceSendResultBuilder.status(HttpStatus.BAD_REQUEST)
+        .data('Subdomain already exists')
+        .build();
     }
-    return this.projectsRepository.create(
-      requestingUserEmail,
-      createProjectDto,
-    );
+    try {
+      const createdClientProject = await this.projectsRepository.create(
+        requestingUserEmail,
+        createProjectDto,
+      );
+      this.logger.log(`Created client project`, createdClientProject);
+      const createdFeatureFlagProject = await this.featureFlagsClient.sendAsync(
+        FEATURE_FLAGS_SERVICE.CREATE_FEATURE_FLAG_PROJECT,
+        {
+          clientSubdomain,
+          clientIp: ip,
+          data: {
+            clientId: createdClientProject.client.id,
+            projectName: createdClientProject.name,
+          },
+          authenticatedUser: {email: requestingUserEmail, id: requestingUserId},
+        },
+      );
+      this.logger.log(
+        `Created feature flag project`,
+        createdFeatureFlagProject,
+      );
+      return MicroserviceSendResultBuilder.ok({
+        createdClientProject,
+        createdFeatureFlagProject,
+      });
+    } catch (e) {
+      return MicroserviceSendResultBuilder.status(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      )
+        .data(e.message)
+        .build();
+    }
   }
 
   async getFeedbackWidgetScript(clientSubdomain: string) {

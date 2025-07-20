@@ -1,4 +1,6 @@
+import {FEATURE_FLAGS_QUEUE} from '@app/comms';
 import {PrismaModule} from '@app/database';
+import {RabbitmqModule} from '@app/init';
 import {Logger, Module} from '@nestjs/common';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../generated/client';
@@ -15,6 +17,7 @@ import {ProjectsService} from './services/projects/projects.service';
       {client: IdentityPrismaClient},
       {injectionKey: IDENTITY_PRISMA},
     ),
+    RabbitmqModule.register({serviceName: FEATURE_FLAGS_QUEUE}),
     ClientsModule,
     UsersModule,
   ],

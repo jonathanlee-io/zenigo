@@ -1,15 +1,7 @@
-import {HelpersUtil} from '@app/util';
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import {Inject, Injectable, Logger, NotFoundException} from '@nestjs/common';
 
 import {PrismaClient as IdentityPrismaClient} from '../../../../../generated/client';
 import {IDENTITY_PRISMA} from '../../../../config/db.config';
-import {UsersRepositoryService} from '../../../users/repositories/users-repository/users-repository.service';
 
 @Injectable()
 export class ClientsRepositoryService {
@@ -17,97 +9,7 @@ export class ClientsRepositoryService {
     private readonly logger: Logger,
     @Inject(IDENTITY_PRISMA)
     private readonly prismaService: IdentityPrismaClient,
-    private readonly usersRepository: UsersRepositoryService,
   ) {}
-
-  async registerNewClientWithTransaction(
-    requestingUserEmail: string,
-    clientDisplayName: string,
-    projectDisplayName: string,
-    subdomain: string,
-    paymentPlanId: string,
-    {
-      isBugReportsEnabled,
-      isFeatureRequestsEnabled,
-      isFeatureFeedbackEnabled,
-    }: {
-      isBugReportsEnabled: boolean;
-      isFeatureRequestsEnabled: boolean;
-      isFeatureFeedbackEnabled: boolean;
-    },
-  ) {
-    const user = await this.usersRepository.findByEmail(requestingUserEmail);
-    if (!user) {
-      throw new InternalServerErrorException(
-        `Could not find user with e-mail: ${requestingUserEmail}`,
-      );
-    }
-    const [createdClient, createdProject, createdSubdomain] =
-      await this.prismaService.$transaction(async (prisma) => {
-        const createdClient = await prisma.client.create({
-          data: {
-            displayName: clientDisplayName,
-            paymentPlanId,
-            createdBy: {
-              connect: {
-                id: user.id,
-              },
-            },
-            admins: {
-              connect: {
-                id: user.id,
-              },
-            },
-            members: {
-              connect: {
-                id: user.id,
-              },
-            },
-          },
-        });
-        const apiKey = HelpersUtil.generateApiKey('ff');
-        this.logger.log(
-          `Creating project: ${projectDisplayName} with api key: ${apiKey.raw}`,
-        );
-        const createdProject = await prisma.project.create({
-          data: {
-            name: projectDisplayName,
-            isBugReportsEnabled,
-            isFeatureRequestsEnabled,
-            isFeatureFeedbackEnabled,
-            hashedFeatureFlagApiKey: apiKey.hashed,
-            isOwnerIssuesEnabled: true,
-            isOwnerUpdatesEnabled: true,
-            isUserIssuesEnabled: false,
-            client: {
-              connect: {
-                id: createdClient.id,
-              },
-            },
-            createdBy: {
-              connect: {
-                id: user.id,
-              },
-            },
-          },
-        });
-
-        const createdSubdomain = await prisma.subdomain.create({
-          data: {
-            subdomain,
-            project: {
-              connect: {
-                id: createdProject.id,
-              },
-            },
-          },
-        });
-
-        return [createdClient, createdProject, createdSubdomain];
-      });
-
-    return {createdClient, createdSubdomain, createdProject};
-  }
 
   async addSubdomainToProject(subdomain: string, projectId: string) {
     await this.prismaService.subdomain.create({
@@ -298,5 +200,37 @@ export class ClientsRepositoryService {
       throw new NotFoundException();
     }
     return clientRecord;
+  }
+
+  async create({
+    requestingUserEmail,
+    clientDisplayName,
+    paymentPlanId,
+  }: {
+    requestingUserEmail: string;
+    clientDisplayName: string;
+    paymentPlanId: string;
+  }) {
+    return this.prismaService.client.create({
+      data: {
+        createdBy: {
+          connect: {
+            email: requestingUserEmail,
+          },
+        },
+        admins: {
+          connect: {
+            email: requestingUserEmail,
+          },
+        },
+        members: {
+          connect: {
+            email: requestingUserEmail,
+          },
+        },
+        displayName: clientDisplayName,
+        paymentPlanId: paymentPlanId,
+      },
+    });
   }
 }
