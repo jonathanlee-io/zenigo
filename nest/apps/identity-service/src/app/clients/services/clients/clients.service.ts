@@ -132,7 +132,6 @@ export class ClientsService implements OnModuleInit {
   }
 
   async checkIfSubdomainAvailable({subdomain}: IsSubdomainAvailableDto) {
-    this.logger.log(`'Checking if subdomain [ '${subdomain}' ] is available`);
     return {
       isSubdomainAvailable: !(
         (await this.clientsRepository.isExistsSubdomain(subdomain)) ||
