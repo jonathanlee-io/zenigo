@@ -16,7 +16,7 @@ export class ProjectsRepositoryService {
 
   async create(
     requestingUserEmail: string,
-    {name, subdomain}: CreateClientProjectDto,
+    {name, subdomain, clientId}: CreateClientProjectDto,
   ) {
     const user = await this.usersRepository.findByEmail(requestingUserEmail);
     if (!user) {
@@ -39,6 +39,11 @@ export class ProjectsRepositoryService {
             createdBy: {
               connect: {
                 email: requestingUserEmail,
+              },
+            },
+            client: {
+              connect: {
+                id: clientId,
               },
             },
           },

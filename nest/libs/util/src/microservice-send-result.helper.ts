@@ -13,6 +13,13 @@ class MicroserviceSendResultBuilder<TData> {
     return builder.build() as MicroserviceSendResult<TData>;
   }
 
+  static created<TData>(data: TData) {
+    const builder = new MicroserviceSendResultBuilder();
+    builder._status = HttpStatus.CREATED;
+    builder._data = data;
+    return builder.build() as MicroserviceSendResult<TData>;
+  }
+
   static forbidden(): MicroserviceSendResult<null> {
     const builder = new MicroserviceSendResultBuilder();
     builder._status = HttpStatus.FORBIDDEN;

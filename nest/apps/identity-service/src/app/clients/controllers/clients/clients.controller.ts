@@ -1,6 +1,7 @@
 import {IDENTITY_SERVICE} from '@app/comms';
 import {AuthenticatedMicroserviceControllerPayload} from '@app/dto';
-import {Controller, HttpStatus, Logger} from '@nestjs/common';
+import {MicroserviceSendResultBuilder} from '@app/util/microservice-send-result.helper';
+import {Controller, Logger} from '@nestjs/common';
 import {MessagePattern, Payload} from '@nestjs/microservices';
 
 import {PaymentsService} from '../../../../../../payments-service/src/app/payments/services/payments/payments.service';
@@ -42,16 +43,10 @@ export class ClientsController {
         clientSubdomain,
         requestingUserEmail,
       });
-      return {
-        status: HttpStatus.OK,
-        data: result,
-      };
+      return MicroserviceSendResultBuilder.ok(result);
     } catch (exception) {
       this.logger.error(exception);
-      return {
-        status: HttpStatus.NOT_FOUND,
-        data: null as never,
-      };
+      return MicroserviceSendResultBuilder.notFound();
     }
   }
 
@@ -68,16 +63,10 @@ export class ClientsController {
         clientId,
         requestingUserEmail,
       });
-      return {
-        status: HttpStatus.OK,
-        data: result,
-      };
+      return MicroserviceSendResultBuilder.ok(result);
     } catch (exception) {
       this.logger.error(exception);
-      return {
-        status: HttpStatus.NOT_FOUND,
-        data: null as never,
-      };
+      return MicroserviceSendResultBuilder.notFound();
     }
   }
 }

@@ -151,7 +151,7 @@ export class ProjectsService implements OnModuleInit {
         `Created feature flag project`,
         createdFeatureFlagProject,
       );
-      return MicroserviceSendResultBuilder.ok({
+      return MicroserviceSendResultBuilder.created({
         createdClientProject,
         createdFeatureFlagProject,
       });
