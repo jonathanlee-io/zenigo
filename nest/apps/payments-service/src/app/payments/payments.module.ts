@@ -1,4 +1,6 @@
+import {PAYMENTS_SERVICE_QUEUE} from '@app/comms';
 import {PrismaModule} from '@app/database';
+import {RabbitmqModule} from '@app/init';
 import {createKeyv} from '@keyv/redis';
 import {CacheModule} from '@nestjs/cache-manager';
 import {Logger, Module} from '@nestjs/common';
@@ -27,6 +29,7 @@ import {PaymentsEnvironment} from '../../config/environment';
         };
       },
     }),
+    RabbitmqModule.register({serviceName: PAYMENTS_SERVICE_QUEUE}),
   ],
   controllers: [PaymentsController],
   providers: [
